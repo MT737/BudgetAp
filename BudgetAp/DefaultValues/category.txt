@@ -1,0 +1,23 @@
+﻿New Account Balance
+Account Balance Modification
+Account Balance Transfer
+Wage
+Mortgage
+Water Utility
+Phone Bill
+Internet
+TV Service
+Phone, Internet, TV Combined
+Health Insurance
+Life Insurance
+Vehicle Insurance
+Groceries
+Eating Out
+Entertainment
+Shopping
+Gas
+Medical
+Correction
+ATM Withdrawal
+Savings Withdrawal
+Other
