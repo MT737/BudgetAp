@@ -34,6 +34,7 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadExistingBudgetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveBudgetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dgvTransactions = new System.Windows.Forms.DataGridView();
             this.lblTransactions = new System.Windows.Forms.Label();
@@ -47,7 +48,6 @@
             this.btnExport = new System.Windows.Forms.Button();
             this.dgvAccountOverview = new System.Windows.Forms.DataGridView();
             this.dgvSpendingByCategory = new System.Windows.Forms.DataGridView();
-            this.saveBudgetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTransactions)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAccountOverview)).BeginInit();
@@ -100,6 +100,13 @@
             this.loadExistingBudgetToolStripMenuItem.Text = "Load Budget";
             this.loadExistingBudgetToolStripMenuItem.Click += new System.EventHandler(this.loadBudgetToolStripMenuItem_Click);
             // 
+            // saveBudgetToolStripMenuItem
+            // 
+            this.saveBudgetToolStripMenuItem.Name = "saveBudgetToolStripMenuItem";
+            this.saveBudgetToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.saveBudgetToolStripMenuItem.Text = "Save Budget";
+            this.saveBudgetToolStripMenuItem.Click += new System.EventHandler(this.saveBudgetToolStripMenuItem_Click);
+            // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
@@ -112,6 +119,7 @@
             this.dgvTransactions.AllowUserToAddRows = false;
             this.dgvTransactions.AllowUserToDeleteRows = false;
             this.dgvTransactions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvTransactions.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dgvTransactions.Location = new System.Drawing.Point(12, 52);
             this.dgvTransactions.MultiSelect = false;
             this.dgvTransactions.Name = "dgvTransactions";
@@ -215,6 +223,7 @@
             this.dgvAccountOverview.AllowUserToAddRows = false;
             this.dgvAccountOverview.AllowUserToDeleteRows = false;
             this.dgvAccountOverview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvAccountOverview.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dgvAccountOverview.Location = new System.Drawing.Point(943, 532);
             this.dgvAccountOverview.MultiSelect = false;
             this.dgvAccountOverview.Name = "dgvAccountOverview";
@@ -228,6 +237,7 @@
             this.dgvSpendingByCategory.AllowUserToAddRows = false;
             this.dgvSpendingByCategory.AllowUserToDeleteRows = false;
             this.dgvSpendingByCategory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvSpendingByCategory.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dgvSpendingByCategory.Location = new System.Drawing.Point(943, 52);
             this.dgvSpendingByCategory.MultiSelect = false;
             this.dgvSpendingByCategory.Name = "dgvSpendingByCategory";
@@ -235,13 +245,6 @@
             this.dgvSpendingByCategory.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvSpendingByCategory.Size = new System.Drawing.Size(814, 440);
             this.dgvSpendingByCategory.TabIndex = 12;
-            // 
-            // saveBudgetToolStripMenuItem
-            // 
-            this.saveBudgetToolStripMenuItem.Name = "saveBudgetToolStripMenuItem";
-            this.saveBudgetToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.saveBudgetToolStripMenuItem.Text = "Save Budget";
-            this.saveBudgetToolStripMenuItem.Click += new System.EventHandler(this.saveBudgetToolStripMenuItem_Click);
             // 
             // Form1
             // 

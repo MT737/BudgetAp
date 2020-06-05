@@ -34,19 +34,47 @@ namespace BudgetAp
         
         private void btnAddAccount_Click(object sender, EventArgs e)
         {                        
-            if (!(txtbxNewAccountName.Text == "") && !(txtbxNewAccountBalance.Text == "") && (rdbtnNewAsset.Checked || rdbtnNewLiability.Checked) && (rdbtnNewAccountActive.Checked || rdbtnNewAccountInactive.Checked))
+            if (!(txtbxNewAccountName.Text == "") 
+                && !(txtbxNewAccountBalance.Text == "") 
+                && (rdbtnNewAsset.Checked || rdbtnNewLiability.Checked) 
+                && (rdbtnNewAccountActive.Checked || rdbtnNewAccountInactive.Checked))
             {
                 if (_budget.IsSuccessfulNewAccount(txtbxNewAccountName.Text, decimal.Parse(txtbxNewAccountBalance.Text), rdbtnNewAsset.Checked, rdbtnNewAccountActive.Checked))
                 {
-                    _budget.FillAccountDGV(dgvAccounts);
-                    dgvAccounts.Refresh();
-                    ClearInputFields();
+                    UpdateForm();
                 }   
             }
             else
             {
                 MessageBox.Show("Missing required inputs. Please make sure all New Account inputs have been properly filled.");
             }            
+        }
+
+        //TODO: Implement
+        private void btnUpdateAccount_Click(object sender, EventArgs e)
+        {
+            if (!(txtbxUpdatedAccountName.Text == "") 
+                && !(txtbxUpdatedAccountBalance.Text == "") 
+                && (rdbtnUpdatedAccountAsset.Checked || rdbtnUpdatedAccountLiability.Checked) 
+                && (rdbtnUpdatedAccountActive.Checked || rdbtnUpdatedAccountInactive.Checked))
+            {
+                if (_budget.IsSuccessfulAccountModification(txtbxSelectedAccountName.Text, txtbxUpdatedAccountName.Text, decimal.Parse(txtbxUpdatedAccountBalance.Text)
+                    , rdbtnUpdatedAccountAsset.Checked, rdbtnUpdatedAccountActive.Checked))
+                {
+                    UpdateForm();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Missing required inputs. Please make sure all Updated Account inputs have been properly filled.");
+            }            
+        }
+
+        private void UpdateForm()
+        {
+            _budget.FillAccountDGV(dgvAccounts);
+            dgvAccounts.Refresh();
+            ClearInputFields();
         }
 
         private void ClearInputFields()
@@ -71,7 +99,7 @@ namespace BudgetAp
             var cells = dgvAccounts.CurrentRow.Cells;
 
             //Assign the pulled data to the "Selected Account" forms.
-            txtbxSelectedAccount.Text = cells[1].Value.ToString();
+            txtbxSelectedAccountName.Text = cells[1].Value.ToString();
             txtbxSelectedAccountBalance.Text = cells[4].Value.ToString();
 
             if (Convert.ToBoolean(cells[2].Value) == true)
@@ -95,12 +123,6 @@ namespace BudgetAp
                 rdbtnSelectedAccountActive.Checked = false;
                 rdbtnSelectedAccountInactive.Checked = true;
             }
-        }
-
-        //TODO: Implement
-        private void btnUpdateAccount_Click(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
         }
 
         private void txtbxNewAccountBalance_KeyPress(object sender, KeyPressEventArgs e)

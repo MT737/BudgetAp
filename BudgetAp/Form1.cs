@@ -181,7 +181,9 @@ namespace BudgetAp
 
         private void btnAccountManager_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            AccountManager oForm = new AccountManager(budget);
+            oForm.ShowDialog();  //Using showdialog so that the main form pauses while the AccountManager is open.
+            oForm = null;
         }
 
         private void btnNewTransaction_Click(object sender, EventArgs e)

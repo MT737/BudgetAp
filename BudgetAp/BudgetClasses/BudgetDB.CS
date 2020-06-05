@@ -120,6 +120,56 @@ namespace BudgetAp.BudgetClasses
             return true;
         }
 
+        internal bool IsSuccessfulAccountModification(string selectedAcccountName, string updatedAccountName, decimal updatedAccountBalance, bool UpdatedAccountIsAsset, bool UpdatedAccountIsActive)
+        {
+            int selectedAccountID = GetAccountID(selectedAcccountName);
+            bool nameNotChanged = selectedAcccountName == updatedAccountName;
+            bool balanceNotChanged = GetAccountBalance(selectedAccountID) == updatedAccountBalance;
+            bool classificationNotChanged = AccountIsAsset(selectedAccountID) == UpdatedAccountIsAsset;
+            bool statusNotChanged = AccountIsActive(selectedAccountID) == UpdatedAccountIsActive;
+
+            if (nameNotChanged && balanceNotChanged && classificationNotChanged && statusNotChanged)
+            {
+                MessageBox.Show("No change detected. Please check your inputs.");
+                return false;
+            }
+
+            if (!balanceNotChanged)
+            {
+                //TODO: Allow user to add comments to the description field detailing the reason for the balance adjustment.
+
+                //Add new transaction using the accountAdjustment to the transactions table. All subsequent account balance determinations reflect the updated account balance.
+                decimal accountAdjustment = updatedAccountBalance - GetAccountBalance(selectedAccountID);                
+                InsertTransaction(Transactions, DateTime.Now, selectedAccountID, GetNewAccountTransType(selectedAccountID), GetCategoryID("Account Balance Modification")
+                    , GetVendorID("N/A"), accountAdjustment, "Account Balance Modification");                
+            }
+
+            if (!nameNotChanged || !classificationNotChanged || !statusNotChanged)
+            {
+                //Implement modification of the account in the accounts table.
+                ModifyAccount(selectedAccountID, updatedAccountName, UpdatedAccountIsAsset, UpdatedAccountIsActive);                
+            }
+
+            //Submit all changes to the DB.
+            db.SubmitChanges();
+            return true;
+        }
+
+        private void ModifyAccount(int selectedAccountID, string updatedAccountName, bool UpdatedAccountIsAsset, bool UpdatedAccountIsActive)
+        {
+            IQueryable<Account> accountQuery =
+                from acct in Accounts
+                where acct.AccountID == selectedAccountID
+                select acct;
+
+            foreach (Account acct in accountQuery)
+            {
+                acct.Name = updatedAccountName;
+                acct.IsAsset = UpdatedAccountIsAsset;
+                acct.IsActive = UpdatedAccountIsActive;
+            }
+        }
+
         public int GetAccountCount()
         {
             IQueryable<Account> accountCount =
@@ -169,6 +219,15 @@ namespace BudgetAp.BudgetClasses
                 where acct.AccountID == accountID
                 select acct;
             return account.Single().IsAsset;
+        }
+
+        private bool AccountIsActive(int accountID)
+        {
+            IQueryable<Account> account =
+                from acct in Accounts
+                where acct.AccountID == accountID
+                select acct;
+            return account.Single().IsActive;
         }
 
         private bool AccountExists(string accountName)
@@ -234,6 +293,27 @@ namespace BudgetAp.BudgetClasses
                 //Liability account balance is the sum of payments from (i.e., credit to the holder) less payments to (i.e., paying down debt).
                 return from - to;
             }
+        }
+
+        private List<AccountWithBalance> GetAccountList()
+        {
+            List<AccountWithBalance> accountList = new List<AccountWithBalance>();
+            IQueryable<Account> accounts =
+                from acct in Accounts
+                select acct;
+
+            foreach (Account item in accounts)
+            {
+                AccountWithBalance accountItem = new AccountWithBalance();
+                accountItem.AccountID = item.AccountID;
+                accountItem.Name = item.Name;
+                accountItem.IsAsset = item.IsAsset;
+                accountItem.IsActive = item.IsActive;
+                accountItem.Balance = GetAccountBalance(item.AccountID);
+                accountList.Add(accountItem);
+            }
+
+            return accountList;
         }
 
         private string GetCategoryName(int categoryID)
@@ -311,27 +391,6 @@ namespace BudgetAp.BudgetClasses
         {
             dgvSpendingByCategory.DataSource = GetSpendingByCategory();            
             dgvSpendingByCategory.AutoGenerateColumns = true;
-        }
-
-        private List<AccountWithBalance> GetAccountList()
-        {
-            List<AccountWithBalance> accountList = new List<AccountWithBalance>();
-            IQueryable<Account> accounts =
-                from acct in Accounts
-                select acct;
-
-            foreach (Account item in accounts)
-            {
-                AccountWithBalance accountItem = new AccountWithBalance();
-                accountItem.AccountID = item.AccountID;
-                accountItem.Name = item.Name;
-                accountItem.IsAsset = item.IsAsset;
-                accountItem.IsActive = item.IsActive;
-                accountItem.Balance = GetAccountBalance(item.AccountID);
-                accountList.Add(accountItem);
-            }
-
-            return accountList;
         }
 
         private List<TransactionsWithNames> GetTransactionsList()

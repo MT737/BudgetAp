@@ -31,6 +31,9 @@
             this.dgvAccounts = new System.Windows.Forms.DataGridView();
             this.lblAccountDGV = new System.Windows.Forms.Label();
             this.gbxAddAccount = new System.Windows.Forms.GroupBox();
+            this.gpbxNewAccountStatus = new System.Windows.Forms.GroupBox();
+            this.rdbtnNewAccountInactive = new System.Windows.Forms.RadioButton();
+            this.rdbtnNewAccountActive = new System.Windows.Forms.RadioButton();
             this.txtbxNewAccountBalance = new System.Windows.Forms.TextBox();
             this.txtbxNewAccountName = new System.Windows.Forms.TextBox();
             this.btnAddAccount = new System.Windows.Forms.Button();
@@ -40,13 +43,19 @@
             this.lblNewAccountBalance = new System.Windows.Forms.Label();
             this.lblNewAccountName = new System.Windows.Forms.Label();
             this.gpbxEditAccount = new System.Windows.Forms.GroupBox();
+            this.gpbxSelectedAccountStatus = new System.Windows.Forms.GroupBox();
+            this.rdbtnSelectedAccountInactive = new System.Windows.Forms.RadioButton();
+            this.rdbtnSelectedAccountActive = new System.Windows.Forms.RadioButton();
+            this.gpbxUpdatedAccountStatus = new System.Windows.Forms.GroupBox();
+            this.rdbtnUpdatedAccountInactive = new System.Windows.Forms.RadioButton();
+            this.rdbtnUpdatedAccountActive = new System.Windows.Forms.RadioButton();
             this.gpbxUpdatedAccountClassification = new System.Windows.Forms.GroupBox();
             this.rdbtnUpdatedAccountLiability = new System.Windows.Forms.RadioButton();
             this.rdbtnUpdatedAccountAsset = new System.Windows.Forms.RadioButton();
             this.txtbxUpdatedAccountBalance = new System.Windows.Forms.TextBox();
             this.txtbxUpdatedAccountName = new System.Windows.Forms.TextBox();
             this.txtbxSelectedAccountBalance = new System.Windows.Forms.TextBox();
-            this.txtbxSelectedAccount = new System.Windows.Forms.TextBox();
+            this.txtbxSelectedAccountName = new System.Windows.Forms.TextBox();
             this.btnUpdateAccount = new System.Windows.Forms.Button();
             this.lblUpdatedAccountBalance = new System.Windows.Forms.Label();
             this.lblUpdatedAccountName = new System.Windows.Forms.Label();
@@ -55,25 +64,16 @@
             this.rdbtnSelectedAccountAsset = new System.Windows.Forms.RadioButton();
             this.lblSelectedAccountBalance = new System.Windows.Forms.Label();
             this.lblSelectedAccount = new System.Windows.Forms.Label();
-            this.gpbxNewAccountStatus = new System.Windows.Forms.GroupBox();
-            this.rdbtnNewAccountInactive = new System.Windows.Forms.RadioButton();
-            this.rdbtnNewAccountActive = new System.Windows.Forms.RadioButton();
-            this.gpbxUpdatedAccountStatus = new System.Windows.Forms.GroupBox();
-            this.rdbtnUpdatedAccountInactive = new System.Windows.Forms.RadioButton();
-            this.rdbtnUpdatedAccountActive = new System.Windows.Forms.RadioButton();
-            this.gpbxSelectedAccountStatus = new System.Windows.Forms.GroupBox();
-            this.rdbtnSelectedAccountInactive = new System.Windows.Forms.RadioButton();
-            this.rdbtnSelectedAccountActive = new System.Windows.Forms.RadioButton();
             this.btnFinished = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAccounts)).BeginInit();
             this.gbxAddAccount.SuspendLayout();
+            this.gpbxNewAccountStatus.SuspendLayout();
             this.gbxNewAccountClassification.SuspendLayout();
             this.gpbxEditAccount.SuspendLayout();
+            this.gpbxSelectedAccountStatus.SuspendLayout();
+            this.gpbxUpdatedAccountStatus.SuspendLayout();
             this.gpbxUpdatedAccountClassification.SuspendLayout();
             this.gpbxEditAccountClassification.SuspendLayout();
-            this.gpbxNewAccountStatus.SuspendLayout();
-            this.gpbxUpdatedAccountStatus.SuspendLayout();
-            this.gpbxSelectedAccountStatus.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgvAccounts
@@ -81,6 +81,7 @@
             this.dgvAccounts.AllowUserToAddRows = false;
             this.dgvAccounts.AllowUserToDeleteRows = false;
             this.dgvAccounts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvAccounts.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dgvAccounts.Location = new System.Drawing.Point(282, 59);
             this.dgvAccounts.MultiSelect = false;
             this.dgvAccounts.Name = "dgvAccounts";
@@ -116,6 +117,42 @@
             this.gbxAddAccount.TabIndex = 2;
             this.gbxAddAccount.TabStop = false;
             this.gbxAddAccount.Text = "Add Account";
+            // 
+            // gpbxNewAccountStatus
+            // 
+            this.gpbxNewAccountStatus.Controls.Add(this.rdbtnNewAccountInactive);
+            this.gpbxNewAccountStatus.Controls.Add(this.rdbtnNewAccountActive);
+            this.gpbxNewAccountStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.gpbxNewAccountStatus.Location = new System.Drawing.Point(9, 172);
+            this.gpbxNewAccountStatus.Name = "gpbxNewAccountStatus";
+            this.gpbxNewAccountStatus.Size = new System.Drawing.Size(234, 48);
+            this.gpbxNewAccountStatus.TabIndex = 3;
+            this.gpbxNewAccountStatus.TabStop = false;
+            this.gpbxNewAccountStatus.Text = "New Account Status";
+            // 
+            // rdbtnNewAccountInactive
+            // 
+            this.rdbtnNewAccountInactive.AutoSize = true;
+            this.rdbtnNewAccountInactive.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F);
+            this.rdbtnNewAccountInactive.Location = new System.Drawing.Point(97, 21);
+            this.rdbtnNewAccountInactive.Name = "rdbtnNewAccountInactive";
+            this.rdbtnNewAccountInactive.Size = new System.Drawing.Size(66, 19);
+            this.rdbtnNewAccountInactive.TabIndex = 1;
+            this.rdbtnNewAccountInactive.TabStop = true;
+            this.rdbtnNewAccountInactive.Text = "Inactive";
+            this.rdbtnNewAccountInactive.UseVisualStyleBackColor = true;
+            // 
+            // rdbtnNewAccountActive
+            // 
+            this.rdbtnNewAccountActive.AutoSize = true;
+            this.rdbtnNewAccountActive.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F);
+            this.rdbtnNewAccountActive.Location = new System.Drawing.Point(11, 21);
+            this.rdbtnNewAccountActive.Name = "rdbtnNewAccountActive";
+            this.rdbtnNewAccountActive.Size = new System.Drawing.Size(56, 19);
+            this.rdbtnNewAccountActive.TabIndex = 0;
+            this.rdbtnNewAccountActive.TabStop = true;
+            this.rdbtnNewAccountActive.Text = "Active";
+            this.rdbtnNewAccountActive.UseVisualStyleBackColor = true;
             // 
             // txtbxNewAccountBalance
             // 
@@ -209,7 +246,7 @@
             this.gpbxEditAccount.Controls.Add(this.txtbxUpdatedAccountBalance);
             this.gpbxEditAccount.Controls.Add(this.txtbxUpdatedAccountName);
             this.gpbxEditAccount.Controls.Add(this.txtbxSelectedAccountBalance);
-            this.gpbxEditAccount.Controls.Add(this.txtbxSelectedAccount);
+            this.gpbxEditAccount.Controls.Add(this.txtbxSelectedAccountName);
             this.gpbxEditAccount.Controls.Add(this.btnUpdateAccount);
             this.gpbxEditAccount.Controls.Add(this.lblUpdatedAccountBalance);
             this.gpbxEditAccount.Controls.Add(this.lblUpdatedAccountName);
@@ -223,6 +260,78 @@
             this.gpbxEditAccount.TabIndex = 3;
             this.gpbxEditAccount.TabStop = false;
             this.gpbxEditAccount.Text = "Edit Account";
+            // 
+            // gpbxSelectedAccountStatus
+            // 
+            this.gpbxSelectedAccountStatus.Controls.Add(this.rdbtnSelectedAccountInactive);
+            this.gpbxSelectedAccountStatus.Controls.Add(this.rdbtnSelectedAccountActive);
+            this.gpbxSelectedAccountStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.gpbxSelectedAccountStatus.Location = new System.Drawing.Point(6, 173);
+            this.gpbxSelectedAccountStatus.Name = "gpbxSelectedAccountStatus";
+            this.gpbxSelectedAccountStatus.Size = new System.Drawing.Size(233, 48);
+            this.gpbxSelectedAccountStatus.TabIndex = 4;
+            this.gpbxSelectedAccountStatus.TabStop = false;
+            this.gpbxSelectedAccountStatus.Text = "Selected Account Status";
+            // 
+            // rdbtnSelectedAccountInactive
+            // 
+            this.rdbtnSelectedAccountInactive.AutoCheck = false;
+            this.rdbtnSelectedAccountInactive.AutoSize = true;
+            this.rdbtnSelectedAccountInactive.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F);
+            this.rdbtnSelectedAccountInactive.Location = new System.Drawing.Point(97, 21);
+            this.rdbtnSelectedAccountInactive.Name = "rdbtnSelectedAccountInactive";
+            this.rdbtnSelectedAccountInactive.Size = new System.Drawing.Size(66, 19);
+            this.rdbtnSelectedAccountInactive.TabIndex = 1;
+            this.rdbtnSelectedAccountInactive.TabStop = true;
+            this.rdbtnSelectedAccountInactive.Text = "Inactive";
+            this.rdbtnSelectedAccountInactive.UseVisualStyleBackColor = true;
+            // 
+            // rdbtnSelectedAccountActive
+            // 
+            this.rdbtnSelectedAccountActive.AutoCheck = false;
+            this.rdbtnSelectedAccountActive.AutoSize = true;
+            this.rdbtnSelectedAccountActive.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F);
+            this.rdbtnSelectedAccountActive.Location = new System.Drawing.Point(6, 21);
+            this.rdbtnSelectedAccountActive.Name = "rdbtnSelectedAccountActive";
+            this.rdbtnSelectedAccountActive.Size = new System.Drawing.Size(56, 19);
+            this.rdbtnSelectedAccountActive.TabIndex = 0;
+            this.rdbtnSelectedAccountActive.TabStop = true;
+            this.rdbtnSelectedAccountActive.Text = "Active";
+            this.rdbtnSelectedAccountActive.UseVisualStyleBackColor = true;
+            // 
+            // gpbxUpdatedAccountStatus
+            // 
+            this.gpbxUpdatedAccountStatus.Controls.Add(this.rdbtnUpdatedAccountInactive);
+            this.gpbxUpdatedAccountStatus.Controls.Add(this.rdbtnUpdatedAccountActive);
+            this.gpbxUpdatedAccountStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.gpbxUpdatedAccountStatus.Location = new System.Drawing.Point(6, 382);
+            this.gpbxUpdatedAccountStatus.Name = "gpbxUpdatedAccountStatus";
+            this.gpbxUpdatedAccountStatus.Size = new System.Drawing.Size(232, 45);
+            this.gpbxUpdatedAccountStatus.TabIndex = 10;
+            this.gpbxUpdatedAccountStatus.TabStop = false;
+            this.gpbxUpdatedAccountStatus.Text = "Updated Account Status";
+            // 
+            // rdbtnUpdatedAccountInactive
+            // 
+            this.rdbtnUpdatedAccountInactive.AutoSize = true;
+            this.rdbtnUpdatedAccountInactive.Location = new System.Drawing.Point(97, 19);
+            this.rdbtnUpdatedAccountInactive.Name = "rdbtnUpdatedAccountInactive";
+            this.rdbtnUpdatedAccountInactive.Size = new System.Drawing.Size(66, 19);
+            this.rdbtnUpdatedAccountInactive.TabIndex = 1;
+            this.rdbtnUpdatedAccountInactive.TabStop = true;
+            this.rdbtnUpdatedAccountInactive.Text = "Inactive";
+            this.rdbtnUpdatedAccountInactive.UseVisualStyleBackColor = true;
+            // 
+            // rdbtnUpdatedAccountActive
+            // 
+            this.rdbtnUpdatedAccountActive.AutoSize = true;
+            this.rdbtnUpdatedAccountActive.Location = new System.Drawing.Point(6, 19);
+            this.rdbtnUpdatedAccountActive.Name = "rdbtnUpdatedAccountActive";
+            this.rdbtnUpdatedAccountActive.Size = new System.Drawing.Size(56, 19);
+            this.rdbtnUpdatedAccountActive.TabIndex = 0;
+            this.rdbtnUpdatedAccountActive.TabStop = true;
+            this.rdbtnUpdatedAccountActive.Text = "Active";
+            this.rdbtnUpdatedAccountActive.UseVisualStyleBackColor = true;
             // 
             // gpbxUpdatedAccountClassification
             // 
@@ -284,14 +393,14 @@
             this.txtbxSelectedAccountBalance.Size = new System.Drawing.Size(233, 24);
             this.txtbxSelectedAccountBalance.TabIndex = 7;
             // 
-            // txtbxSelectedAccount
+            // txtbxSelectedAccountName
             // 
-            this.txtbxSelectedAccount.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.txtbxSelectedAccount.Location = new System.Drawing.Point(6, 46);
-            this.txtbxSelectedAccount.Name = "txtbxSelectedAccount";
-            this.txtbxSelectedAccount.ReadOnly = true;
-            this.txtbxSelectedAccount.Size = new System.Drawing.Size(233, 24);
-            this.txtbxSelectedAccount.TabIndex = 6;
+            this.txtbxSelectedAccountName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.txtbxSelectedAccountName.Location = new System.Drawing.Point(6, 46);
+            this.txtbxSelectedAccountName.Name = "txtbxSelectedAccountName";
+            this.txtbxSelectedAccountName.ReadOnly = true;
+            this.txtbxSelectedAccountName.Size = new System.Drawing.Size(233, 24);
+            this.txtbxSelectedAccountName.TabIndex = 6;
             // 
             // btnUpdateAccount
             // 
@@ -382,114 +491,6 @@
             this.lblSelectedAccount.TabIndex = 0;
             this.lblSelectedAccount.Text = "Selected Account";
             // 
-            // gpbxNewAccountStatus
-            // 
-            this.gpbxNewAccountStatus.Controls.Add(this.rdbtnNewAccountInactive);
-            this.gpbxNewAccountStatus.Controls.Add(this.rdbtnNewAccountActive);
-            this.gpbxNewAccountStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.gpbxNewAccountStatus.Location = new System.Drawing.Point(9, 172);
-            this.gpbxNewAccountStatus.Name = "gpbxNewAccountStatus";
-            this.gpbxNewAccountStatus.Size = new System.Drawing.Size(234, 48);
-            this.gpbxNewAccountStatus.TabIndex = 3;
-            this.gpbxNewAccountStatus.TabStop = false;
-            this.gpbxNewAccountStatus.Text = "New Account Status";
-            // 
-            // rdbtnNewAccountInactive
-            // 
-            this.rdbtnNewAccountInactive.AutoSize = true;
-            this.rdbtnNewAccountInactive.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F);
-            this.rdbtnNewAccountInactive.Location = new System.Drawing.Point(97, 21);
-            this.rdbtnNewAccountInactive.Name = "rdbtnNewAccountInactive";
-            this.rdbtnNewAccountInactive.Size = new System.Drawing.Size(66, 19);
-            this.rdbtnNewAccountInactive.TabIndex = 1;
-            this.rdbtnNewAccountInactive.TabStop = true;
-            this.rdbtnNewAccountInactive.Text = "Inactive";
-            this.rdbtnNewAccountInactive.UseVisualStyleBackColor = true;
-            // 
-            // rdbtnNewAccountActive
-            // 
-            this.rdbtnNewAccountActive.AutoSize = true;
-            this.rdbtnNewAccountActive.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F);
-            this.rdbtnNewAccountActive.Location = new System.Drawing.Point(11, 21);
-            this.rdbtnNewAccountActive.Name = "rdbtnNewAccountActive";
-            this.rdbtnNewAccountActive.Size = new System.Drawing.Size(56, 19);
-            this.rdbtnNewAccountActive.TabIndex = 0;
-            this.rdbtnNewAccountActive.TabStop = true;
-            this.rdbtnNewAccountActive.Text = "Active";
-            this.rdbtnNewAccountActive.UseVisualStyleBackColor = true;
-            // 
-            // gpbxUpdatedAccountStatus
-            // 
-            this.gpbxUpdatedAccountStatus.Controls.Add(this.rdbtnUpdatedAccountInactive);
-            this.gpbxUpdatedAccountStatus.Controls.Add(this.rdbtnUpdatedAccountActive);
-            this.gpbxUpdatedAccountStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.gpbxUpdatedAccountStatus.Location = new System.Drawing.Point(6, 382);
-            this.gpbxUpdatedAccountStatus.Name = "gpbxUpdatedAccountStatus";
-            this.gpbxUpdatedAccountStatus.Size = new System.Drawing.Size(232, 45);
-            this.gpbxUpdatedAccountStatus.TabIndex = 10;
-            this.gpbxUpdatedAccountStatus.TabStop = false;
-            this.gpbxUpdatedAccountStatus.Text = "Updated Account Status";
-            // 
-            // rdbtnUpdatedAccountInactive
-            // 
-            this.rdbtnUpdatedAccountInactive.AutoSize = true;
-            this.rdbtnUpdatedAccountInactive.Location = new System.Drawing.Point(97, 19);
-            this.rdbtnUpdatedAccountInactive.Name = "rdbtnUpdatedAccountInactive";
-            this.rdbtnUpdatedAccountInactive.Size = new System.Drawing.Size(66, 19);
-            this.rdbtnUpdatedAccountInactive.TabIndex = 1;
-            this.rdbtnUpdatedAccountInactive.TabStop = true;
-            this.rdbtnUpdatedAccountInactive.Text = "Inactive";
-            this.rdbtnUpdatedAccountInactive.UseVisualStyleBackColor = true;
-            // 
-            // rdbtnUpdatedAccountActive
-            // 
-            this.rdbtnUpdatedAccountActive.AutoSize = true;
-            this.rdbtnUpdatedAccountActive.Location = new System.Drawing.Point(6, 19);
-            this.rdbtnUpdatedAccountActive.Name = "rdbtnUpdatedAccountActive";
-            this.rdbtnUpdatedAccountActive.Size = new System.Drawing.Size(56, 19);
-            this.rdbtnUpdatedAccountActive.TabIndex = 0;
-            this.rdbtnUpdatedAccountActive.TabStop = true;
-            this.rdbtnUpdatedAccountActive.Text = "Active";
-            this.rdbtnUpdatedAccountActive.UseVisualStyleBackColor = true;
-            // 
-            // gpbxSelectedAccountStatus
-            // 
-            this.gpbxSelectedAccountStatus.Controls.Add(this.rdbtnSelectedAccountInactive);
-            this.gpbxSelectedAccountStatus.Controls.Add(this.rdbtnSelectedAccountActive);
-            this.gpbxSelectedAccountStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.gpbxSelectedAccountStatus.Location = new System.Drawing.Point(6, 173);
-            this.gpbxSelectedAccountStatus.Name = "gpbxSelectedAccountStatus";
-            this.gpbxSelectedAccountStatus.Size = new System.Drawing.Size(233, 48);
-            this.gpbxSelectedAccountStatus.TabIndex = 4;
-            this.gpbxSelectedAccountStatus.TabStop = false;
-            this.gpbxSelectedAccountStatus.Text = "Selected Account Status";
-            // 
-            // rdbtnSelectedAccountInactive
-            // 
-            this.rdbtnSelectedAccountInactive.AutoCheck = false;
-            this.rdbtnSelectedAccountInactive.AutoSize = true;
-            this.rdbtnSelectedAccountInactive.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F);
-            this.rdbtnSelectedAccountInactive.Location = new System.Drawing.Point(97, 21);
-            this.rdbtnSelectedAccountInactive.Name = "rdbtnSelectedAccountInactive";
-            this.rdbtnSelectedAccountInactive.Size = new System.Drawing.Size(66, 19);
-            this.rdbtnSelectedAccountInactive.TabIndex = 1;
-            this.rdbtnSelectedAccountInactive.TabStop = true;
-            this.rdbtnSelectedAccountInactive.Text = "Inactive";
-            this.rdbtnSelectedAccountInactive.UseVisualStyleBackColor = true;
-            // 
-            // rdbtnSelectedAccountActive
-            // 
-            this.rdbtnSelectedAccountActive.AutoCheck = false;
-            this.rdbtnSelectedAccountActive.AutoSize = true;
-            this.rdbtnSelectedAccountActive.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F);
-            this.rdbtnSelectedAccountActive.Location = new System.Drawing.Point(6, 21);
-            this.rdbtnSelectedAccountActive.Name = "rdbtnSelectedAccountActive";
-            this.rdbtnSelectedAccountActive.Size = new System.Drawing.Size(56, 19);
-            this.rdbtnSelectedAccountActive.TabIndex = 0;
-            this.rdbtnSelectedAccountActive.TabStop = true;
-            this.rdbtnSelectedAccountActive.Text = "Active";
-            this.rdbtnSelectedAccountActive.UseVisualStyleBackColor = true;
-            // 
             // btnFinished
             // 
             this.btnFinished.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
@@ -516,20 +517,20 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvAccounts)).EndInit();
             this.gbxAddAccount.ResumeLayout(false);
             this.gbxAddAccount.PerformLayout();
+            this.gpbxNewAccountStatus.ResumeLayout(false);
+            this.gpbxNewAccountStatus.PerformLayout();
             this.gbxNewAccountClassification.ResumeLayout(false);
             this.gbxNewAccountClassification.PerformLayout();
             this.gpbxEditAccount.ResumeLayout(false);
             this.gpbxEditAccount.PerformLayout();
+            this.gpbxSelectedAccountStatus.ResumeLayout(false);
+            this.gpbxSelectedAccountStatus.PerformLayout();
+            this.gpbxUpdatedAccountStatus.ResumeLayout(false);
+            this.gpbxUpdatedAccountStatus.PerformLayout();
             this.gpbxUpdatedAccountClassification.ResumeLayout(false);
             this.gpbxUpdatedAccountClassification.PerformLayout();
             this.gpbxEditAccountClassification.ResumeLayout(false);
             this.gpbxEditAccountClassification.PerformLayout();
-            this.gpbxNewAccountStatus.ResumeLayout(false);
-            this.gpbxNewAccountStatus.PerformLayout();
-            this.gpbxUpdatedAccountStatus.ResumeLayout(false);
-            this.gpbxUpdatedAccountStatus.PerformLayout();
-            this.gpbxSelectedAccountStatus.ResumeLayout(false);
-            this.gpbxSelectedAccountStatus.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -555,7 +556,7 @@
         private System.Windows.Forms.TextBox txtbxUpdatedAccountBalance;
         private System.Windows.Forms.TextBox txtbxUpdatedAccountName;
         private System.Windows.Forms.TextBox txtbxSelectedAccountBalance;
-        private System.Windows.Forms.TextBox txtbxSelectedAccount;
+        private System.Windows.Forms.TextBox txtbxSelectedAccountName;
         private System.Windows.Forms.Button btnUpdateAccount;
         private System.Windows.Forms.Label lblUpdatedAccountBalance;
         private System.Windows.Forms.Label lblUpdatedAccountName;

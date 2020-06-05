@@ -129,6 +129,11 @@ namespace BudgetAp
             }
         }
 
+        /// <summary>
+        /// Provides indication of the .bak file's use-status by attempting to access the file and returning true of an IOException is caught.
+        /// </summary>
+        /// <param name="filePathway">FileInfo: file info object that represents the associated .bak file.</param>
+        /// <returns>Boolean: True if file is currently being accessed by another program (typically the syncing program if the file is saved in an auto-sync folder such as Google Drive).</returns>
         private static bool IsFileLocked(FileInfo filePathway)
         {
             try
@@ -186,7 +191,6 @@ namespace BudgetAp
             cmd.CommandText = $"ALTER DATABASE [{System.Windows.Forms.Application.StartupPath}\\Budget.mdf] SET MULTI_USER;";
             cmd.ExecuteNonQuery();
         }
-
 
         /// <summary>
         /// Pulls a list of names from the specified default list.
