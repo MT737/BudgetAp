@@ -29,13 +29,6 @@ namespace BudgetAp
             transactionsTable.InsertOnSubmit(newTransaction);
         }
 
-        //TODO: method for deleting a transaction.
-        //public static void DeleteTransaction()
-        //{
-
-        //}
-
-        //TODO: As I will be using this for user adds, I need to check for current existence of said vendor. 
         /// <summary>
         /// Adds a vendor to the vendor table object and instructs the table object to insert the data to the DB table on DB object submit.
         /// </summary>
@@ -43,21 +36,26 @@ namespace BudgetAp
         /// <param name="name">String: the name of the new vendor.</param>
         /// <param name="isDefault">Bool: indicator of default statis.</param>
         public static void AddVendor(Table<Vendor> vendorTable, string name, bool isDefault)
-        {
+        {           
             Vendor newVendor = new Vendor();
             newVendor.Name = name;
             newVendor.IsDefault = isDefault;
-            vendorTable.InsertOnSubmit(newVendor);
+            vendorTable.InsertOnSubmit(newVendor);         
         }
 
-        //TODO: method for modifying a vendor.
-        //public static void ModifyVendor()
-        //{
+        public static void ModifyVendor(Table<Vendor> vendorTable, int vendorID, string updatedVendorName)
+        {
+            IQueryable<Vendor> modifyVendorQuery =
+               from vends in vendorTable
+               where vends.VendorID == vendorID
+               select vends;
 
-        //}
+            foreach (Vendor vend in modifyVendorQuery)
+            {
+                vend.Name = updatedVendorName;                
+            }
+        }
 
-
-        //TODO: As I will be using this for user adds, I need to check for current existence of said category. 
         /// <summary>
         /// Adds a category to the category table object and instructs the table object to insert the data to the DB table on DB object submit.
         /// </summary>
@@ -72,8 +70,21 @@ namespace BudgetAp
             categoryTable.InsertOnSubmit(newCategory);
         }
 
+        public static void ModifyCategory(Table<Category> categoryTable, int categoryID, string updatedCategoryName)
+        {
+            IQueryable<Category> modifyCategoryQuery =
+               from cats in categoryTable
+               where cats.CategoryID == categoryID
+               select cats;
 
-        //TODO: method for adding an account.
+            foreach (Category cats in modifyCategoryQuery)
+            {
+                cats.Name = updatedCategoryName;
+            }
+        }
+
+
+        //TODO: write xml description.
         public static void AddAccount(Table<Account> accounts, string name, bool isAsset, bool isActive)
         {
             Account newAccount = new Account();
@@ -83,10 +94,53 @@ namespace BudgetAp
             accounts.InsertOnSubmit(newAccount);
         }
 
-        //TODO: method for modifying an account.
-        //public static void ModifyAccount()
-        //{
+        //TODO: write xml description.
+        public static void ModifyAccount(Table<Account> accounts, int selectedAccountID, string updatedAccountName, bool UpdatedAccountIsAsset, bool UpdatedAccountIsActive)
+        {        
+            IQueryable<Account> accountQuery =
+                from acct in accounts
+                where acct.AccountID == selectedAccountID
+                select acct;
 
-        //}
+            foreach (Account acct in accountQuery)
+            {
+                acct.Name = updatedAccountName;
+                acct.IsAsset = UpdatedAccountIsAsset;
+                acct.IsActive = UpdatedAccountIsActive;
+            }            
+        }
+
+        public static void ModifyTransaction(Table<Transactions> transactions, int selectedTransactionID, DateTime date, int accountID, string transType, int categoryID
+            , int vendorID, decimal amount, string description)
+        {
+            IQueryable<Transactions> transactionsModificationQuery =
+                from trans in transactions
+                where trans.TransactionID == selectedTransactionID
+                select trans;
+
+            foreach (Transactions trans in transactionsModificationQuery)
+            {
+                trans.TransactionDate = date;
+                trans.AccountID = accountID;
+                trans.TransactionType = transType;
+                trans.CategoryID = categoryID;
+                trans.VendorID = vendorID;
+                trans.Amount = amount;
+                trans.Description = description;
+            }
+        }
+
+        public static void DeleteTransaction(Table<Transactions> transactions, int selectedTransactionID)
+        {
+            var deleteTransactionQuery =
+                from trans in transactions
+                where trans.TransactionID == selectedTransactionID
+                select trans;
+
+            foreach (var trans in deleteTransactionQuery)
+            {
+                transactions.DeleteOnSubmit(trans);
+            }
+        }
     }
 }

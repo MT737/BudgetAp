@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static BudgetAp.DatabaseInsertsAndMods;
+using static BudgetAp.Utils;
 
 namespace BudgetAp
 {
@@ -50,7 +50,6 @@ namespace BudgetAp
             }            
         }
 
-        //TODO: Implement
         private void btnUpdateAccount_Click(object sender, EventArgs e)
         {
             if (!(txtbxUpdatedAccountName.Text == "") 
@@ -127,31 +126,12 @@ namespace BudgetAp
 
         private void txtbxNewAccountBalance_KeyPress(object sender, KeyPressEventArgs e)
         {
-            ValidateBalanceInput(e);           
+            ValidateCurrencyInputs(e);           
         }
 
         private void txtbxUpdatedAccountBalance_KeyPress(object sender, KeyPressEventArgs e)
         {
-            ValidateBalanceInput(e);
-        }
-
-        /// <summary>
-        /// Limits inputs to -0123456789. and backspace.
-        /// </summary>
-        /// <param name="e"></param>
-        private void ValidateBalanceInput(KeyPressEventArgs e)
-        {
-            //TODO: needs stronger validation. What if someone input multiple periods?
-            string allowedCharacters = "-0123456789.";
-            if (e.KeyChar != (char)Keys.Back)  //Allow backspace
-            {
-                if (allowedCharacters.IndexOf(e.KeyChar) == -1)
-                {
-                    //Invalid character. Warn the user and don't allow the inclusion of the key.
-                    e.Handled = true;
-                    MessageBox.Show("Please only enter digits, a single period, and hyphen '-' if needed to represent a negative.");
-                }
-            }
+            ValidateCurrencyInputs(e);
         }
 
         private void btnFinished_Click(object sender, EventArgs e)

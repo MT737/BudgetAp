@@ -18,6 +18,25 @@ namespace BudgetAp
     public static class Utils
     {
         /// <summary>
+        /// Limits inputs to -0123456789. and backspace.
+        /// </summary>
+        /// <param name="e"></param>
+        public static void ValidateCurrencyInputs(KeyPressEventArgs e)
+        {
+            //TODO: needs stronger validation. What if someone input multiple periods?
+            string allowedCharacters = "-0123456789.";
+            if (e.KeyChar != (char)Keys.Back)  //Allow backspace
+            {
+                if (allowedCharacters.IndexOf(e.KeyChar) == -1)
+                {
+                    //Invalid character. Warn the user and don't allow the inclusion of the key.
+                    e.Handled = true;
+                    MessageBox.Show("Please only enter digits, a single period, and hyphen '-' if needed to represent a negative.");
+                }
+            }
+        }
+
+        /// <summary>
         /// Saves current DB and clears all database data.
         /// </summary>
         /// <param name="currentBudget">BudgetDB: budget db object for the currently open budget. Used to save the currently oben budget before creating the new one.</param>
@@ -120,7 +139,7 @@ namespace BudgetAp
                     catch (Exception ex)
                     {
                         MessageBox.Show("Error backing up currently open budget!");
-                        MessageBox.Show(ex.ToString(), "New Budget", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show(ex.ToString(), "Budget", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                         //TODO: refine this exit.
                         Application.Exit();

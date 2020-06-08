@@ -30,15 +30,15 @@
         {
             this.dgvSelectionList = new System.Windows.Forms.DataGridView();
             this.gpbxAddNewEntry = new System.Windows.Forms.GroupBox();
-            this.gpbxUpdateEntry = new System.Windows.Forms.GroupBox();
-            this.lblNewEntry = new System.Windows.Forms.Label();
-            this.lblSelectedEntry = new System.Windows.Forms.Label();
-            this.lblUpdatedEntry = new System.Windows.Forms.Label();
-            this.txtbxNewEntry = new System.Windows.Forms.TextBox();
-            this.txtbxSelectedEntry = new System.Windows.Forms.TextBox();
-            this.txtbxUpdatedEntry = new System.Windows.Forms.TextBox();
             this.btnAddEntry = new System.Windows.Forms.Button();
+            this.txtbxNewEntry = new System.Windows.Forms.TextBox();
+            this.lblNewEntry = new System.Windows.Forms.Label();
+            this.gpbxUpdateEntry = new System.Windows.Forms.GroupBox();
             this.btnUpdateEntry = new System.Windows.Forms.Button();
+            this.txtbxUpdatedEntry = new System.Windows.Forms.TextBox();
+            this.txtbxSelectedEntry = new System.Windows.Forms.TextBox();
+            this.lblUpdatedEntry = new System.Windows.Forms.Label();
+            this.lblSelectedEntry = new System.Windows.Forms.Label();
             this.btnFinished = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSelectionList)).BeginInit();
             this.gpbxAddNewEntry.SuspendLayout();
@@ -55,6 +55,7 @@
             this.dgvSelectionList.Name = "dgvSelectionList";
             this.dgvSelectionList.Size = new System.Drawing.Size(359, 369);
             this.dgvSelectionList.TabIndex = 0;
+            this.dgvSelectionList.SelectionChanged += new System.EventHandler(this.dgvSelectionList_SelectionChanged);
             // 
             // gpbxAddNewEntry
             // 
@@ -67,6 +68,32 @@
             this.gpbxAddNewEntry.TabIndex = 1;
             this.gpbxAddNewEntry.TabStop = false;
             this.gpbxAddNewEntry.Text = "Add New Entry";
+            // 
+            // btnAddEntry
+            // 
+            this.btnAddEntry.Location = new System.Drawing.Point(103, 69);
+            this.btnAddEntry.Name = "btnAddEntry";
+            this.btnAddEntry.Size = new System.Drawing.Size(103, 38);
+            this.btnAddEntry.TabIndex = 2;
+            this.btnAddEntry.Text = "Add Entry";
+            this.btnAddEntry.UseVisualStyleBackColor = true;
+            this.btnAddEntry.Click += new System.EventHandler(this.btnAddEntry_Click);
+            // 
+            // txtbxNewEntry
+            // 
+            this.txtbxNewEntry.Location = new System.Drawing.Point(6, 43);
+            this.txtbxNewEntry.Name = "txtbxNewEntry";
+            this.txtbxNewEntry.Size = new System.Drawing.Size(200, 20);
+            this.txtbxNewEntry.TabIndex = 1;
+            // 
+            // lblNewEntry
+            // 
+            this.lblNewEntry.AutoSize = true;
+            this.lblNewEntry.Location = new System.Drawing.Point(3, 27);
+            this.lblNewEntry.Name = "lblNewEntry";
+            this.lblNewEntry.Size = new System.Drawing.Size(141, 13);
+            this.lblNewEntry.TabIndex = 0;
+            this.lblNewEntry.Text = "Enter New Entry Name Here";
             // 
             // gpbxUpdateEntry
             // 
@@ -82,23 +109,30 @@
             this.gpbxUpdateEntry.TabStop = false;
             this.gpbxUpdateEntry.Text = "Update Entry";
             // 
-            // lblNewEntry
+            // btnUpdateEntry
             // 
-            this.lblNewEntry.AutoSize = true;
-            this.lblNewEntry.Location = new System.Drawing.Point(3, 27);
-            this.lblNewEntry.Name = "lblNewEntry";
-            this.lblNewEntry.Size = new System.Drawing.Size(141, 13);
-            this.lblNewEntry.TabIndex = 0;
-            this.lblNewEntry.Text = "Enter New Entry Name Here";
+            this.btnUpdateEntry.Location = new System.Drawing.Point(103, 119);
+            this.btnUpdateEntry.Name = "btnUpdateEntry";
+            this.btnUpdateEntry.Size = new System.Drawing.Size(103, 38);
+            this.btnUpdateEntry.TabIndex = 3;
+            this.btnUpdateEntry.Text = "Update Entry";
+            this.btnUpdateEntry.UseVisualStyleBackColor = true;
+            this.btnUpdateEntry.Click += new System.EventHandler(this.btnUpdateEntry_Click);
             // 
-            // lblSelectedEntry
+            // txtbxUpdatedEntry
             // 
-            this.lblSelectedEntry.AutoSize = true;
-            this.lblSelectedEntry.Location = new System.Drawing.Point(6, 27);
-            this.lblSelectedEntry.Name = "lblSelectedEntry";
-            this.lblSelectedEntry.Size = new System.Drawing.Size(76, 13);
-            this.lblSelectedEntry.TabIndex = 1;
-            this.lblSelectedEntry.Text = "Selected Entry";
+            this.txtbxUpdatedEntry.Location = new System.Drawing.Point(9, 93);
+            this.txtbxUpdatedEntry.Name = "txtbxUpdatedEntry";
+            this.txtbxUpdatedEntry.Size = new System.Drawing.Size(197, 20);
+            this.txtbxUpdatedEntry.TabIndex = 3;
+            // 
+            // txtbxSelectedEntry
+            // 
+            this.txtbxSelectedEntry.Location = new System.Drawing.Point(9, 43);
+            this.txtbxSelectedEntry.Name = "txtbxSelectedEntry";
+            this.txtbxSelectedEntry.ReadOnly = true;
+            this.txtbxSelectedEntry.Size = new System.Drawing.Size(197, 20);
+            this.txtbxSelectedEntry.TabIndex = 2;
             // 
             // lblUpdatedEntry
             // 
@@ -109,47 +143,14 @@
             this.lblUpdatedEntry.TabIndex = 2;
             this.lblUpdatedEntry.Text = "Updated Entry";
             // 
-            // txtbxNewEntry
+            // lblSelectedEntry
             // 
-            this.txtbxNewEntry.Location = new System.Drawing.Point(6, 43);
-            this.txtbxNewEntry.Name = "txtbxNewEntry";
-            this.txtbxNewEntry.Size = new System.Drawing.Size(200, 20);
-            this.txtbxNewEntry.TabIndex = 1;
-            // 
-            // txtbxSelectedEntry
-            // 
-            this.txtbxSelectedEntry.Location = new System.Drawing.Point(9, 43);
-            this.txtbxSelectedEntry.Name = "txtbxSelectedEntry";
-            this.txtbxSelectedEntry.ReadOnly = true;
-            this.txtbxSelectedEntry.Size = new System.Drawing.Size(197, 20);
-            this.txtbxSelectedEntry.TabIndex = 2;
-            // 
-            // txtbxUpdatedEntry
-            // 
-            this.txtbxUpdatedEntry.Location = new System.Drawing.Point(9, 93);
-            this.txtbxUpdatedEntry.Name = "txtbxUpdatedEntry";
-            this.txtbxUpdatedEntry.Size = new System.Drawing.Size(197, 20);
-            this.txtbxUpdatedEntry.TabIndex = 3;
-            // 
-            // btnAddEntry
-            // 
-            this.btnAddEntry.Location = new System.Drawing.Point(103, 69);
-            this.btnAddEntry.Name = "btnAddEntry";
-            this.btnAddEntry.Size = new System.Drawing.Size(103, 38);
-            this.btnAddEntry.TabIndex = 2;
-            this.btnAddEntry.Text = "Add Entry";
-            this.btnAddEntry.UseVisualStyleBackColor = true;
-            this.btnAddEntry.Click += new System.EventHandler(this.btnAddEntry_Click);
-            // 
-            // btnUpdateEntry
-            // 
-            this.btnUpdateEntry.Location = new System.Drawing.Point(103, 119);
-            this.btnUpdateEntry.Name = "btnUpdateEntry";
-            this.btnUpdateEntry.Size = new System.Drawing.Size(103, 38);
-            this.btnUpdateEntry.TabIndex = 3;
-            this.btnUpdateEntry.Text = "Update Entry";
-            this.btnUpdateEntry.UseVisualStyleBackColor = true;
-            this.btnUpdateEntry.Click += new System.EventHandler(this.btnUpdateEntry_Click);
+            this.lblSelectedEntry.AutoSize = true;
+            this.lblSelectedEntry.Location = new System.Drawing.Point(6, 27);
+            this.lblSelectedEntry.Name = "lblSelectedEntry";
+            this.lblSelectedEntry.Size = new System.Drawing.Size(76, 13);
+            this.lblSelectedEntry.TabIndex = 1;
+            this.lblSelectedEntry.Text = "Selected Entry";
             // 
             // btnFinished
             // 

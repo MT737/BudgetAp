@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Configuration;
 using static BudgetAp.Utils;
+using static BudgetAp.DatabaseInsertsAndMods;
 
 
 
@@ -129,14 +130,24 @@ namespace BudgetAp
             dgvAccountOverview.Columns[0].Visible = false;              //Don't show AccountID
             dgvAccountOverview.Columns[3].Visible = false;              //Don't show AccountStatus
             HideInactive(dgvAccountOverview);                           //Don't show inactive accounts
-            
+            dgvAccountOverview.Columns[4].DefaultCellStyle.Format = "c";
+            dgvAccountOverview.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+
             //Transactions
             budget.FillTransactionsDGV(dgvTransactions);
             dgvTransactions.Columns[0].Visible = false;                 //Don't show TransactionsID
+            dgvTransactions.Columns[6].DefaultCellStyle.Format = "c";
+            dgvTransactions.Columns[6].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             
             //Spending by Category            
             budget.FillSpendingByCategory(dgvSpendingByCategory);
             dgvSpendingByCategory.Columns[0].Visible = false;
+            dgvSpendingByCategory.Columns[2].DefaultCellStyle.Format = "c";
+            dgvSpendingByCategory.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dgvSpendingByCategory.Columns[3].DefaultCellStyle.Format = "c";
+            dgvSpendingByCategory.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dgvSpendingByCategory.Columns[4].DefaultCellStyle.Format = "c";
+            dgvSpendingByCategory.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
         }
 
         private void HideInactive(DataGridView dgvAccountOverview)
@@ -171,12 +182,17 @@ namespace BudgetAp
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            budget.PushToDBandBackup();
+            Application.Exit();
         }
 
         private void btnCategoryManager_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            EditSelection oForm = new EditSelection(budget, "Category");
+            oForm.ShowDialog();  //Using showdialog so that the main form pauses while the AccountManager is open.
+            oForm = null;
+
+            FillDGVS();
         }
 
         private void btnAccountManager_Click(object sender, EventArgs e)
@@ -184,16 +200,29 @@ namespace BudgetAp
             AccountManager oForm = new AccountManager(budget);
             oForm.ShowDialog();  //Using showdialog so that the main form pauses while the AccountManager is open.
             oForm = null;
+
+            FillDGVS();
         }
 
         private void btnNewTransaction_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            TransactionManager oForm = new TransactionManager(false, 0, budget);
+            oForm.ShowDialog(); //Using showdialog so that the m ain form pauses whil the TransactionManager is open.
+            oForm = null;
+
+            FillDGVS();
         }
 
         private void btnDeleteTransaction_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            //TODO: Prevent deletion of new account balance?
+            DialogResult dialogResult = MessageBox.Show("This action cannot be undone. Are you sure you want to delete the selected transaction?", "Delete Transaction", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                DeleteTransaction(budget.GetTransactionsTable(), (int)dgvTransactions.CurrentRow.Cells[0].Value);
+                budget.PushToDBandBackup();
+                FillDGVS();
+            }
         }
 
         private void btnExport_Click(object sender, EventArgs e)
@@ -203,7 +232,11 @@ namespace BudgetAp
 
         private void btnEditTransaction_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            TransactionManager oForm = new TransactionManager(true, (int)dgvTransactions.CurrentRow.Cells[0].Value, budget);
+            oForm.ShowDialog(); //Using showdialog so that the m ain form pauses whil the TransactionManager is open.
+            oForm = null;
+
+            FillDGVS();
         }
 
         private void saveBudgetToolStripMenuItem_Click(object sender, EventArgs e)

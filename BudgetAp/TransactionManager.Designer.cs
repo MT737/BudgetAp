@@ -51,6 +51,7 @@
             this.btnAddTransaction = new System.Windows.Forms.Button();
             this.btnCancelTransaction = new System.Windows.Forms.Button();
             this.lblTransferAccount = new System.Windows.Forms.Label();
+            this.btnUpdateTransaction = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblAccountTransactionType
@@ -131,6 +132,7 @@
             this.txtbxAmount.Name = "txtbxAmount";
             this.txtbxAmount.Size = new System.Drawing.Size(174, 20);
             this.txtbxAmount.TabIndex = 8;
+            this.txtbxAmount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtbxAmount_KeyPress);
             // 
             // dateTimePicker1
             // 
@@ -156,6 +158,7 @@
             this.chckbxTransfer.TabIndex = 11;
             this.chckbxTransfer.Text = "Transfer between accounts?";
             this.chckbxTransfer.UseVisualStyleBackColor = true;
+            this.chckbxTransfer.CheckedChanged += new System.EventHandler(this.chckbxTransfer_CheckedChanged);
             // 
             // cmbxTransType
             // 
@@ -261,14 +264,24 @@
             this.lblTransferAccount.TabIndex = 22;
             this.lblTransferAccount.Text = "Select the partner account";
             // 
+            // btnUpdateTransaction
+            // 
+            this.btnUpdateTransaction.Location = new System.Drawing.Point(12, 302);
+            this.btnUpdateTransaction.Name = "btnUpdateTransaction";
+            this.btnUpdateTransaction.Size = new System.Drawing.Size(402, 51);
+            this.btnUpdateTransaction.TabIndex = 23;
+            this.btnUpdateTransaction.Text = "Update Transaction";
+            this.btnUpdateTransaction.UseVisualStyleBackColor = true;
+            this.btnUpdateTransaction.Click += new System.EventHandler(this.btnUpdateTransaction_Click);
+            // 
             // TransactionManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(437, 424);
+            this.Controls.Add(this.btnUpdateTransaction);
             this.Controls.Add(this.lblTransferAccount);
             this.Controls.Add(this.btnCancelTransaction);
-            this.Controls.Add(this.btnAddTransaction);
             this.Controls.Add(this.btnVendorManager);
             this.Controls.Add(this.btnCategoryManager);
             this.Controls.Add(this.btnAccountManager);
@@ -289,6 +302,7 @@
             this.Controls.Add(this.lblAccountTransfer);
             this.Controls.Add(this.lblAccount);
             this.Controls.Add(this.lblAccountTransactionType);
+            this.Controls.Add(this.btnAddTransaction);
             this.Name = "TransactionManager";
             this.Text = "Transaction Manager";
             this.ResumeLayout(false);
@@ -321,5 +335,6 @@
         private System.Windows.Forms.Button btnAddTransaction;
         private System.Windows.Forms.Button btnCancelTransaction;
         private System.Windows.Forms.Label lblTransferAccount;
+        private System.Windows.Forms.Button btnUpdateTransaction;
     }
 }
