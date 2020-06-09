@@ -188,61 +188,163 @@ namespace BudgetAp
 
         private void btnCategoryManager_Click(object sender, EventArgs e)
         {
-            EditSelection oForm = new EditSelection(budget, "Category");
-            oForm.ShowDialog();  //Using showdialog so that the main form pauses while the AccountManager is open.
-            oForm = null;
+            if (budget != null)
+            {
+                EditSelection oForm = new EditSelection(budget, "Category");
+                oForm.ShowDialog();  //Using showdialog so that the main form pauses while the AccountManager is open.
+                oForm = null;
 
-            FillDGVS();
+                FillDGVS(); 
+            }
+            else
+            {
+                PleaseCreateOrLoadBudget();
+            }
         }
 
         private void btnAccountManager_Click(object sender, EventArgs e)
         {
-            AccountManager oForm = new AccountManager(budget);
-            oForm.ShowDialog();  //Using showdialog so that the main form pauses while the AccountManager is open.
-            oForm = null;
+            if (budget != null)
+            {
+                AccountManager oForm = new AccountManager(budget);
+                oForm.ShowDialog();  //Using showdialog so that the main form pauses while the AccountManager is open.
+                oForm = null;
 
-            FillDGVS();
+                FillDGVS(); 
+            }
+            else
+            {
+                PleaseCreateOrLoadBudget();
+            }
         }
 
         private void btnNewTransaction_Click(object sender, EventArgs e)
         {
-            TransactionManager oForm = new TransactionManager(false, 0, budget);
-            oForm.ShowDialog(); //Using showdialog so that the m ain form pauses whil the TransactionManager is open.
-            oForm = null;
+            if (budget != null)
+            {
+                TransactionManager oForm = new TransactionManager(false, 0, budget);
+                oForm.ShowDialog(); //Using showdialog so that the m ain form pauses whil the TransactionManager is open.
+                oForm = null;
 
-            FillDGVS();
+                FillDGVS(); 
+            }
+            else
+            {
+                PleaseCreateOrLoadBudget();
+            }
         }
 
         private void btnDeleteTransaction_Click(object sender, EventArgs e)
         {
             //TODO: Prevent deletion of new account balance?
-            DialogResult dialogResult = MessageBox.Show("This action cannot be undone. Are you sure you want to delete the selected transaction?", "Delete Transaction", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
+            if (budget != null)
             {
-                DeleteTransaction(budget.GetTransactionsTable(), (int)dgvTransactions.CurrentRow.Cells[0].Value);
-                budget.PushToDBandBackup();
-                FillDGVS();
+                DialogResult dialogResult = MessageBox.Show("This action cannot be undone. Are you sure you want to delete the selected transaction?", "Delete Transaction", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    DeleteTransaction(budget.GetTransactionsTable(), (int)dgvTransactions.CurrentRow.Cells[0].Value);
+                    budget.PushToDBandBackup();
+                    FillDGVS();
+                } 
+            }
+            else
+            {
+                PleaseCreateOrLoadBudget();
             }
         }
 
         private void btnExport_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            if (budget != null)
+            {
+                throw new NotImplementedException(); 
+            }
+            else
+            {
+                PleaseCreateOrLoadBudget();
+            }
         }
 
         private void btnEditTransaction_Click(object sender, EventArgs e)
         {
-            TransactionManager oForm = new TransactionManager(true, (int)dgvTransactions.CurrentRow.Cells[0].Value, budget);
-            oForm.ShowDialog(); //Using showdialog so that the m ain form pauses whil the TransactionManager is open.
-            oForm = null;
+            if (budget != null)
+            {
+                TransactionManager oForm = new TransactionManager(true, (int)dgvTransactions.CurrentRow.Cells[0].Value, budget);
+                oForm.ShowDialog(); //Using showdialog so that the m ain form pauses whil the TransactionManager is open.
+                oForm = null;
 
-            FillDGVS();
+                FillDGVS(); 
+            }
+            else
+            {
+                PleaseCreateOrLoadBudget();
+            }
         }
 
         private void saveBudgetToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //Save to the .bak file.
-            Utils.SaveCurrentBudget(budget);
+            if (budget != null)
+            {
+                //Save to the .bak file.
+                Utils.SaveCurrentBudget(budget); 
+            }
+            else
+            {
+                PleaseCreateOrLoadBudget();
+            }
+        }
+
+        private void accountManagerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (budget != null)
+            {
+                AccountManager oForm = new AccountManager(budget);
+                oForm.ShowDialog();  //Using showdialog so that the main form pauses while the AccountManager is open.
+                oForm = null;
+
+                FillDGVS(); 
+            }
+            else
+            {
+                PleaseCreateOrLoadBudget();
+            }
+        }
+
+        private void categoryManagerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (budget != null)
+            {
+                EditSelection oForm = new EditSelection(budget, "Category");
+                oForm.ShowDialog();  //Using showdialog so that the main form pauses while the AccountManager is open.
+                oForm = null;
+
+                FillDGVS(); 
+            }
+            else
+            {
+                PleaseCreateOrLoadBudget();
+            }
+        }
+
+        private void vendorManagerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (budget != null)
+            {
+                EditSelection oForm = new EditSelection(budget, "Vendor");
+                oForm.ShowDialog();  //Using showdialog so that the main form pauses while the AccountManager is open.
+                oForm = null;
+
+                FillDGVS(); 
+            }
+            else
+            {
+                PleaseCreateOrLoadBudget();
+            }    
+        }
+
+        private void PleaseCreateOrLoadBudget()
+        {
+            MessageBox.Show("Please create a new or load an existing budget.");
         }
     }
 }

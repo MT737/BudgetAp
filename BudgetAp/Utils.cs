@@ -122,28 +122,35 @@ namespace BudgetAp
             {
                 var file = new FileInfo(currentBudget.GetBackupLocation());
 
-                while (IsFileLocked(file))
+                if (File.Exists(currentBudget.GetBackupLocation()))
                 {
-                    //wait for file to be available. Necessary if .bak file is stored in an auto sync drive such as GoogleDrive.
-                    
-                    //TODO: provide some indication to the user as to why the program is pausing.
-                }
-
-                using (conn)
-                {
-                    conn.Open();
-                    try
+                    while (IsFileLocked(file))
                     {
-                        SaveDB(currentBudget.GetBackupLocation(), conn);
+                        //wait for file to be available. Necessary if .bak file is stored in an auto sync drive such as GoogleDrive.
+
+                        //TODO: provide some indication to the user as to why the program is pausing.
                     }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Error backing up currently open budget!");
-                        MessageBox.Show(ex.ToString(), "Budget", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                        //TODO: refine this exit.
-                        Application.Exit();
-                    } 
+                    using (conn)
+                    {
+                        conn.Open();
+                        try
+                        {
+                            SaveDB(currentBudget.GetBackupLocation(), conn);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error backing up currently open budget!");
+                            MessageBox.Show(ex.ToString(), "Budget", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            //TODO: refine this exit.
+                            Application.Exit();
+                        }
+                    }                     
+                }
+                else
+                {
+                    MessageBox.Show($"Error! .bak file not found at the stored backup location. {currentBudget.GetBackupLocation()}");
                 }
             }
         }

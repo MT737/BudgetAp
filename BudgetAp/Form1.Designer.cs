@@ -36,6 +36,10 @@
             this.loadExistingBudgetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveBudgetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.managersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.accountManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.categoryManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.vendorManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dgvTransactions = new System.Windows.Forms.DataGridView();
             this.lblTransactions = new System.Windows.Forms.Label();
             this.lblSpendingByCategory = new System.Windows.Forms.Label();
@@ -68,7 +72,8 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.managersToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1769, 24);
@@ -113,6 +118,37 @@
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // managersToolStripMenuItem
+            // 
+            this.managersToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.accountManagerToolStripMenuItem,
+            this.categoryManagerToolStripMenuItem,
+            this.vendorManagerToolStripMenuItem});
+            this.managersToolStripMenuItem.Name = "managersToolStripMenuItem";
+            this.managersToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
+            this.managersToolStripMenuItem.Text = "Managers";
+            // 
+            // accountManagerToolStripMenuItem
+            // 
+            this.accountManagerToolStripMenuItem.Name = "accountManagerToolStripMenuItem";
+            this.accountManagerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.accountManagerToolStripMenuItem.Text = "Account Manager";
+            this.accountManagerToolStripMenuItem.Click += new System.EventHandler(this.accountManagerToolStripMenuItem_Click);
+            // 
+            // categoryManagerToolStripMenuItem
+            // 
+            this.categoryManagerToolStripMenuItem.Name = "categoryManagerToolStripMenuItem";
+            this.categoryManagerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.categoryManagerToolStripMenuItem.Text = "Category Manager";
+            this.categoryManagerToolStripMenuItem.Click += new System.EventHandler(this.categoryManagerToolStripMenuItem_Click);
+            // 
+            // vendorManagerToolStripMenuItem
+            // 
+            this.vendorManagerToolStripMenuItem.Name = "vendorManagerToolStripMenuItem";
+            this.vendorManagerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.vendorManagerToolStripMenuItem.Text = "Vendor Manager";
+            this.vendorManagerToolStripMenuItem.Click += new System.EventHandler(this.vendorManagerToolStripMenuItem_Click);
             // 
             // dgvTransactions
             // 
@@ -238,7 +274,7 @@
             this.dgvSpendingByCategory.AllowUserToDeleteRows = false;
             this.dgvSpendingByCategory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvSpendingByCategory.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dgvSpendingByCategory.Location = new System.Drawing.Point(943, 52);
+            this.dgvSpendingByCategory.Location = new System.Drawing.Point(944, 52);
             this.dgvSpendingByCategory.MultiSelect = false;
             this.dgvSpendingByCategory.Name = "dgvSpendingByCategory";
             this.dgvSpendingByCategory.ReadOnly = true;
@@ -300,6 +336,10 @@
         private System.Windows.Forms.DataGridView dgvAccountOverview;
         private System.Windows.Forms.DataGridView dgvSpendingByCategory;
         private System.Windows.Forms.ToolStripMenuItem saveBudgetToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem managersToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem accountManagerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem categoryManagerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem vendorManagerToolStripMenuItem;
     }
 }
 

@@ -35,7 +35,7 @@ namespace BudgetAp
 
         private void btnAddEntry_Click(object sender, EventArgs e)
         {
-            if (txtbxNewEntry.Text != "" && !_budget.NameExists(_catOrVend, txtbxNewEntry.Text))
+            if (txtbxNewEntry.Text != "" && !_budget.EntryNameExists(_catOrVend, txtbxNewEntry.Text))
             {
                 if (_catOrVend == "Category")
                 {
@@ -68,19 +68,26 @@ namespace BudgetAp
         private void btnUpdateEntry_Click(object sender, EventArgs e)
         {
 
-            //TODO: Error with edit selection. It's possible to create a new vendor with the name of a default member. Modification then errors out!
-            if ((bool)dgvSelectionList.CurrentRow.Cells[2].Value != true && txtbxUpdatedEntry.Text != "" && txtbxSelectedEntry.Text != txtbxUpdatedEntry.Text)
+            //TODO: Error. It's possible to modify the default entrys.
+            if (txtbxUpdatedEntry.Text != "" && txtbxSelectedEntry.Text != txtbxUpdatedEntry.Text)
             {
-                if (_catOrVend == "Category")
+                if (!_budget.IsDefaultEntry(_catOrVend, txtbxSelectedEntry.Text) && !_budget.IsDefaultEntry(_catOrVend, txtbxUpdatedEntry.Text))
                 {
-                    ModifyCategory(_budget.GetCategoryTable(), _budget.GetCategoryID(txtbxSelectedEntry.Text), txtbxUpdatedEntry.Text);
+                    if (_catOrVend == "Category")
+                    {
+                        ModifyCategory(_budget.GetCategoryTable(), _budget.GetCategoryID(txtbxSelectedEntry.Text), txtbxUpdatedEntry.Text);
+                    }
+                    else
+                    {
+                        ModifyVendor(_budget.GetVendorTable(), _budget.GetVendorID(txtbxSelectedEntry.Text), txtbxUpdatedEntry.Text);
+                    }
+                    _budget.PushToDBandBackup();
+                    PrepFieldsAndFillDGV(); 
                 }
                 else
                 {
-                    ModifyVendor(_budget.GetVendorTable(), _budget.GetVendorID(txtbxSelectedEntry.Text), txtbxUpdatedEntry.Text);
+                    MessageBox.Show("Cannot modify default entries.");
                 }
-                _budget.PushToDBandBackup();
-                PrepFieldsAndFillDGV();
             }            
             else
             {

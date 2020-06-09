@@ -443,11 +443,11 @@ namespace BudgetAp.BudgetClasses
             return vendorQuery.Single().Name;
         }
 
-        public bool NameExists(string catOrVend, string name)
+        public bool EntryNameExists(string catOrVend, string newName)
         {
             //Get a list of names from the appropriate table.
             List<string> names = new List<string>();
-            if (catOrVend == "Category")
+            if (catOrVend == "Vendor")
             {
 
                 IQueryable<Vendor> nameCheckQuery =
@@ -475,7 +475,7 @@ namespace BudgetAp.BudgetClasses
             //Compare the list to the new name.
             foreach (string formattedName in names)
             {
-                if (formattedName == Regex.Replace(name, "[^A-Za-z0-9]", "").ToUpper().Trim())
+                if (formattedName == Regex.Replace(newName, "[^A-Za-z0-9]", "").ToUpper().Trim())
                 {
                     MessageBox.Show("Name already exists.");
                     return true;
@@ -500,6 +500,51 @@ namespace BudgetAp.BudgetClasses
         public Table<Vendor> GetVendorTable()
         {
             return Vendors;
+        }
+
+        internal bool IsDefaultEntry(string catOrVend, string selectedName)
+        {
+            //Get a list of default names from the appropriate table.
+            List<string> names = new List<string>();
+            if (catOrVend == "Vendor")
+            {
+
+                IQueryable<Vendor> nameCheckQuery =
+                    from vends in Vendors
+                    where vends.IsDefault == true
+                    select vends;
+
+                foreach (Vendor vend in nameCheckQuery)
+                {
+                    names.Add(Regex.Replace(vend.Name, "[^A-Za-z0-9]", "").ToUpper().Trim());
+                }
+
+            }
+            else
+            {
+                IQueryable<Category> nameCheckQuery =
+                    from cats in Categories
+                    where cats.IsDefault == true
+                    select cats;
+
+                foreach (Category cats in nameCheckQuery)
+                {
+                    names.Add(Regex.Replace(cats.Name, "[^A-Za-z0-9]", "").ToUpper().Trim());
+                }
+            }
+
+            //Compare the list to the new name.
+            foreach (string formattedName in names)
+            {
+                if (formattedName == Regex.Replace(selectedName, "[^A-Za-z0-9]", "").ToUpper().Trim())
+                {
+                    MessageBox.Show("Name already exists.");
+                    return true;
+                }
+            }
+
+            //If still in the method, then the name is new.
+            return false;
         }
 
         public void FillTransactionsDGV(DataGridView dgvTransactions)
