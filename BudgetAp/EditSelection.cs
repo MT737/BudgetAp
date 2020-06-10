@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.Linq;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BudgetAp.BudgetClasses;
+using System;
 using System.Windows.Forms;
-using BudgetAp.BudgetClasses;
 using static BudgetAp.DatabaseInsertsAndMods;
 
 namespace BudgetAp
@@ -18,6 +10,11 @@ namespace BudgetAp
         private string _catOrVend;
         private BudgetDB _budget;
 
+        /// <summary>
+        /// EditSelection class constructor.
+        /// </summary>
+        /// <param name="budget">BudgetDB object: the budget DB for the budget currently accessed by the program.</param>
+        /// <param name="catOrVend"></param>
         public EditSelection(BudgetDB budget, string catOrVend)
         {
             InitializeComponent();
@@ -28,11 +25,17 @@ namespace BudgetAp
             PrepFieldsAndFillDGV();          
         }
 
+        /// <summary>
+        /// Closes the EditSelection form.
+        /// </summary>
         private void btnFinished_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        /// <summary>
+        /// Prompts the process to validate and add the entry.
+        /// </summary>
         private void btnAddEntry_Click(object sender, EventArgs e)
         {
             if (txtbxNewEntry.Text != "" && !_budget.EntryNameExists(_catOrVend, txtbxNewEntry.Text))
@@ -58,6 +61,9 @@ namespace BudgetAp
             }        
         }
 
+        /// <summary>
+        /// Prompts the process to clear form fields and fill the dgvSelectionList data grid view.
+        /// </summary>
         private void PrepFieldsAndFillDGV()
         {        
             txtbxNewEntry.Text = "";
@@ -65,10 +71,11 @@ namespace BudgetAp
             dgvSelectionList.Columns[0].Visible = false;
         }
 
+        /// <summary>
+        /// Prompts the process to validate and update an entry.
+        /// </summary>
         private void btnUpdateEntry_Click(object sender, EventArgs e)
         {
-
-            //TODO: Error. It's possible to modify the default entrys.
             if (txtbxUpdatedEntry.Text != "" && txtbxSelectedEntry.Text != txtbxUpdatedEntry.Text)
             {
                 if (!_budget.IsDefaultEntry(_catOrVend, txtbxSelectedEntry.Text) && !_budget.IsDefaultEntry(_catOrVend, txtbxUpdatedEntry.Text))
@@ -95,6 +102,9 @@ namespace BudgetAp
             }
         }
 
+        /// <summary>
+        /// Fills the text value of the txtbxSelectedEntry based on the selected row of the dgvSelectionList.
+        /// </summary>
         private void dgvSelectionList_SelectionChanged(object sender, EventArgs e)
         {
             txtbxSelectedEntry.Text = dgvSelectionList.CurrentRow.Cells[1].Value.ToString();

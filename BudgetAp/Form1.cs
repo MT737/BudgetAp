@@ -1,18 +1,9 @@
 ﻿using BudgetAp.BudgetClasses;
 using System;
 using System.IO;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.SqlClient;
-using System.Configuration;
-using static BudgetAp.Utils;
 using static BudgetAp.DatabaseInsertsAndMods;
+using static BudgetAp.Utils;
 
 
 
@@ -37,7 +28,9 @@ namespace BudgetAp
 
         }
 
-        //New Budget Selection
+        /// <summary>
+        /// Initiates new budget database process.
+        /// </summary>
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
             bool successfulFileCreation = false;
@@ -78,7 +71,9 @@ namespace BudgetAp
             }
         }
 
-        //Load Budget Selection
+        /// <summary>
+        /// Initiates the load existing budget database process.
+        /// </summary>
         private void loadBudgetToolStripMenuItem_Click(object sender, EventArgs e)
         {
             bool succesfulFileLoad = false;
@@ -123,6 +118,9 @@ namespace BudgetAp
             }       
         }
 
+        /// <summary>
+        /// Fills and formates the data grid views in the form.
+        /// </summary>
         private void FillDGVS()
         {
             //Account Overview
@@ -150,6 +148,10 @@ namespace BudgetAp
             dgvSpendingByCategory.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
         }
 
+        /// <summary>
+        /// Prevents inactive accounts from appearing in the the Accounts Overview data grid view.
+        /// </summary>
+        /// <param name="dgvAccountOverview">DataGridView: Account Overview.</param>
         private void HideInactive(DataGridView dgvAccountOverview)
         {
             foreach (DataGridViewRow dr in dgvAccountOverview.Rows)
@@ -180,12 +182,18 @@ namespace BudgetAp
             return created;
         }
 
+        /// <summary>
+        /// Calls the PushToDBandBackup method and closes the application.
+        /// </summary>
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             budget.PushToDBandBackup();
             Application.Exit();
         }
 
+        /// <summary>
+        /// Opens the Category Manager.
+        /// </summary>
         private void btnCategoryManager_Click(object sender, EventArgs e)
         {
             if (budget != null)
@@ -202,6 +210,9 @@ namespace BudgetAp
             }
         }
 
+        /// <summary>
+        /// Opens the Account Manager.
+        /// </summary>
         private void btnAccountManager_Click(object sender, EventArgs e)
         {
             if (budget != null)
@@ -218,6 +229,9 @@ namespace BudgetAp
             }
         }
 
+        /// <summary>
+        /// Prompts the New Transaction process.
+        /// </summary>
         private void btnNewTransaction_Click(object sender, EventArgs e)
         {
             if (budget != null)
@@ -234,6 +248,9 @@ namespace BudgetAp
             }
         }
 
+        /// <summary>
+        /// Prompts the delete transaction process on the transaction currently selected in the transactions data grid view.
+        /// </summary>
         private void btnDeleteTransaction_Click(object sender, EventArgs e)
         {
             //TODO: Prevent deletion of new account balance?
@@ -253,6 +270,7 @@ namespace BudgetAp
             }
         }
 
+        //TODO: Implement export feature.
         private void btnExport_Click(object sender, EventArgs e)
         {
             if (budget != null)
@@ -265,6 +283,9 @@ namespace BudgetAp
             }
         }
 
+        /// <summary>
+        /// Prompts the edit transaction process on the transaction currently selected in the Transactions data grid view.
+        /// </summary>
         private void btnEditTransaction_Click(object sender, EventArgs e)
         {
             if (budget != null)
@@ -281,6 +302,9 @@ namespace BudgetAp
             }
         }
 
+        /// <summary>
+        /// Calls the SaveCurrentBudget method on the currently open budget.
+        /// </summary>
         private void saveBudgetToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (budget != null)
@@ -294,6 +318,9 @@ namespace BudgetAp
             }
         }
 
+        /// <summary>
+        /// Opens the Account Manager.
+        /// </summary>
         private void accountManagerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (budget != null)
@@ -310,6 +337,9 @@ namespace BudgetAp
             }
         }
 
+        /// <summary>
+        /// Opens the Category Manager.
+        /// </summary>
         private void categoryManagerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (budget != null)
@@ -326,6 +356,9 @@ namespace BudgetAp
             }
         }
 
+        /// <summary>
+        /// Opens the Vendor Manager.
+        /// </summary>
         private void vendorManagerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (budget != null)
@@ -342,6 +375,9 @@ namespace BudgetAp
             }    
         }
 
+        /// <summary>
+        /// Prompts a messagebox instructing the user to create a new or open an existing budget.
+        /// </summary>
         private void PleaseCreateOrLoadBudget()
         {
             MessageBox.Show("Please create a new or load an existing budget.");

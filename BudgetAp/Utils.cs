@@ -1,16 +1,11 @@
-﻿using System;
-using System.CodeDom;
+﻿using BudgetAp.BudgetClasses;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using System.Windows.Forms;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using BudgetAp.BudgetClasses;
-using static BudgetAp.DatabaseInsertsAndMods;
+using System.IO;
+using System.Windows.Forms;
 
 
 namespace BudgetAp

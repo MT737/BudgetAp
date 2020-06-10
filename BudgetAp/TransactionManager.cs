@@ -1,17 +1,9 @@
-﻿using System;
+﻿using BudgetAp.BudgetClasses;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using BudgetAp.BudgetClasses;
-using static BudgetAp.Utils;
 using static BudgetAp.DatabaseInsertsAndMods;
-using System.Data.Linq;
-using BudgetAp.BudgetClasses.HelperBudgetClasses;
+using static BudgetAp.Utils;
 
 namespace BudgetAp
 {

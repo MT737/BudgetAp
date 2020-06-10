@@ -75,6 +75,14 @@ namespace BudgetAp.BudgetClasses
             db.SubmitChanges();
         }
 
+        /// <summary>
+        /// Inserts a new account row into the database.
+        /// </summary>
+        /// <param name="name">String: name of the new account.</param>
+        /// <param name="balance">Decimal: new account balance.</param>
+        /// <param name="isAsset">Bool: indication of account classification. True = asset, false = liability.</param>
+        /// <param name="isActive">Bool: indication of account status. True = active, false = inactive.</param>
+        /// <returns>True if new account is successfully added to the DB. False if the account already exists or on exception trigger.</returns>
         public bool IsSuccessfulNewAccount(string name, decimal balance, bool isAsset, bool isActive)
         {
             int accountID;
@@ -119,12 +127,24 @@ namespace BudgetAp.BudgetClasses
             return true;
         }
 
+        /// <summary>
+        /// Calls the database submit changes method followed by the SaveCurrentBudget method.
+        /// </summary>
         public void PushToDBandBackup()
         {
             db.SubmitChanges();
             SaveCurrentBudget(this);           
         }
 
+        /// <summary>
+        /// Modifies the fields of a currently exist account.
+        /// </summary>
+        /// <param name="selectedAcccountName">String: name of the account to be modified. Used to pull current account field data for comparison to updated values.</param>
+        /// <param name="updatedAccountName">String: name of the updated account.</param>
+        /// <param name="updatedAccountBalance">Decimal: updated balance.</param>
+        /// <param name="UpdatedAccountIsAsset">Bool: updated account classification.</param>
+        /// <param name="UpdatedAccountIsActive">Bool: updated account status.</param>
+        /// <returns>Bool: True if account is successfully modified. False if no changes are detected.</returns>
         internal bool IsSuccessfulAccountModification(string selectedAcccountName, string updatedAccountName, decimal updatedAccountBalance, bool UpdatedAccountIsAsset, bool UpdatedAccountIsActive)
         {
             int selectedAccountID = GetAccountID(selectedAcccountName);
@@ -160,11 +180,23 @@ namespace BudgetAp.BudgetClasses
             return true;
         }
 
+        /// <summary>
+        /// Gets the transactions table for the budget object that calls the method.
+        /// </summary>
+        /// <returns>Table Transactions</returns>
         public Table<Transactions> GetTransactionsTable()
         {
             return Transactions;
         }
 
+        /// <summary>
+        /// Fills data source elements of the TransactionsManager comboboxes.
+        /// </summary>
+        /// <param name="transType">Combobox: transaction types combobox.</param>
+        /// <param name="account">Combobox: account list combobox.</param>
+        /// <param name="transferAccount">Combobox: transfer account list combobox.</param>
+        /// <param name="categories">Combobox: categories list combobox.</param>
+        /// <param name="vendors">Combobox: vendors list combobox.</param>
         public void LoadTransactionsComboBoxes(ComboBox transType, ComboBox account, ComboBox transferAccount, ComboBox categories, ComboBox vendors)
         {
             transType.DataSource = GetTransactionTypes();
@@ -174,6 +206,17 @@ namespace BudgetAp.BudgetClasses
             vendors.DataSource = GetVendorNameList();
         }
 
+        /// <summary>
+        /// Sets the TransactionManager form values equal to the field values of a specified transaction.
+        /// </summary>
+        /// <param name="transID">Int: transaction ID representing the transaction from which to pull field values.</param>
+        /// <param name="transType">Combobox: transaction type combobox.</param>
+        /// <param name="account">Combobox: account list combobox.</param>
+        /// <param name="categories">Combobox: categories list combobox.</param>
+        /// <param name="vendors">Combobox: vendors list combobox.</param>
+        /// <param name="amount">TextBox: amount text box.</param>
+        /// <param name="date">DateTimePicker.</param>
+        /// <param name="description">TextBox: description.</param>
         public void LoadTransaction(int transID, ComboBox transType, ComboBox account, ComboBox categories, ComboBox vendors, TextBox amount, DateTimePicker date, TextBox description)
         {
             TransactionsWithNames transaction = GetTransaction(transID);
@@ -187,6 +230,11 @@ namespace BudgetAp.BudgetClasses
             description.Text = transaction.Description;
         }
 
+        /// <summary>
+        /// Creates and returns a TransactionsWithNames object based on the passed transaction ID.
+        /// </summary>
+        /// <param name="transID">Int: transaction ID for which transaction field data will be used to generate the TransactionsWithNames object.</param>
+        /// <returns>TransactionsWithNames object filled with data matching the passed transaction ID.</returns>
         private TransactionsWithNames GetTransaction(int transID)
         {
             TransactionsWithNames transaction = new TransactionsWithNames();
@@ -210,6 +258,10 @@ namespace BudgetAp.BudgetClasses
             return transaction;
         }
 
+        /// <summary>
+        /// Gets a count of the accounts in the budget object that calls the method.
+        /// </summary>
+        /// <returns>Int: number of accounts in the budget that calls the method.</returns>
         public int GetAccountCount()
         {
             IQueryable<Account> accountCount =
@@ -218,6 +270,11 @@ namespace BudgetAp.BudgetClasses
             return accountCount.Count();
         }
 
+        /// <summary>
+        /// Gets the account name associated to the account ID parameter.
+        /// </summary>
+        /// <param name="accountID">Int: account ID for which to pull account name.</param>
+        /// <returns>String: account name associated to the account ID.</returns>
         private string GetAccountName(int accountID)
         {
             IQueryable<Account> account =
@@ -227,6 +284,11 @@ namespace BudgetAp.BudgetClasses
             return account.Single().Name;
         }
 
+        /// <summary>
+        /// Gets the account ID associated to the accountName parameter.
+        /// </summary>
+        /// <param name="accountName">String: account name for which to pull an account ID.</param>
+        /// <returns>Int: account ID associated to the account name.</returns>
         public int GetAccountID(string accountName)
         {
             IQueryable<Account> account =
@@ -236,6 +298,11 @@ namespace BudgetAp.BudgetClasses
             return account.Single().AccountID;
         }
 
+        /// <summary>
+        /// Gets the appropriate new account transaction type based on the new account's classification.
+        /// </summary>
+        /// <param name="accountID">Int: account ID for which to determine the correct new account transaction type.</param>
+        /// <returns>String: transaction type appropriate to the new account transaction. "Payment To" for new asset accounts. "Payment From" for new liability accounts.</returns>
         private string GetNewAccountTransType(int accountID)
         {
             string transType;
@@ -252,12 +319,21 @@ namespace BudgetAp.BudgetClasses
             return transType;
         }
 
+        /// <summary>
+        /// Gets a string array consisting of the two different transaction types.
+        /// </summary>
+        /// <returns>String[] consisting of the two different transaction types ("Payment From" and "Payment To").</returns>
         private string[] GetTransactionTypes()
         {
             string[] types = new string[] { "Payment From", "Payment To" };
             return types;            
         }
 
+        /// <summary>
+        /// Infers a given account's classification.
+        /// </summary>
+        /// <param name="accountID">Int: account ID for which to determine classification.</param>
+        /// <returns>Bool: True if account is an asset. False if an account is a liability.</returns>
         private bool AccountIsAsset(int accountID)
         {
             IQueryable<Account> account =
@@ -267,6 +343,11 @@ namespace BudgetAp.BudgetClasses
             return account.Single().IsAsset;
         }
 
+        /// <summary>
+        /// Infers a given account's status.
+        /// </summary>
+        /// <param name="accountID">Int: account ID for which to determine classification.</param>
+        /// <returns>Bool: True if account is active. False if account is inactive.</returns>
         private bool AccountIsActive(int accountID)
         {
             IQueryable<Account> account =
@@ -276,6 +357,11 @@ namespace BudgetAp.BudgetClasses
             return account.Single().IsActive;
         }
 
+        /// <summary>
+        /// Infers the existence of a specified account by comparing the string parameter representing an account name to all currently existing account names.
+        /// </summary>
+        /// <param name="accountName">String: account name to compare to all currently existing account names.</param>
+        /// <returns>Bool: True if account name found in the database. False if account name not found in the database.</returns>
         private bool AccountExists(string accountName)
         {
             List<string> dbNames = new List<string>();
@@ -300,6 +386,11 @@ namespace BudgetAp.BudgetClasses
             return false;
         }
 
+        /// <summary>
+        /// Calculates and returns the balance for the account specified in the accountID parameter.
+        /// </summary>
+        /// <param name="accountID">Int: account ID for which to determine the current balance.</param>
+        /// <returns>Decimal: balance for the specified account.</returns>
         private decimal GetAccountBalance(int accountID)
         {
             //TODO: clean this up with a better use of LINQ (keep running into an issue with converting NULL to decimal (which shouldn't happen here anyways?).
@@ -341,6 +432,10 @@ namespace BudgetAp.BudgetClasses
             }
         }
 
+        /// <summary>
+        /// Gets a list of strings representing account names in the budget object that calls the method.
+        /// </summary>
+        /// <returns>List of string: each string represents a unique account name from the calling budget object.</returns>
         private List<string> GetListOfAccounts()
         {
             List<string> accountsList = new List<string>();
@@ -356,6 +451,10 @@ namespace BudgetAp.BudgetClasses
             return accountsList;
         }
 
+        /// <summary>
+        /// Gets a list of AccountWithBalance objects derived from the calling budget object. Each AccountWithBalance object is filled with data for a unique account.
+        /// </summary>
+        /// <returns>List of AccountWithBalance objects derived from the calling budget object. Each AccountWithBalance object is filled with data for a unique account.</returns>
         private List<AccountWithBalance> GetAccountListWithBalance()
         {
             List<AccountWithBalance> accountList = new List<AccountWithBalance>();
@@ -377,6 +476,11 @@ namespace BudgetAp.BudgetClasses
             return accountList;
         }
 
+        /// <summary>
+        /// Gets the name of a category based on the passed category ID.
+        /// </summary>
+        /// <param name="categoryID">Int: category ID for which to pull the category name.</param>
+        /// <returns>String: name of the category for the specified category ID.</returns>
         private string GetCategoryName(int categoryID)
         {
             IQueryable<Category> categoryQuery =
@@ -386,6 +490,11 @@ namespace BudgetAp.BudgetClasses
             return categoryQuery.Single().Name;
         }
 
+        /// <summary>
+        /// Gets the category ID value for the passed category name.
+        /// </summary>
+        /// <param name="categoryName">String: name of the category for which to pull the category ID.</param>
+        /// <returns>Int: ID of the category for the specified category name.</returns>
         public int GetCategoryID(string categoryName)
         {
             IQueryable<Category> category =
@@ -397,6 +506,10 @@ namespace BudgetAp.BudgetClasses
             //TODO: Try catch? Necessary? Shouldn't be if I'm propery catching during the insert phase.
         }
 
+        /// <summary>
+        /// Gets a list of string objects, each with a unique category name derived from the budget object that calls the method.
+        /// </summary>
+        /// <returns>List String: each string object returned represents a unique category.</returns>
         private List<string> GetCategoryNameList()
         {
             List<string> categories = new List<string>();
@@ -413,12 +526,20 @@ namespace BudgetAp.BudgetClasses
             return categories;
         }        
 
+        /// <summary>
+        /// Gets the calling budget object's category table.
+        /// </summary>
+        /// <returns>Table Categor for the calling budget object.</returns>
         public Table<Category> GetCategoryTable()
         {
             return Categories;
         }
 
-        private object GetVendorNameList()
+        /// <summary>
+        /// Gets a list of string objects, each with a unique vendor name derived from the budget object that calls the method.
+        /// </summary>
+        /// <returns>List String: each string object returned represents a unique vendor.</returns>
+        private List<string> GetVendorNameList()
         {
             List<string> vendors = new List<string>();
 
@@ -434,6 +555,11 @@ namespace BudgetAp.BudgetClasses
             return vendors;
         }
      
+        /// <summary>
+        /// Gets the name of a vendor based on the passed vendor ID.
+        /// </summary>
+        /// <param name="vendorID">Int: vendor ID for which to pull the vendor name.</param>
+        /// <returns>String: name of the vendor for the specified vendor ID.</returns>
         private string GetVendorName(int vendorID)
         {
             IQueryable<Vendor> vendorQuery =
@@ -443,6 +569,12 @@ namespace BudgetAp.BudgetClasses
             return vendorQuery.Single().Name;
         }
 
+        /// <summary>
+        /// Infers if a passed entity name already exists in the calling budget. 
+        /// </summary>
+        /// <param name="catOrVend">String: Indication of the entity list to compare to. Either "Category" or "Vendor".</param>
+        /// <param name="newName">String: new entity name being compared to the currently existing list.</param>
+        /// <returns>Bool: True of the name already exists. False if the name does not already exist.</returns>
         public bool EntryNameExists(string catOrVend, string newName)
         {
             //Get a list of names from the appropriate table.
@@ -486,6 +618,11 @@ namespace BudgetAp.BudgetClasses
             return false;
         }
 
+        /// <summary>
+        /// Gets the vendor ID value for the passed vendor name.
+        /// </summary>
+        /// <param name="vendorName">String: name of the vendor for which to pull the vendor ID.</param>
+        /// <returns>Int: ID of the vendor for the specified vendor name.</returns>
         public int GetVendorID(string vendorName)
         {
             IQueryable<Vendor> vendor =
@@ -497,11 +634,21 @@ namespace BudgetAp.BudgetClasses
             //TODO: Try catch? Necessary? Shouldn't be if I'm propery catching during the insert phase.
         }
 
+        /// <summary>
+        /// Gets the vendor table for the budget object calling the method.
+        /// </summary>
+        /// <returns>Table Vendor belonging to the calling budget object.</returns>
         public Table<Vendor> GetVendorTable()
         {
             return Vendors;
         }
 
+        /// <summary>
+        /// Infers if the passed entry's IsDefault field evaluates to true.
+        /// </summary>
+        /// <param name="catOrVend">String: Indication of the entity list to compare to. Either "Category" or "Vendor".</param>
+        /// <param name="selectedName">String: entity name being reviewed for default status.</param>
+        /// <returns>Bool: True if the entry is a default value. False if the entry is not a default value.</returns>
         internal bool IsDefaultEntry(string catOrVend, string selectedName)
         {
             //Get a list of default names from the appropriate table.
@@ -547,12 +694,20 @@ namespace BudgetAp.BudgetClasses
             return false;
         }
 
+        /// <summary>
+        /// Fills a DGV object with transactions data.
+        /// </summary>
+        /// <param name="dgvTransactions">DataGridView object to fill with transactions data.</param>
         public void FillTransactionsDGV(DataGridView dgvTransactions)
         {
             dgvTransactions.DataSource = GetTransactionsList();
             dgvTransactions.AutoGenerateColumns = true;
         }
 
+        /// <summary>
+        /// Fills a DGV object with account information.
+        /// </summary>
+        /// <param name="dgvAccounts">DataGridView obgject to fill with account information.</param>
         public void FillAccountDGV(DataGridView dgvAccounts)
         {
             //TODO: data binding, would that be the better choice?            
@@ -562,6 +717,11 @@ namespace BudgetAp.BudgetClasses
             dgvAccounts.AutoGenerateColumns = true;
         }
 
+        /// <summary>
+        /// Fills a datagrid view with a list of entries (Vendors or Categories based on the parameter passed). Employed by the Category and Vendor manager.
+        /// </summary>
+        /// <param name="dgvSelectionList">DataGridView object to fill with entry information.</param>
+        /// <param name="catOrVend">String: Indication of the type of entry list (Category or Vendor).</param>
         public void FillEditSelectionDGV(DataGridView dgvSelectionList, string catOrVend)
         {
             if (catOrVend == "Category")
@@ -602,12 +762,20 @@ namespace BudgetAp.BudgetClasses
             dgvSelectionList.AutoGenerateColumns = true;
         }
 
+        /// <summary>
+        /// Fills a datagridview with spending by category information.
+        /// </summary>
+        /// <param name="dgvSpendingByCategory">DataGridView object to fill with spending by category information.</param>
         internal void FillSpendingByCategory(DataGridView dgvSpendingByCategory)
         {
             dgvSpendingByCategory.DataSource = GetSpendingByCategory();            
             dgvSpendingByCategory.AutoGenerateColumns = true;
         }
 
+        /// <summary>
+        /// Gets a list of TransactionsWithNames objects for the calling budget. Each object contains the details of a unique transaction.
+        /// </summary>
+        /// <returns>List TransactionsWithNames objects, each object contains the details of a unique transaction.</returns>
         private List<TransactionsWithNames> GetTransactionsList()
         {
             List<TransactionsWithNames> transactions = new List<TransactionsWithNames>();
@@ -631,6 +799,10 @@ namespace BudgetAp.BudgetClasses
             return transactions;
         }
 
+        /// <summary>
+        /// Gets a list of SpendingByCategory objects for the calling budget. Each object contains the sum of spending for a specific category.
+        /// </summary>
+        /// <returns>List of SpendingByCategory objects, each object contains the sum of spending for a specific category.</returns>
         private List<SpendingByCategory> GetSpendingByCategory()
         {
             List<SpendingByCategory> categorySpending = new List<SpendingByCategory>();
@@ -649,6 +821,12 @@ namespace BudgetAp.BudgetClasses
             return categorySpending;
         }
 
+        /// <summary>
+        /// Gets the total spending for a given category for the calling budget object.
+        /// </summary>
+        /// <param name="categoryID">Int: category ID for which to get total spending.</param>
+        /// <param name="timeSpan">DateTime: time span in which to determine the total spending for a given category.</param>
+        /// <returns>Decimal: total spending for the category for the specified timespan.</returns>
         private decimal GetCategoryTotal(int categoryID, DateTime timeSpan)
         {
             decimal total = 0;
@@ -666,16 +844,22 @@ namespace BudgetAp.BudgetClasses
             return total;
         }
 
-        private decimal GetCategoryThreeMonthAverage(int categoryID, DateTime currentDate)
+        /// <summary>
+        /// Gets the 3 month spending average for a given category for the calling budget object.
+        /// </summary>
+        /// <param name="categoryID">Int: category ID for which to get total spending.</param>
+        /// <param name="originDate">DateTime: the data from which to count back 3 months in order to get prior three month average. Typically current date.</param>
+        /// <returns>Decimal: average spending spending for the 3 months prior to the specified date.</returns>
+        private decimal GetCategoryThreeMonthAverage(int categoryID, DateTime originDate)
         {
             decimal total = 0;
 
             var categorySumQuery =
                 from trans in Transactions
                 where trans.CategoryID == categoryID && (
-                    trans.TransactionDate.Month == (currentDate.AddMonths(-1).Month) && (trans.TransactionDate.Year == currentDate.AddMonths(-1).Year)                
-                    || trans.TransactionDate.Month == (currentDate.AddMonths(-2).Month) && (trans.TransactionDate.Year == currentDate.AddMonths(-2).Year)
-                    || trans.TransactionDate.Month == (currentDate.AddMonths(-3).Month) && (trans.TransactionDate.Year == currentDate.AddMonths(-3).Year)
+                    trans.TransactionDate.Month == (originDate.AddMonths(-1).Month) && (trans.TransactionDate.Year == originDate.AddMonths(-1).Year)                
+                    || trans.TransactionDate.Month == (originDate.AddMonths(-2).Month) && (trans.TransactionDate.Year == originDate.AddMonths(-2).Year)
+                    || trans.TransactionDate.Month == (originDate.AddMonths(-3).Month) && (trans.TransactionDate.Year == originDate.AddMonths(-3).Year)
                 )
                 select trans;
 
