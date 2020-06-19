@@ -14,7 +14,7 @@ namespace BudgetAp
         /// EditSelection class constructor.
         /// </summary>
         /// <param name="budget">BudgetDB object: the budget DB for the budget currently accessed by the program.</param>
-        /// <param name="catOrVend"></param>
+        /// <param name="catOrVend">String: text declaring the type.</param>
         public EditSelection(BudgetDB budget, string catOrVend)
         {
             InitializeComponent();

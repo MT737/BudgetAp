@@ -12,8 +12,11 @@ namespace BudgetAp
         static void Main()
         {
             Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.SetCompatibleTextRenderingDefault(false);       
+
+            //Use AppContext to maintain broad program context needs (i.e., creating DB pathway before loading form1, and setting up on exit event to delete DB on program exit).
+            AppContext context = new AppContext();
+            Application.Run(context);
         }
     }
 }

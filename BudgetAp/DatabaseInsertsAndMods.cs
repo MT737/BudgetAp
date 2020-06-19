@@ -59,6 +59,8 @@ namespace BudgetAp
                where vends.VendorID == vendorID
                select vends;
 
+            //TODO: add check for more than 1 result.
+
             foreach (Vendor vend in modifyVendorQuery)
             {
                 vend.Name = updatedVendorName;                
@@ -91,6 +93,8 @@ namespace BudgetAp
                from cats in categoryTable
                where cats.CategoryID == categoryID
                select cats;
+
+            //TODO: Add check for more than 1 result.
 
             foreach (Category cats in modifyCategoryQuery)
             {
@@ -129,6 +133,8 @@ namespace BudgetAp
                 where acct.AccountID == selectedAccountID
                 select acct;
 
+            //TODO: add a check for more than 1 result. Shouldn't be possible at this point, but it's best to check.
+
             foreach (Account acct in accountQuery)
             {
                 acct.Name = updatedAccountName;
@@ -157,6 +163,8 @@ namespace BudgetAp
                 where trans.TransactionID == selectedTransactionID
                 select trans;
 
+            //TODO: add check for more than 1 result.
+
             foreach (Transactions trans in transactionsModificationQuery)
             {
                 trans.TransactionDate = date;
@@ -180,6 +188,8 @@ namespace BudgetAp
                 from trans in transactions
                 where trans.TransactionID == selectedTransactionID
                 select trans;
+
+            //TODO: Add check for more than 1 result.
 
             foreach (var trans in deleteTransactionQuery)
             {

@@ -1,39 +1,35 @@
-﻿using System;
+﻿using BudgetAp.BudgetClasses.HelperBudgetClasses;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Data.Linq.Mapping;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
 using System.Data.Linq;
-using System.Configuration;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
 using static BudgetAp.DatabaseInsertsAndMods;
 using static BudgetAp.Utils;
-using System.Data.SqlClient;
-using System.Windows.Forms;
-using System.Text.RegularExpressions;
-using System.Security.Cryptography;
-using System.Runtime.CompilerServices;
-using BudgetAp.BudgetClasses.HelperBudgetClasses;
 
 namespace BudgetAp.BudgetClasses
 {
     public class BudgetDB
     {
-        private DataContext db = new DataContext(ConfigurationManager.ConnectionStrings["BudgetConnect"].ConnectionString);
-        private string backupLocation = "";
+        private string _conn;
+        private string _backupPathway;
+        private DataContext db;      
         private Table<Account> Accounts;
         private Table<Category> Categories;
         private Table<Vendor> Vendors;
         private Table<Transactions> Transactions;
-
+        
         /// <summary>
         /// Budget class constructor.
         /// </summary>
-        /// <param name="pathway">String: save location for the .bak file.</param>
-        public BudgetDB(string pathway)
+        /// <param name="backupPathway">String: save location for the .bak file.</param>
+        /// <param name="connString">String: DB connection string.</param>
+        public BudgetDB(string backupPathway, string connString)
         {
-            backupLocation = pathway;
+            _backupPathway = backupPathway;
+            _conn = connString;
+            db = new DataContext(_conn);
             Accounts = db.GetTable<Account>();
             Categories = db.GetTable<Category>();
             Vendors = db.GetTable<Vendor>();
@@ -51,7 +47,16 @@ namespace BudgetAp.BudgetClasses
         /// <returns>String: backup file pathway.</returns>
         public string GetBackupLocation()
         {
-            return backupLocation;
+            return _backupPathway;
+        }
+
+        /// <summary>
+        /// Provides the DB connection string.
+        /// </summary>
+        /// <returns>String: DB connections string.</returns>
+        public string GetConnectionString()
+        {
+            return _conn;
         }
 
         /// <summary>
@@ -71,7 +76,7 @@ namespace BudgetAp.BudgetClasses
                 AddCategory(Categories, item, true);
             }
 
-            //Before submiting changes the vendor and cateogry object tables are not synced with the primary database. 
+            //Submit the changes to the DB. 
             db.SubmitChanges();
         }
 
@@ -107,15 +112,13 @@ namespace BudgetAp.BudgetClasses
             }
             catch (InvalidOperationException exInvalid)
             {
-                MessageBox.Show("Erorr! Account duplication in the database.");
-                MessageBox.Show(exInvalid.ToString(), "New Account", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return false; //TODO: confirm the return is necessary (i.e., does catching the exception end the program?)
+                MessageBox.Show($"Erorr! Account duplication in the database. {exInvalid}", "BudgetApp", MessageBoxButtons.OK);
+                return false;
             }
             catch (ArgumentNullException exNull)
             {
-                MessageBox.Show("Error! Account not saved to the database.");
-                MessageBox.Show(exNull.ToString(), "New Account", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return false; //TODO: confirm the return is necessary (i.e., does catching the exception end the program?)
+                MessageBox.Show($"Error! Account not saved to the database. {exNull}", "BudgetApp", MessageBoxButtons.OK);
+                return false;
             }
 
             //Add a new account transaction.
@@ -147,28 +150,32 @@ namespace BudgetAp.BudgetClasses
         /// <returns>Bool: True if account is successfully modified. False if no changes are detected.</returns>
         internal bool IsSuccessfulAccountModification(string selectedAcccountName, string updatedAccountName, decimal updatedAccountBalance, bool UpdatedAccountIsAsset, bool UpdatedAccountIsActive)
         {
+            //Get the account name
             int selectedAccountID = GetAccountID(selectedAcccountName);
-            bool nameNotChanged = selectedAcccountName == updatedAccountName;
+            
+            //Test if name, balance, classification, or status have changed.
+            bool nameNotChanged = selectedAcccountName == updatedAccountName;                        
             bool balanceNotChanged = GetAccountBalance(selectedAccountID) == updatedAccountBalance;
             bool classificationNotChanged = AccountIsAsset(selectedAccountID) == UpdatedAccountIsAsset;
             bool statusNotChanged = AccountIsActive(selectedAccountID) == UpdatedAccountIsActive;
 
+            //If nothing has changed, alert the user and hald the process (return false).
             if (nameNotChanged && balanceNotChanged && classificationNotChanged && statusNotChanged)
             {
                 MessageBox.Show("No change detected. Please check your inputs.");
                 return false;
             }
 
+            //Test for balance change.
             if (!balanceNotChanged)
             {
-                //TODO: Allow user to add comments to the description field detailing the reason for the balance adjustment.
-
                 //Add new transaction using the accountAdjustment to the transactions table. All subsequent account balance determinations reflect the updated account balance.
                 decimal accountAdjustment = updatedAccountBalance - GetAccountBalance(selectedAccountID);                
                 InsertTransaction(Transactions, DateTime.Now, selectedAccountID, GetNewAccountTransType(selectedAccountID), GetCategoryID("Account Balance Modification")
                     , GetVendorID("N/A"), accountAdjustment, "Account Balance Modification");                
             }
 
+            //Test for non-balance changes.
             if (!nameNotChanged || !classificationNotChanged || !statusNotChanged)
             {
                 //Implement modification of the account in the accounts table.
@@ -393,7 +400,6 @@ namespace BudgetAp.BudgetClasses
         /// <returns>Decimal: balance for the specified account.</returns>
         private decimal GetAccountBalance(int accountID)
         {
-            //TODO: clean this up with a better use of LINQ (keep running into an issue with converting NULL to decimal (which shouldn't happen here anyways?).
             decimal from = 0;
             decimal to = 0;
 
@@ -402,7 +408,8 @@ namespace BudgetAp.BudgetClasses
                   from trans in Transactions
                   where trans.AccountID == accountID && trans.TransactionType == "Payment From"
                   select trans;
-
+            
+            //TODO: Research a better means for aggregation.
             foreach (var account in accountBalanceFrom)
             {
                 from += account.Amount;
@@ -500,10 +507,8 @@ namespace BudgetAp.BudgetClasses
             IQueryable<Category> category =
                 from cat in Categories
                 where cat.Name == categoryName
-                select cat;
-            return category.Single().CategoryID;
-
-            //TODO: Try catch? Necessary? Shouldn't be if I'm propery catching during the insert phase.
+                select cat;            
+            return category.Single().CategoryID;            
         }
 
         /// <summary>

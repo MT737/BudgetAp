@@ -15,6 +15,7 @@ namespace BudgetAp
         private int _transID;
         private bool _isModification;
 
+        //Constructor
         public TransactionManager(bool isModification, int transID, BudgetDB budget)
         {
             InitializeComponent();
@@ -26,11 +27,16 @@ namespace BudgetAp
             PrepTransactionManagerFields(isModification);
         }
 
+        /// <summary>
+        /// Loads form comboboxes and clears all selections. Shows/Hides the AddTransaction and UpdateTransaction buttons based on isModification.
+        /// </summary>
+        /// <param name="isModification"></param>
         private void PrepTransactionManagerFields(bool isModification)
         {
             _budget.LoadTransactionsComboBoxes(cmbxTransType, cmbxAccount, cmbxTransferAccounts, cmbxCategory, cmbxVendor);
             ClearSelections();
 
+            //Check if this is an add transaction or modify transaction instance of the form.
             if (isModification)
             {
                 //Hide transfer items. Currently not allowing modification of transfer accounts.
@@ -54,6 +60,9 @@ namespace BudgetAp
             }
         }
 
+        /// <summary>
+        /// Set's comboboxes selected indexes to -1, textboxes to empty strings, and datetimepicker to now.
+        /// </summary>
         private void ClearSelections()
         {
             //Set combobox index to -1
@@ -71,16 +80,25 @@ namespace BudgetAp
             dateTimePicker1.Value = DateTime.Now;
         }
 
+        /// <summary>
+        /// Validates inputs and inserts transaction. Accounts for transfer account as well.
+        /// </summary>
         private void btnAddTransaction_Click(object sender, EventArgs e)
         {
+            //Check that the user has interacted with the comboboxes.
             if (ComboBoxesCompleted())
             {
+                //Check that the user has entered an amount value.
                 if (AmountCompleted())
                 {
+                    //Check if this is transfer transaction.
                     if (IsTransfer())
                     {
+                        //Check that the transfer account has been selected and is not the same as the main account.
                         if (TransferAccountSelected() && AccountsAreNotTheSame())
                         {
+                            //Transfer transactions consist of two transactions.
+
                             //First 1/2 of transfer
                             InsertTransaction(_budget.GetTransactionsTable(), dateTimePicker1.Value, _budget.GetAccountID(cmbxAccount.SelectedItem.ToString()), cmbxTransType.SelectedItem.ToString(),
                             _budget.GetCategoryID(cmbxCategory.SelectedItem.ToString()), _budget.GetVendorID(cmbxVendor.SelectedItem.ToString()), decimal.Parse(txtbxAmount.Text), $"Transfer Transaction: {txtbxDescription.Text}");
@@ -89,30 +107,36 @@ namespace BudgetAp
                             InsertTransaction(_budget.GetTransactionsTable(), dateTimePicker1.Value, _budget.GetAccountID(cmbxTransferAccounts.SelectedItem.ToString()), OppositeTransType(),
                             _budget.GetCategoryID(cmbxCategory.SelectedItem.ToString()), _budget.GetVendorID(cmbxVendor.SelectedItem.ToString()), decimal.Parse(txtbxAmount.Text), $"Transfer Transaction: {txtbxDescription.Text}");
 
+                            //Push the transaction to the DB and then backup.
                             _budget.PushToDBandBackup();
                             this.Close();
                         }
                         else
                         {
+                            //Alert the user to select a transfer account.
                             MessageBox.Show("Must selected a transfer account when creating a transfer transaction. Account and Transfer Account cannot be the same.");
                         }
                     }
                     else                    
                     {
+                        //Insert transaction
                         InsertTransaction(_budget.GetTransactionsTable(), dateTimePicker1.Value, _budget.GetAccountID(cmbxAccount.SelectedItem.ToString()), cmbxTransType.SelectedItem.ToString(),
                             _budget.GetCategoryID(cmbxCategory.SelectedItem.ToString()), _budget.GetVendorID(cmbxVendor.SelectedItem.ToString()), decimal.Parse(txtbxAmount.Text), txtbxDescription.Text);
 
+                        //Push the transaction to the DB and then backup.
                         _budget.PushToDBandBackup();
                         this.Close();
                     }
                 }
                 else
                 {
+                    //Alert the user to enter a transaction amount.
                     MessageBox.Show("Please enter a transaction ammount not entered.");
                 }
             }
             else 
             {
+                //Alert the user to finish completing the form.
                 MessageBox.Show("Not all input fields completed. Please select transaction type, category, and vendor.");
             }
         }
@@ -125,34 +149,56 @@ namespace BudgetAp
             this.Close();
         }
 
+        /// <summary>
+        /// Evaluates if the selected account and selected transfer account are the same.
+        /// </summary>
+        /// <returns>Bool: true if the selected account and selected trasnfer account are not the same.</returns>
         private bool AccountsAreNotTheSame()
         {
+            //Compare the selected indexes of the transfer account and primary account comboboxes.
             return cmbxAccount.SelectedIndex != cmbxTransferAccounts.SelectedIndex;
         }
 
+        /// <summary>
+        /// Evaluates if the transfer checkbox is checked.
+        /// </summary>
+        /// <returns>Bool: True if the transfers checkbox is checked.</returns>
         private bool IsTransfer()
         {
+
             return chckbxTransfer.Checked;
         }
 
+        /// <summary>
+        /// Evaluates if the user has utilized the transaction menu's comboboxes to select entities.
+        /// </summary>
+        /// <returns>Bool: returns true if all comboboxes have been utilized.</returns>
         private bool ComboBoxesCompleted()
-        {
+        {            
             return cmbxTransType.SelectedIndex != -1 && cmbxAccount.SelectedIndex != -1 && cmbxCategory.SelectedIndex != -1 && cmbxVendor.SelectedIndex != -1;
         }
 
+        /// <summary>
+        /// Evaluates if the transfer account combobox has been utilized by the user.
+        /// </summary>
+        /// <returns>Bool: returns true if the transfer account combobox has been utilized.</returns>
         private bool TransferAccountSelected()
         {
             return cmbxTransferAccounts.SelectedIndex != -1;
         }
 
+        /// <summary>
+        /// Evaluates if the user has input a value in the Amount textbox.
+        /// </summary>
+        /// <returns></returns>
         private bool AmountCompleted()
         {
             return txtbxAmount.Text != "";
         }
 
-        //TODO: Description box validator? LinqToSQL parameterizes (sp?) all inputs, so there should be no need to worry about sql injection attacks from users fooling around with the description field
-        //but, this could be a best practice.
-
+        /// <summary>
+        /// Opens an EditSelection form and passes the the budget object and a string indicating that the type is Category.
+        /// </summary>
         private void btnCategoryManager_Click(object sender, EventArgs e)
         {
             EditSelection oForm = new EditSelection(_budget, "Category");
@@ -162,6 +208,9 @@ namespace BudgetAp
             PrepTransactionManagerFields(_isModification);
         }
 
+        /// <summary>
+        /// Opens an EditSelection form and passes the the budget object and a string indicating that the type is Vendor.
+        /// </summary>
         private void btnVendorManager_Click(object sender, EventArgs e)
         {
             EditSelection oForm = new EditSelection(_budget, "Vendor");
@@ -171,6 +220,9 @@ namespace BudgetAp
             PrepTransactionManagerFields(_isModification);
         }
 
+        /// <summary>
+        /// Opends the account manager form and passes the budget object.
+        /// </summary>
         private void btnAccountManager_Click(object sender, EventArgs e)
         {            
             AccountManager oForm = new AccountManager(_budget);
@@ -181,13 +233,16 @@ namespace BudgetAp
         }
 
         /// <summary>
-        /// Calls the Validate Currency Inputs method.
+        /// Calls the Validate Currency Inputs method on keypresses inside the amount textbox control.
         /// </summary>
         private void txtbxAmount_KeyPress(object sender, KeyPressEventArgs e)
         {
             ValidateCurrencyInputs(e);
         }
 
+        /// <summary>
+        /// Called when the transfers checkbox is checked. Disables or enables category and vendor controls based on the checkboxes status.
+        /// </summary>
         private void chckbxTransfer_CheckedChanged(object sender, EventArgs e)
         {
             if (chckbxTransfer.Checked)
@@ -208,6 +263,10 @@ namespace BudgetAp
             }
         }
 
+        /// <summary>
+        /// Returns the opposite transaction type based on the Transaction Type comboboxes current setting.
+        /// </summary>
+        /// <returns>String: returns "Payment From" if the Transaction type combobox is "Payment To". Otherwise returns "Payment From".</returns>
         private string OppositeTransType()
         {            
             if (cmbxTransType.SelectedItem.ToString() == "Payment To")
@@ -220,13 +279,18 @@ namespace BudgetAp
             }
         }
 
+        /// <summary>
+        /// Modifies the values in the transactions table of the budget object, pushes the changes to the DataBase, and backs up the .bak file.
+        /// </summary>
         private void btnUpdateTransaction_Click(object sender, EventArgs e)              
         {
-           ModifyTransaction(_budget.GetTransactionsTable(), _transID, dateTimePicker1.Value, _budget.GetAccountID(cmbxAccount.SelectedItem.ToString()), cmbxTransType.SelectedItem.ToString(),
-                            _budget.GetCategoryID(cmbxCategory.SelectedItem.ToString()), _budget.GetVendorID(cmbxVendor.SelectedItem.ToString()), decimal.Parse(txtbxAmount.Text), txtbxDescription.Text);
-
-            _budget.PushToDBandBackup();
             //TODO: Check for actual change. Currently taking the user at their word that a value has changed.  
+            ModifyTransaction(_budget.GetTransactionsTable(), _transID, dateTimePicker1.Value, _budget.GetAccountID(cmbxAccount.SelectedItem.ToString()), cmbxTransType.SelectedItem.ToString(),
+                            _budget.GetCategoryID(cmbxCategory.SelectedItem.ToString()), _budget.GetVendorID(cmbxVendor.SelectedItem.ToString()), decimal.Parse(txtbxAmount.Text), txtbxDescription.Text);
+                        
+            //Push the transaction to the DB and then backup.
+            _budget.PushToDBandBackup();
+            this.Close();
         }
     }
 }

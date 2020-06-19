@@ -13,19 +13,21 @@ namespace BudgetAp
     {
         //Budget object to hold necessary budget data in memory.
         private BudgetDB budget;
-      
+        
+        //Connection string to the Budget DB.
+        private readonly string _connString = $"Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename={Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\BudgetApp\\Budget.mdf;Integrated Security=True;";
+
+        //Constructor
         public Form1()
         {
-            InitializeComponent();
+            InitializeComponent();            
         }
 
-        //Load form.
+        //Load form
         private void Form1_Load(object sender, EventArgs e)
         {
-            //TODO: Program will require SQL functionality. If user does not already have SQL server or local SQL, display warning. (eventually, package the installer?).
             //TODO: Review possible issues with log file.
-            //TODO: Also, account balance is being stored as decimal(18,0). Is this accurate enough?
-
+            //TODO: Account balance is being stored as decimal(18,0). Is this accurate enough?
         }
 
         /// <summary>
@@ -33,30 +35,30 @@ namespace BudgetAp
         /// </summary>
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            bool successfulFileCreation = false;
-
+            //Request storage location pathway from user.
             MessageBox.Show("Name your new backup file and select a storage location. This can be used for syncing across devices if saved in a syncing folder such as Google Drive.");
+            
+            //Validate user filename 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK && Path.GetExtension(saveFileDialog1.FileName) == ".bak")
             {
-                try
-                    {                        
-                        PrepNewBudget(budget, saveFileDialog1.FileName);                        
-                        budget = new BudgetDB(saveFileDialog1.FileName);
-                        successfulFileCreation = true;
-                    }
-                    catch (Exception ex)
-                    {
-                        //TODO: Provide a generic exception message.
-                        MessageBox.Show(ex.ToString(), "New Budget", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                }
-            else
-            {
-                MessageBox.Show("Please use the requested file extension (bak).");
-            }
+                //Check if a budget is currently open.
+                if (budget != null)
+                {
+                    //If a different budget is currently open, save it.
+                    SaveCurrentBudget(budget);
+                    
+                    //Delete the current DB
+                    DeleteDB(_connString);
 
-            if (successfulFileCreation)
-            {
+                    //Clear the budget object
+                    budget = null;
+                }
+          
+                //Creat a new budget DB and set the budget object = to a new BudgetDB object.
+                NewBudget(_connString);
+                budget = new BudgetDB(saveFileDialog1.FileName, _connString);
+                
+                //Have user enter at least 1 account.
                 while (!InitialAccountCreation())
                 {
                     //Keep looping here until the user creates an account.
@@ -69,6 +71,10 @@ namespace BudgetAp
                 //Save to the .bak file.
                 Utils.SaveCurrentBudget(budget);
             }
+            else //Inform the user to enter appropriate file extension.
+            {
+                MessageBox.Show("Please use the requested file extension (bak).");
+            }
         }
 
         /// <summary>
@@ -76,45 +82,48 @@ namespace BudgetAp
         /// </summary>
         private void loadBudgetToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            bool succesfulFileLoad = false;
-
+            //Request backup file pathway from the user.
             MessageBox.Show("Select the backup budget file you would like to open.");
+
+            //TODO: Need to increase validation. User could select a .bak file that's not actually for this program.
+            //Validate user selection
             if (openFileDialog1.ShowDialog() == DialogResult.OK && Path.GetExtension(openFileDialog1.FileName) == ".bak")
             {
-                try
+                //Check if a budget object is currently loaded. 
+                if (budget != null)
                 {
-                    LoadBudgetFile(openFileDialog1.FileName, budget);                    
-                    succesfulFileLoad = true;
-                    budget = new BudgetDB(openFileDialog1.FileName);                    
-                    MessageBox.Show("Database file loaded", "Load Budget", MessageBoxButtons.OK, MessageBoxIcon.Information);                    
+                    //If a budget object currently exists, save it.
+                    SaveCurrentBudget(budget);
+                    
+                    //Delete the current DB.
+                    DeleteDB(_connString);
+
+                    //Clear the budget object.
+                    budget = null;
                 }
-                catch (Exception ex)
-                {
-
-                    MessageBox.Show(ex.ToString(), "Load Budget", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                } 
-            }
-            else
-            {
-                MessageBox.Show("Please select an appropriate file to open.");
-            }
-
-            //Including an account count check, as it's possible for someone to close the program post DB file save but without completing the account generation process.
-            if (succesfulFileLoad)
-            {
+ 
+                //Load the budget file selected by the user.
+                LoadBudget(openFileDialog1.FileName);
+                budget = new BudgetDB(openFileDialog1.FileName, _connString);
+                
+                //If no accounts exist, start a loop requiring the user to enter an account.
                 if (budget.GetAccountCount() == 0)
                 {
-                    while(!InitialAccountCreation())
+                    while (!InitialAccountCreation())
                     {
                         //Keep looping here until the user creates an account.
                     }
                 }
 
                 //Fill the dgvs
-                FillDGVS();                
+                FillDGVS();
 
                 //Save to the .bak file.
                 Utils.SaveCurrentBudget(budget);
+            }
+            else //Inform the user to open a correct file.
+            {
+                MessageBox.Show("Please select an appropriate file to open.");
             }       
         }
 
@@ -136,6 +145,7 @@ namespace BudgetAp
             dgvTransactions.Columns[0].Visible = false;                 //Don't show TransactionsID
             dgvTransactions.Columns[6].DefaultCellStyle.Format = "c";
             dgvTransactions.Columns[6].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dgvTransactions.Rows[0].Cells[1].Selected = true; //Hiding the first column results in the table not autoloading with a cell(row) selected. Can result in a crash if user selects edit transaction before selecting a row.
             
             //Spending by Category            
             budget.FillSpendingByCategory(dgvSpendingByCategory);
@@ -291,7 +301,7 @@ namespace BudgetAp
             if (budget != null)
             {
                 TransactionManager oForm = new TransactionManager(true, (int)dgvTransactions.CurrentRow.Cells[0].Value, budget);
-                oForm.ShowDialog(); //Using showdialog so that the m ain form pauses whil the TransactionManager is open.
+                oForm.ShowDialog(); //Using showdialog so that the main form pauses whil the TransactionManager is open.
                 oForm = null;
 
                 FillDGVS(); 

@@ -8,6 +8,8 @@ namespace BudgetAp
     public partial class AccountManager : Form
     {
         private BudgetDB _budget;
+        
+        //Constructor
         public AccountManager(BudgetDB budget)
         {
             InitializeComponent();
@@ -15,6 +17,9 @@ namespace BudgetAp
             LoadAccountsDGV();
         }
 
+        /// <summary>
+        /// Fills the account DataGridView.
+        /// </summary>
         private void LoadAccountsDGV()
         {
             //Only load if account count is > 0 (i.e., if this isn't the initial launch of account manager for a new budget).
@@ -25,6 +30,9 @@ namespace BudgetAp
             }
         }
         
+        /// <summary>
+        /// Validates user input, confirms success creation of new account, and calls the UpdateForm method.
+        /// </summary>
         private void btnAddAccount_Click(object sender, EventArgs e)
         {                        
             if (!(txtbxNewAccountName.Text == "") 
@@ -43,6 +51,9 @@ namespace BudgetAp
             }            
         }
 
+        /// <summary>
+        /// Validates user input, confirms successful account modifcation, and calls the UpdateForm method.
+        /// </summary>
         private void btnUpdateAccount_Click(object sender, EventArgs e)
         {
             if (!(txtbxUpdatedAccountName.Text == "") 
@@ -62,6 +73,9 @@ namespace BudgetAp
             }            
         }
 
+        /// <summary>
+        /// Calls the FillAccountDGV method, calls the Refresh extension on the form, and calls the ClearInputFields method.
+        /// </summary>
         private void UpdateForm()
         {
             _budget.FillAccountDGV(dgvAccounts);
@@ -69,6 +83,9 @@ namespace BudgetAp
             ClearInputFields();
         }
 
+        /// <summary>
+        /// Clears all form input fields.
+        /// </summary>
         private void ClearInputFields()
         {
             txtbxNewAccountName.Text = "";
@@ -85,6 +102,9 @@ namespace BudgetAp
             rdbtnUpdatedAccountInactive.Checked = false;
         }
 
+        /// <summary>
+        /// Fills the selected account controls based on the row selected in the DGV.
+        /// </summary>
         private void dgvAccounts_SelectionChanged(object sender, EventArgs e)
         {   
             //Pull data from the selected row.
@@ -117,16 +137,25 @@ namespace BudgetAp
             }
         }
 
+        /// <summary>
+        /// Calls the ValidateCurrencyInputs method when a key is pressed while the NewAccountBalance control has focus.
+        /// </summary>
         private void txtbxNewAccountBalance_KeyPress(object sender, KeyPressEventArgs e)
         {
             ValidateCurrencyInputs(e);           
         }
 
+        /// <summary>
+        /// Calsl the ValidateCurrencyInputs method when a key is pressed while the UpdatedAccountBalance control has focus.
+        /// </summary>
         private void txtbxUpdatedAccountBalance_KeyPress(object sender, KeyPressEventArgs e)
         {
             ValidateCurrencyInputs(e);
         }
 
+        /// <summary>
+        /// Closes the form.
+        /// </summary>
         private void btnFinished_Click(object sender, EventArgs e)
         {
             this.Close();
