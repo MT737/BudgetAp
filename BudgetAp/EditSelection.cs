@@ -42,7 +42,7 @@ namespace BudgetAp
             {
                 if (_catOrVend == "Category")
                 {
-                    AddCategory(_budget.GetCategoryTable(), txtbxNewEntry.Text, false);
+                    AddCategory(_budget.GetCategoryTable(), txtbxNewEntry.Text, false, true);
                     _budget.PushToDBandBackup();
 
                     PrepFieldsAndFillDGV();

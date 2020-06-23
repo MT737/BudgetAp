@@ -40,6 +40,8 @@
             this.lblUpdatedEntry = new System.Windows.Forms.Label();
             this.lblSelectedEntry = new System.Windows.Forms.Label();
             this.btnFinished = new System.Windows.Forms.Button();
+            this.chckbxNewDisplaySpendByMonth = new System.Windows.Forms.CheckBox();
+            this.chckbxUpdatedDisplaySpendByMonth = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSelectionList)).BeginInit();
             this.gpbxAddNewEntry.SuspendLayout();
             this.gpbxUpdateEntry.SuspendLayout();
@@ -53,25 +55,26 @@
             this.dgvSelectionList.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dgvSelectionList.Location = new System.Drawing.Point(12, 12);
             this.dgvSelectionList.Name = "dgvSelectionList";
-            this.dgvSelectionList.Size = new System.Drawing.Size(359, 369);
+            this.dgvSelectionList.Size = new System.Drawing.Size(359, 378);
             this.dgvSelectionList.TabIndex = 0;
             this.dgvSelectionList.SelectionChanged += new System.EventHandler(this.dgvSelectionList_SelectionChanged);
             // 
             // gpbxAddNewEntry
             // 
+            this.gpbxAddNewEntry.Controls.Add(this.chckbxNewDisplaySpendByMonth);
             this.gpbxAddNewEntry.Controls.Add(this.btnAddEntry);
             this.gpbxAddNewEntry.Controls.Add(this.txtbxNewEntry);
             this.gpbxAddNewEntry.Controls.Add(this.lblNewEntry);
             this.gpbxAddNewEntry.Location = new System.Drawing.Point(399, 13);
             this.gpbxAddNewEntry.Name = "gpbxAddNewEntry";
-            this.gpbxAddNewEntry.Size = new System.Drawing.Size(215, 126);
+            this.gpbxAddNewEntry.Size = new System.Drawing.Size(215, 142);
             this.gpbxAddNewEntry.TabIndex = 1;
             this.gpbxAddNewEntry.TabStop = false;
             this.gpbxAddNewEntry.Text = "Add New Entry";
             // 
             // btnAddEntry
             // 
-            this.btnAddEntry.Location = new System.Drawing.Point(103, 69);
+            this.btnAddEntry.Location = new System.Drawing.Point(100, 92);
             this.btnAddEntry.Name = "btnAddEntry";
             this.btnAddEntry.Size = new System.Drawing.Size(103, 38);
             this.btnAddEntry.TabIndex = 2;
@@ -97,6 +100,7 @@
             // 
             // gpbxUpdateEntry
             // 
+            this.gpbxUpdateEntry.Controls.Add(this.chckbxUpdatedDisplaySpendByMonth);
             this.gpbxUpdateEntry.Controls.Add(this.btnUpdateEntry);
             this.gpbxUpdateEntry.Controls.Add(this.txtbxUpdatedEntry);
             this.gpbxUpdateEntry.Controls.Add(this.txtbxSelectedEntry);
@@ -104,14 +108,14 @@
             this.gpbxUpdateEntry.Controls.Add(this.lblSelectedEntry);
             this.gpbxUpdateEntry.Location = new System.Drawing.Point(399, 155);
             this.gpbxUpdateEntry.Name = "gpbxUpdateEntry";
-            this.gpbxUpdateEntry.Size = new System.Drawing.Size(215, 166);
+            this.gpbxUpdateEntry.Size = new System.Drawing.Size(215, 191);
             this.gpbxUpdateEntry.TabIndex = 2;
             this.gpbxUpdateEntry.TabStop = false;
             this.gpbxUpdateEntry.Text = "Update Entry";
             // 
             // btnUpdateEntry
             // 
-            this.btnUpdateEntry.Location = new System.Drawing.Point(103, 119);
+            this.btnUpdateEntry.Location = new System.Drawing.Point(103, 147);
             this.btnUpdateEntry.Name = "btnUpdateEntry";
             this.btnUpdateEntry.Size = new System.Drawing.Size(103, 38);
             this.btnUpdateEntry.TabIndex = 3;
@@ -154,13 +158,33 @@
             // 
             // btnFinished
             // 
-            this.btnFinished.Location = new System.Drawing.Point(399, 343);
+            this.btnFinished.Location = new System.Drawing.Point(399, 352);
             this.btnFinished.Name = "btnFinished";
             this.btnFinished.Size = new System.Drawing.Size(215, 38);
             this.btnFinished.TabIndex = 3;
             this.btnFinished.Text = "Finished";
             this.btnFinished.UseVisualStyleBackColor = true;
             this.btnFinished.Click += new System.EventHandler(this.btnFinished_Click);
+            // 
+            // chckbxNewDisplaySpendByMonth
+            // 
+            this.chckbxNewDisplaySpendByMonth.AutoSize = true;
+            this.chckbxNewDisplaySpendByMonth.Location = new System.Drawing.Point(6, 69);
+            this.chckbxNewDisplaySpendByMonth.Name = "chckbxNewDisplaySpendByMonth";
+            this.chckbxNewDisplaySpendByMonth.Size = new System.Drawing.Size(197, 17);
+            this.chckbxNewDisplaySpendByMonth.TabIndex = 3;
+            this.chckbxNewDisplaySpendByMonth.Text = "Display in Spending By Month Table";
+            this.chckbxNewDisplaySpendByMonth.UseVisualStyleBackColor = true;
+            // 
+            // chckbxUpdatedDisplaySpendByMonth
+            // 
+            this.chckbxUpdatedDisplaySpendByMonth.AutoSize = true;
+            this.chckbxUpdatedDisplaySpendByMonth.Location = new System.Drawing.Point(9, 119);
+            this.chckbxUpdatedDisplaySpendByMonth.Name = "chckbxUpdatedDisplaySpendByMonth";
+            this.chckbxUpdatedDisplaySpendByMonth.Size = new System.Drawing.Size(197, 17);
+            this.chckbxUpdatedDisplaySpendByMonth.TabIndex = 4;
+            this.chckbxUpdatedDisplaySpendByMonth.Text = "Display in Spending By Month Table";
+            this.chckbxUpdatedDisplaySpendByMonth.UseVisualStyleBackColor = true;
             // 
             // EditSelection
             // 
@@ -196,5 +220,7 @@
         private System.Windows.Forms.Label lblUpdatedEntry;
         private System.Windows.Forms.Label lblSelectedEntry;
         private System.Windows.Forms.Button btnFinished;
+        private System.Windows.Forms.CheckBox chckbxNewDisplaySpendByMonth;
+        private System.Windows.Forms.CheckBox chckbxUpdatedDisplaySpendByMonth;
     }
 }

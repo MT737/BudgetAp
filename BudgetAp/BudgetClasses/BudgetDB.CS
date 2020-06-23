@@ -73,7 +73,8 @@ namespace BudgetAp.BudgetClasses
             //Default categories
             foreach (string item in GetListOfNames("category"))
             {
-                AddCategory(Categories, item, true);
+
+                AddCategory(Categories, item, true, true);
             }
 
             //Submit the changes to the DB. 
@@ -541,6 +542,26 @@ namespace BudgetAp.BudgetClasses
         }
 
         /// <summary>
+        /// Gets a list of categories based on the passed display type.
+        /// </summary>
+        /// <param name="displayed">Bool: dictates the displayed status.</param>
+        /// <returns>List of string: list of categories by the displayed type dicated by the passed bool.</returns>
+        public List<string> GetCategoryListByDisplay(bool displayed)
+        {
+            List<string> categories = new List<string>();
+            IQueryable<Category> categoryQuery =
+                from cats in Categories
+                where cats.IsDisplayed == displayed
+                select cats;
+
+            foreach  (Category cat in categoryQuery)
+            {
+                categories.Add(cat.Name);
+            }
+            return categories;
+        }
+
+        /// <summary>
         /// Gets a list of string objects, each with a unique vendor name derived from the budget object that calls the method.
         /// </summary>
         /// <returns>List String: each string object returned represents a unique vendor.</returns>
@@ -635,8 +656,6 @@ namespace BudgetAp.BudgetClasses
                 where vend.Name == vendorName
                 select vend;
             return vendor.Single().VendorID;
-
-            //TODO: Try catch? Necessary? Shouldn't be if I'm propery catching during the insert phase.
         }
 
         /// <summary>
@@ -714,11 +733,8 @@ namespace BudgetAp.BudgetClasses
         /// </summary>
         /// <param name="dgvAccounts">DataGridView obgject to fill with account information.</param>
         public void FillAccountDGV(DataGridView dgvAccounts)
-        {
-            //TODO: data binding, would that be the better choice?            
+        {        
             dgvAccounts.DataSource = GetAccountListWithBalance();
-
-            //TODO: consider other formatting.
             dgvAccounts.AutoGenerateColumns = true;
         }
 
@@ -811,7 +827,7 @@ namespace BudgetAp.BudgetClasses
         private List<SpendingByCategory> GetSpendingByCategory()
         {
             List<SpendingByCategory> categorySpending = new List<SpendingByCategory>();
-            List<string> categories = GetCategoryNameList();
+            List<string> categories = GetCategoryListByDisplay(true);
 
             foreach (string category in categories)
             {

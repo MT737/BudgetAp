@@ -52,6 +52,7 @@
             this.btnExport = new System.Windows.Forms.Button();
             this.dgvAccountOverview = new System.Windows.Forms.DataGridView();
             this.dgvSpendingByCategory = new System.Windows.Forms.DataGridView();
+            this.btnModifyDisplayedCats = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTransactions)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAccountOverview)).BeginInit();
@@ -132,21 +133,21 @@
             // accountManagerToolStripMenuItem
             // 
             this.accountManagerToolStripMenuItem.Name = "accountManagerToolStripMenuItem";
-            this.accountManagerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.accountManagerToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.accountManagerToolStripMenuItem.Text = "Account Manager";
             this.accountManagerToolStripMenuItem.Click += new System.EventHandler(this.accountManagerToolStripMenuItem_Click);
             // 
             // categoryManagerToolStripMenuItem
             // 
             this.categoryManagerToolStripMenuItem.Name = "categoryManagerToolStripMenuItem";
-            this.categoryManagerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.categoryManagerToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.categoryManagerToolStripMenuItem.Text = "Category Manager";
             this.categoryManagerToolStripMenuItem.Click += new System.EventHandler(this.categoryManagerToolStripMenuItem_Click);
             // 
             // vendorManagerToolStripMenuItem
             // 
             this.vendorManagerToolStripMenuItem.Name = "vendorManagerToolStripMenuItem";
-            this.vendorManagerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.vendorManagerToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.vendorManagerToolStripMenuItem.Text = "Vendor Manager";
             this.vendorManagerToolStripMenuItem.Click += new System.EventHandler(this.vendorManagerToolStripMenuItem_Click);
             // 
@@ -282,11 +283,22 @@
             this.dgvSpendingByCategory.Size = new System.Drawing.Size(814, 440);
             this.dgvSpendingByCategory.TabIndex = 12;
             // 
+            // btnModifyDisplayedCats
+            // 
+            this.btnModifyDisplayedCats.Location = new System.Drawing.Point(1499, 24);
+            this.btnModifyDisplayedCats.Name = "btnModifyDisplayedCats";
+            this.btnModifyDisplayedCats.Size = new System.Drawing.Size(126, 27);
+            this.btnModifyDisplayedCats.TabIndex = 13;
+            this.btnModifyDisplayedCats.Text = "Modify Displayed Categories";
+            this.btnModifyDisplayedCats.UseVisualStyleBackColor = true;
+            this.btnModifyDisplayedCats.Click += new System.EventHandler(this.btnModifyDisplayedCats_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1769, 712);
+            this.Controls.Add(this.btnModifyDisplayedCats);
             this.Controls.Add(this.dgvSpendingByCategory);
             this.Controls.Add(this.dgvAccountOverview);
             this.Controls.Add(this.btnExport);
@@ -340,6 +352,7 @@
         private System.Windows.Forms.ToolStripMenuItem accountManagerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem categoryManagerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem vendorManagerToolStripMenuItem;
+        private System.Windows.Forms.Button btnModifyDisplayedCats;
     }
 }
 

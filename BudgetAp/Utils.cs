@@ -160,7 +160,8 @@ namespace BudgetAp
                     sql = "CREATE TABLE [Category] (\n" +
                         "[CategoryID] [int] PRIMARY KEY IDENTITY(1,1) NOT NULL\n" +
                         ",[Name] [nvarchar](100) NOT NULL\n" +
-                        ",[IsDefault] [bit] NOT NULL)";
+                        ",[IsDefault] [bit] NOT NULL\n" +
+                        ",[IsDisplayed] [bit] NOT NULL);";
                     cmd.CommandText = sql;
                     cmd.ExecuteNonQuery();
 

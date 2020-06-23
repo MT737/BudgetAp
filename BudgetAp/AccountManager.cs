@@ -43,6 +43,7 @@ namespace BudgetAp
                 if (_budget.IsSuccessfulNewAccount(txtbxNewAccountName.Text, decimal.Parse(txtbxNewAccountBalance.Text), rdbtnNewAsset.Checked, rdbtnNewAccountActive.Checked))
                 {
                     UpdateForm();
+                    _budget.PushToDBandBackup();
                 }   
             }
             else
@@ -65,6 +66,7 @@ namespace BudgetAp
                     , rdbtnUpdatedAccountAsset.Checked, rdbtnUpdatedAccountActive.Checked))
                 {
                     UpdateForm();
+                    _budget.PushToDBandBackup();
                 }
             }
             else

@@ -155,9 +155,9 @@ namespace BudgetAp
             dgvSpendingByCategory.Columns[3].DefaultCellStyle.Format = "c";
             dgvSpendingByCategory.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             dgvSpendingByCategory.Columns[4].DefaultCellStyle.Format = "c";
-            dgvSpendingByCategory.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dgvSpendingByCategory.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;           
         }
-
+                
         /// <summary>
         /// Prevents inactive accounts from appearing in the the Accounts Overview data grid view.
         /// </summary>
@@ -391,6 +391,25 @@ namespace BudgetAp
         private void PleaseCreateOrLoadBudget()
         {
             MessageBox.Show("Please create a new or load an existing budget.");
+        }
+
+        /// <summary>
+        /// Opens the DisplayedCategoriesManager        
+        /// </summary>
+        private void btnModifyDisplayedCats_Click(object sender, EventArgs e)
+        {
+            if (budget != null)
+            {
+                DisplayCategoriesManager oForm = new DisplayCategoriesManager(budget);
+                oForm.ShowDialog();  //Using showdialog so that the main form pauses while the AccountManager is open.
+                oForm = null;
+
+                FillDGVS();
+            }
+            else
+            {
+                PleaseCreateOrLoadBudget();
+            }
         }
     }
 }

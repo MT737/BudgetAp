@@ -95,6 +95,12 @@
     <Compile Include="BudgetClasses\Transactions.cs" />
     <Compile Include="BudgetClasses\Vendor.cs" />
     <Compile Include="DatabaseInsertsAndMods.cs" />
+    <Compile Include="DisplayCategoriesManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DisplayCategoriesManager.Designer.cs">
+      <DependentUpon>DisplayCategoriesManager.cs</DependentUpon>
+    </Compile>
     <Compile Include="EditSelection.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -118,6 +124,9 @@
     <Compile Include="Utils.cs" />
     <EmbeddedResource Include="AccountManager.resx">
       <DependentUpon>AccountManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DisplayCategoriesManager.resx">
+      <DependentUpon>DisplayCategoriesManager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditSelection.resx">
       <DependentUpon>EditSelection.cs</DependentUpon>
@@ -180,12 +189,12 @@
   <ItemGroup>
     <PublishFile Include="Budget_log.ldf">
       <Visible>False</Visible>
+      <PublishState>DataFile</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>DataFile</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
   </ItemGroup>

@@ -59,12 +59,8 @@ namespace BudgetAp
                where vends.VendorID == vendorID
                select vends;
 
-            //TODO: add check for more than 1 result.
-
-            foreach (Vendor vend in modifyVendorQuery)
-            {
-                vend.Name = updatedVendorName;                
-            }
+            //.Single() will result in an exception if more than one result is found. Shouldn't happen due to being based on VendorID, which is the identity field of the table.
+            modifyVendorQuery.Single().Name = updatedVendorName;
         }
 
         /// <summary>
@@ -73,11 +69,12 @@ namespace BudgetAp
         /// <param name="categoryTable">Database Table Object: The Category database object.</param>
         /// <param name="name">String: the name of the new category.</param>
         /// <param name="isDefault">Bool: indicator of default statis.</param>
-        public static void AddCategory(Table<Category> categoryTable, string name, bool isDefault)
+        public static void AddCategory(Table<Category> categoryTable, string name, bool isDefault, bool isDisplayed)
         {
             Category newCategory = new Category();
             newCategory.Name = name;
             newCategory.IsDefault = isDefault;
+            newCategory.IsDisplayed = isDisplayed;
             categoryTable.InsertOnSubmit(newCategory);
         }
 
@@ -94,12 +91,23 @@ namespace BudgetAp
                where cats.CategoryID == categoryID
                select cats;
 
-            //TODO: Add check for more than 1 result.
+            modifyCategoryQuery.Single().Name = updatedCategoryName;
+        }
 
-            foreach (Category cats in modifyCategoryQuery)
-            {
-                cats.Name = updatedCategoryName;
-            }
+        /// <summary>
+        /// Modifies the isdisplayed field of a specified category found in the calling budget's Category table.
+        /// </summary>
+        /// <param name="categoryTable">Table Category: the category table of the budget object calling the method.</param>
+        /// <param name="catName">String: name of the category to be modified.</param>
+        /// <param name="displayed">Bool: new bool status of the category's display field.</param>
+        public static void ModifyCategoryDisplayStatus(Table<Category> categoryTable, string catName, bool displayed)
+        {
+            IQueryable<Category> modifyCategoryDisplayQuery =
+               from cats in categoryTable
+               where cats.Name == catName
+               select cats;
+
+            modifyCategoryDisplayQuery.Single().IsDisplayed = displayed;
         }
 
         /// <summary>
@@ -133,14 +141,9 @@ namespace BudgetAp
                 where acct.AccountID == selectedAccountID
                 select acct;
 
-            //TODO: add a check for more than 1 result. Shouldn't be possible at this point, but it's best to check.
-
-            foreach (Account acct in accountQuery)
-            {
-                acct.Name = updatedAccountName;
-                acct.IsAsset = UpdatedAccountIsAsset;
-                acct.IsActive = UpdatedAccountIsActive;
-            }            
+            accountQuery.Single().Name = updatedAccountName;
+            accountQuery.Single().IsAsset = UpdatedAccountIsAsset;
+            accountQuery.Single().IsActive = UpdatedAccountIsActive;
         }
 
         /// <summary>
@@ -163,18 +166,13 @@ namespace BudgetAp
                 where trans.TransactionID == selectedTransactionID
                 select trans;
 
-            //TODO: add check for more than 1 result.
-
-            foreach (Transactions trans in transactionsModificationQuery)
-            {
-                trans.TransactionDate = date;
-                trans.AccountID = accountID;
-                trans.TransactionType = transType;
-                trans.CategoryID = categoryID;
-                trans.VendorID = vendorID;
-                trans.Amount = amount;
-                trans.Description = description;
-            }
+            transactionsModificationQuery.Single().TransactionDate = date;
+            transactionsModificationQuery.Single().AccountID = accountID;
+            transactionsModificationQuery.Single().TransactionType = transType;
+            transactionsModificationQuery.Single().CategoryID = categoryID;
+            transactionsModificationQuery.Single().VendorID = vendorID;
+            transactionsModificationQuery.Single().Amount = amount;
+            transactionsModificationQuery.Single().Description = description;
         }
 
         /// <summary>
@@ -189,12 +187,7 @@ namespace BudgetAp
                 where trans.TransactionID == selectedTransactionID
                 select trans;
 
-            //TODO: Add check for more than 1 result.
-
-            foreach (var trans in deleteTransactionQuery)
-            {
-                transactions.DeleteOnSubmit(trans);
-            }
+            transactions.DeleteOnSubmit(deleteTransactionQuery.Single());            
         }
     }
 }
