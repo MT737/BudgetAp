@@ -14,13 +14,13 @@ namespace BudgetAp.BudgetClasses
         [Column(Storage = "_TransactionDate", DbType = "date NOT NULL")]
         public DateTime TransactionDate { get {return _TransactionDate; } set {this._TransactionDate = value; } }
 
-        private int _AccountID;
-        [Column(Storage = "_AccountID", DbType = "int NOT NULL")]
-        public int AccountID { get {return _AccountID; } set {this._AccountID = value; } }
-
         private string _TransactionType;
         [Column(Storage = "_TransactionType", DbType = "nvarchar(15) NOT NULL")]
         public string TransactionType { get {return _TransactionType; } set {this._TransactionType = value; } }
+
+        private int _AccountID;
+        [Column(Storage = "_AccountID", DbType = "int NOT NULL")]
+        public int AccountID { get {return _AccountID; } set {this._AccountID = value; } }
 
         private int _CategoryID;
         [Column(Storage = "_CategoryID", DbType = "int NOT NULL")]
@@ -31,7 +31,7 @@ namespace BudgetAp.BudgetClasses
         public int VendorID { get { return _VendorID; } set { this._VendorID = value; } }
 
         private decimal _Amount;
-        [Column(Storage = "_Amount", DbType = "decimal(18,0) NOT NULL")]
+        [Column(Storage = "_Amount", DbType = "decimal(18,2) NOT NULL")]
         public decimal Amount { get { return _Amount; } set { this._Amount = value; } }
 
         private string _Description;

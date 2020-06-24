@@ -285,9 +285,9 @@
             // 
             // btnModifyDisplayedCats
             // 
-            this.btnModifyDisplayedCats.Location = new System.Drawing.Point(1499, 24);
+            this.btnModifyDisplayedCats.Location = new System.Drawing.Point(1474, 24);
             this.btnModifyDisplayedCats.Name = "btnModifyDisplayedCats";
-            this.btnModifyDisplayedCats.Size = new System.Drawing.Size(126, 27);
+            this.btnModifyDisplayedCats.Size = new System.Drawing.Size(151, 27);
             this.btnModifyDisplayedCats.TabIndex = 13;
             this.btnModifyDisplayedCats.Text = "Modify Displayed Categories";
             this.btnModifyDisplayedCats.UseVisualStyleBackColor = true;

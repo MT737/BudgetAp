@@ -30,10 +30,8 @@
         {
             this.lstbxDisplayedCategories = new System.Windows.Forms.ListBox();
             this.lstbxNotDisplayedCategories = new System.Windows.Forms.ListBox();
-            this.btnMoveAllToDisplayedList = new System.Windows.Forms.Button();
             this.btnMoveSelectedToDisplayedList = new System.Windows.Forms.Button();
             this.btnMoveSelectedToNotDisplayedList = new System.Windows.Forms.Button();
-            this.btnMoveAllToNotDisplayedList = new System.Windows.Forms.Button();
             this.btnFinished = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.lblDisplayedList = new System.Windows.Forms.Label();
@@ -56,16 +54,6 @@
             this.lstbxNotDisplayedCategories.Size = new System.Drawing.Size(154, 355);
             this.lstbxNotDisplayedCategories.TabIndex = 1;
             // 
-            // btnMoveAllToDisplayedList
-            // 
-            this.btnMoveAllToDisplayedList.Location = new System.Drawing.Point(184, 101);
-            this.btnMoveAllToDisplayedList.Name = "btnMoveAllToDisplayedList";
-            this.btnMoveAllToDisplayedList.Size = new System.Drawing.Size(97, 38);
-            this.btnMoveAllToDisplayedList.TabIndex = 2;
-            this.btnMoveAllToDisplayedList.Text = "<<";
-            this.btnMoveAllToDisplayedList.UseVisualStyleBackColor = true;
-            this.btnMoveAllToDisplayedList.Click += new System.EventHandler(this.btnMoveAllToDisplayedList_Click);
-            // 
             // btnMoveSelectedToDisplayedList
             // 
             this.btnMoveSelectedToDisplayedList.Location = new System.Drawing.Point(184, 145);
@@ -85,16 +73,6 @@
             this.btnMoveSelectedToNotDisplayedList.Text = ">";
             this.btnMoveSelectedToNotDisplayedList.UseVisualStyleBackColor = true;
             this.btnMoveSelectedToNotDisplayedList.Click += new System.EventHandler(this.btnMoveSelectedToNotDisplayedList_Click);
-            // 
-            // btnMoveAllToNotDisplayedList
-            // 
-            this.btnMoveAllToNotDisplayedList.Location = new System.Drawing.Point(184, 233);
-            this.btnMoveAllToNotDisplayedList.Name = "btnMoveAllToNotDisplayedList";
-            this.btnMoveAllToNotDisplayedList.Size = new System.Drawing.Size(97, 38);
-            this.btnMoveAllToNotDisplayedList.TabIndex = 5;
-            this.btnMoveAllToNotDisplayedList.Text = ">>";
-            this.btnMoveAllToNotDisplayedList.UseVisualStyleBackColor = true;
-            this.btnMoveAllToNotDisplayedList.Click += new System.EventHandler(this.btnMoveAllToNotDisplayedList_Click);
             // 
             // btnFinished
             // 
@@ -143,10 +121,8 @@
             this.Controls.Add(this.lblDisplayedList);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnFinished);
-            this.Controls.Add(this.btnMoveAllToNotDisplayedList);
             this.Controls.Add(this.btnMoveSelectedToNotDisplayedList);
             this.Controls.Add(this.btnMoveSelectedToDisplayedList);
-            this.Controls.Add(this.btnMoveAllToDisplayedList);
             this.Controls.Add(this.lstbxNotDisplayedCategories);
             this.Controls.Add(this.lstbxDisplayedCategories);
             this.Name = "DisplayCategoriesManager";
@@ -160,10 +136,8 @@
 
         private System.Windows.Forms.ListBox lstbxDisplayedCategories;
         private System.Windows.Forms.ListBox lstbxNotDisplayedCategories;
-        private System.Windows.Forms.Button btnMoveAllToDisplayedList;
         private System.Windows.Forms.Button btnMoveSelectedToDisplayedList;
         private System.Windows.Forms.Button btnMoveSelectedToNotDisplayedList;
-        private System.Windows.Forms.Button btnMoveAllToNotDisplayedList;
         private System.Windows.Forms.Button btnFinished;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Label lblDisplayedList;

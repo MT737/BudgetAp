@@ -22,7 +22,7 @@ namespace BudgetAp
             _budget = budget;
 
             //TODO: update the text in the form to represent Vendor or Category.
-            PrepFieldsAndFillDGV();          
+            PrepFieldsAndFillDGV(_catOrVend);          
         }
 
         /// <summary>
@@ -45,14 +45,14 @@ namespace BudgetAp
                     AddCategory(_budget.GetCategoryTable(), txtbxNewEntry.Text, false, true);
                     _budget.PushToDBandBackup();
 
-                    PrepFieldsAndFillDGV();
+                    PrepFieldsAndFillDGV(_catOrVend);
                 }
                 else
                 {
                     AddVendor(_budget.GetVendorTable(), txtbxNewEntry.Text, false);
                     _budget.PushToDBandBackup();
 
-                    PrepFieldsAndFillDGV();
+                    PrepFieldsAndFillDGV(_catOrVend);
                 }
             }
             else
@@ -64,11 +64,19 @@ namespace BudgetAp
         /// <summary>
         /// Prompts the process to clear form fields and fill the dgvSelectionList data grid view.
         /// </summary>
-        private void PrepFieldsAndFillDGV()
+        private void PrepFieldsAndFillDGV(string catOrVend)
         {        
             txtbxNewEntry.Text = "";
             _budget.FillEditSelectionDGV(dgvSelectionList, _catOrVend);
             dgvSelectionList.Columns[0].Visible = false;
+            if (catOrVend == "Category")
+            {
+                chckbxNewDisplaySpendByMonth.Visible = true;
+            }
+            else
+            {
+                chckbxNewDisplaySpendByMonth.Visible = false;
+            }
         }
 
         /// <summary>
@@ -89,7 +97,7 @@ namespace BudgetAp
                         ModifyVendor(_budget.GetVendorTable(), _budget.GetVendorID(txtbxSelectedEntry.Text), txtbxUpdatedEntry.Text);
                     }
                     _budget.PushToDBandBackup();
-                    PrepFieldsAndFillDGV(); 
+                    PrepFieldsAndFillDGV(_catOrVend); 
                 }
                 else
                 {

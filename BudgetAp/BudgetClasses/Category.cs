@@ -18,7 +18,7 @@ namespace BudgetAp.BudgetClasses
         public bool IsDefault { get { return _IsDefault; } set {this._IsDefault = value; } }
 
         private bool _IsDisplayed;
-        [Column(Storage = "_IsDefault", DbType = "bit NOT NULL")]
-        public bool IsDisplayed { get { return _IsDefault; } set { this._IsDefault = value; } }
+        [Column(Storage = "_IsDisplayed", DbType = "bit NOT NULL")]
+        public bool IsDisplayed { get { return _IsDisplayed; } set { this._IsDisplayed = value; } }
     }
 }

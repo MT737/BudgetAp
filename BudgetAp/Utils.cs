@@ -177,11 +177,11 @@ namespace BudgetAp
                     sql = "CREATE TABLE [Transactions] (\n" +
                         "[TransactionID] [int] PRIMARY KEY IDENTITY(1,1) NOT NULL\n" +
                         ",[TransactionDate] [date] NOT NULL\n" +
-                        ",[AccountID] [int] NOT NULL\n" +
                         ",[TransactionType] [nvarchar](15) NOT NULL\n" +
+                        ",[AccountID] [int] NOT NULL\n" +
                         ",[CategoryID] [int] NOT NULL\n" +
                         ",[VendorID] [int] NOT NULL\n" +
-                        ",[Amount] [decimal](18,0) NOT NULL\n" +
+                        ",[Amount] [decimal](18,2) NOT NULL\n" +
                         ",[Description] [nvarchar](500) NULL)";
                     cmd.CommandText = sql;
                     cmd.ExecuteNonQuery();

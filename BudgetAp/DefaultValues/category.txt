@@ -3,6 +3,7 @@ Account Balance Modification
 Account Balance Transfer
 Wage
 Mortgage
+Electric Utility
 Water Utility
 Phone Bill
 Internet
@@ -20,4 +21,6 @@ Medical
 Correction
 ATM Withdrawal
 Savings Withdrawal
+Returns/Refunds/Other Deposits
+Car Loan
 Other

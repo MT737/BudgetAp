@@ -27,7 +27,7 @@ namespace BudgetAp
             newTransaction.TransactionType = transType;
             newTransaction.CategoryID = categoryID;
             newTransaction.VendorID = vendorID;
-            newTransaction.Amount = amount;
+            newTransaction.Amount = (decimal)amount;
             newTransaction.Description = description;
             transactionsTable.InsertOnSubmit(newTransaction);
         }
@@ -171,7 +171,7 @@ namespace BudgetAp
             transactionsModificationQuery.Single().TransactionType = transType;
             transactionsModificationQuery.Single().CategoryID = categoryID;
             transactionsModificationQuery.Single().VendorID = vendorID;
-            transactionsModificationQuery.Single().Amount = amount;
+            transactionsModificationQuery.Single().Amount = (decimal)amount;
             transactionsModificationQuery.Single().Description = description;
         }
 

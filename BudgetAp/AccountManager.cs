@@ -26,6 +26,8 @@ namespace BudgetAp
             if (_budget.GetAccountCount() > 0)
             {
                 _budget.FillAccountDGV(dgvAccounts);
+                dgvAccounts.Columns[4].DefaultCellStyle.Format = "c";
+                dgvAccounts.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
                 dgvAccounts.Refresh();
             }
         }

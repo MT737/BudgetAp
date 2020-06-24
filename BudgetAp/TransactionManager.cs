@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Windows.Markup;
 using static BudgetAp.DatabaseInsertsAndMods;
 using static BudgetAp.Utils;
 
@@ -33,7 +34,7 @@ namespace BudgetAp
         /// <param name="isModification"></param>
         private void PrepTransactionManagerFields(bool isModification)
         {
-            _budget.LoadTransactionsComboBoxes(cmbxTransType, cmbxAccount, cmbxTransferAccounts, cmbxCategory, cmbxVendor);
+            _budget.LoadAllTransactionsComboBoxes(cmbxTransType, cmbxAccount, cmbxTransferAccounts, cmbxCategory, cmbxVendor);
             ClearSelections();
 
             //Check if this is an add transaction or modify transaction instance of the form.
@@ -57,6 +58,10 @@ namespace BudgetAp
                 //Show the add transaction button and hide the update transaction button.
                 btnAddTransaction.Show();
                 btnUpdateTransaction.Hide();
+
+                //Hide the transfer lable and combobox by default. (selection handled in event handler below will make visible/hide)
+                lblAccountTransfer.Visible = false;
+                cmbxTransferAccounts.Visible = false;
             }
         }
 
@@ -205,7 +210,8 @@ namespace BudgetAp
             oForm.ShowDialog();  //Using showdialog so that the calling form pauses while the AccountManager is open.
             oForm = null;
 
-            PrepTransactionManagerFields(_isModification);
+            //replace this with a method that loads a single combobox
+            _budget.ReLoadComboBox(cmbxCategory, "Category");
         }
 
         /// <summary>
@@ -217,7 +223,7 @@ namespace BudgetAp
             oForm.ShowDialog();  //Using showdialog so that the calling form pauses while the AccountManager is open.
             oForm = null;
 
-            PrepTransactionManagerFields(_isModification);
+            _budget.ReLoadComboBox(cmbxVendor, "Vendor");
         }
 
         /// <summary>
@@ -229,7 +235,8 @@ namespace BudgetAp
             oForm.ShowDialog();  //Using showdialog so that the main form pauses while the AccountManager is open.
             oForm = null;
 
-            PrepTransactionManagerFields(_isModification);
+            _budget.ReLoadComboBox(cmbxAccount, "Account");
+            _budget.ReLoadComboBox(cmbxTransferAccounts, "Account");
         }
 
         /// <summary>
@@ -252,6 +259,8 @@ namespace BudgetAp
                 cmbxVendor.Enabled = false;
                 cmbxCategory.SelectedIndex = cmbxCategory.FindStringExact("Account Balance Transfer");
                 cmbxVendor.SelectedIndex = cmbxVendor.FindStringExact("N/A");
+                cmbxTransferAccounts.Visible = true;
+                lblAccountTransfer.Visible = true;
             }
             else
             {
@@ -260,6 +269,8 @@ namespace BudgetAp
                 cmbxVendor.Enabled = true;
                 cmbxCategory.SelectedIndex = -1;
                 cmbxVendor.SelectedIndex = -1;
+                cmbxTransferAccounts.Visible = false;
+                lblAccountTransfer.Visible = false;
             }
         }
 

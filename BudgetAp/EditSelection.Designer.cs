@@ -30,6 +30,7 @@
         {
             this.dgvSelectionList = new System.Windows.Forms.DataGridView();
             this.gpbxAddNewEntry = new System.Windows.Forms.GroupBox();
+            this.chckbxNewDisplaySpendByMonth = new System.Windows.Forms.CheckBox();
             this.btnAddEntry = new System.Windows.Forms.Button();
             this.txtbxNewEntry = new System.Windows.Forms.TextBox();
             this.lblNewEntry = new System.Windows.Forms.Label();
@@ -40,8 +41,6 @@
             this.lblUpdatedEntry = new System.Windows.Forms.Label();
             this.lblSelectedEntry = new System.Windows.Forms.Label();
             this.btnFinished = new System.Windows.Forms.Button();
-            this.chckbxNewDisplaySpendByMonth = new System.Windows.Forms.CheckBox();
-            this.chckbxUpdatedDisplaySpendByMonth = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSelectionList)).BeginInit();
             this.gpbxAddNewEntry.SuspendLayout();
             this.gpbxUpdateEntry.SuspendLayout();
@@ -72,6 +71,16 @@
             this.gpbxAddNewEntry.TabStop = false;
             this.gpbxAddNewEntry.Text = "Add New Entry";
             // 
+            // chckbxNewDisplaySpendByMonth
+            // 
+            this.chckbxNewDisplaySpendByMonth.AutoSize = true;
+            this.chckbxNewDisplaySpendByMonth.Location = new System.Drawing.Point(6, 69);
+            this.chckbxNewDisplaySpendByMonth.Name = "chckbxNewDisplaySpendByMonth";
+            this.chckbxNewDisplaySpendByMonth.Size = new System.Drawing.Size(197, 17);
+            this.chckbxNewDisplaySpendByMonth.TabIndex = 3;
+            this.chckbxNewDisplaySpendByMonth.Text = "Display in Spending By Month Table";
+            this.chckbxNewDisplaySpendByMonth.UseVisualStyleBackColor = true;
+            // 
             // btnAddEntry
             // 
             this.btnAddEntry.Location = new System.Drawing.Point(100, 92);
@@ -100,7 +109,6 @@
             // 
             // gpbxUpdateEntry
             // 
-            this.gpbxUpdateEntry.Controls.Add(this.chckbxUpdatedDisplaySpendByMonth);
             this.gpbxUpdateEntry.Controls.Add(this.btnUpdateEntry);
             this.gpbxUpdateEntry.Controls.Add(this.txtbxUpdatedEntry);
             this.gpbxUpdateEntry.Controls.Add(this.txtbxSelectedEntry);
@@ -166,26 +174,6 @@
             this.btnFinished.UseVisualStyleBackColor = true;
             this.btnFinished.Click += new System.EventHandler(this.btnFinished_Click);
             // 
-            // chckbxNewDisplaySpendByMonth
-            // 
-            this.chckbxNewDisplaySpendByMonth.AutoSize = true;
-            this.chckbxNewDisplaySpendByMonth.Location = new System.Drawing.Point(6, 69);
-            this.chckbxNewDisplaySpendByMonth.Name = "chckbxNewDisplaySpendByMonth";
-            this.chckbxNewDisplaySpendByMonth.Size = new System.Drawing.Size(197, 17);
-            this.chckbxNewDisplaySpendByMonth.TabIndex = 3;
-            this.chckbxNewDisplaySpendByMonth.Text = "Display in Spending By Month Table";
-            this.chckbxNewDisplaySpendByMonth.UseVisualStyleBackColor = true;
-            // 
-            // chckbxUpdatedDisplaySpendByMonth
-            // 
-            this.chckbxUpdatedDisplaySpendByMonth.AutoSize = true;
-            this.chckbxUpdatedDisplaySpendByMonth.Location = new System.Drawing.Point(9, 119);
-            this.chckbxUpdatedDisplaySpendByMonth.Name = "chckbxUpdatedDisplaySpendByMonth";
-            this.chckbxUpdatedDisplaySpendByMonth.Size = new System.Drawing.Size(197, 17);
-            this.chckbxUpdatedDisplaySpendByMonth.TabIndex = 4;
-            this.chckbxUpdatedDisplaySpendByMonth.Text = "Display in Spending By Month Table";
-            this.chckbxUpdatedDisplaySpendByMonth.UseVisualStyleBackColor = true;
-            // 
             // EditSelection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -221,6 +209,5 @@
         private System.Windows.Forms.Label lblSelectedEntry;
         private System.Windows.Forms.Button btnFinished;
         private System.Windows.Forms.CheckBox chckbxNewDisplaySpendByMonth;
-        private System.Windows.Forms.CheckBox chckbxUpdatedDisplaySpendByMonth;
     }
 }

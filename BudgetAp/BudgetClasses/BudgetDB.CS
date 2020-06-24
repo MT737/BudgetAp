@@ -205,13 +205,38 @@ namespace BudgetAp.BudgetClasses
         /// <param name="transferAccount">Combobox: transfer account list combobox.</param>
         /// <param name="categories">Combobox: categories list combobox.</param>
         /// <param name="vendors">Combobox: vendors list combobox.</param>
-        public void LoadTransactionsComboBoxes(ComboBox transType, ComboBox account, ComboBox transferAccount, ComboBox categories, ComboBox vendors)
+        public void LoadAllTransactionsComboBoxes(ComboBox transType, ComboBox account, ComboBox transferAccount, ComboBox categories, ComboBox vendors)
         {
             transType.DataSource = GetTransactionTypes();
             account.DataSource = GetListOfAccounts();
             transferAccount.DataSource = GetListOfAccounts();
             categories.DataSource = GetCategoryNameList();
             vendors.DataSource = GetVendorNameList();
+        }
+
+        /// <summary>
+        /// Reloads the passed combobox.
+        /// </summary>
+        /// <param name="comboBox">ComboBox: the combobox to be refilled.</param>
+        /// <param name="box">String: The type of box (i.e., category, vendor, etc.)</param>
+        public void ReLoadComboBox(ComboBox comboBox, string box)
+        {
+            //Clear datasource
+            comboBox.DataSource = null;
+
+            //Set datasource based on the type of box.
+            switch (box)
+            {
+                case "Category":
+                    comboBox.DataSource = GetCategoryNameList();                    
+                    break;
+                case "Vendor":
+                    comboBox.DataSource = GetVendorNameList();
+                    break;
+                case "Account":
+                    comboBox.DataSource = GetListOfAccounts();
+                    break;
+            }
         }
 
         /// <summary>
@@ -256,7 +281,7 @@ namespace BudgetAp.BudgetClasses
                 transaction.TransactionID = trans.TransactionID;
                 transaction.TransactionType = trans.TransactionType;
                 transaction.Account = GetAccountName(trans.AccountID);
-                transaction.Amount = trans.Amount;
+                transaction.Amount = (decimal)trans.Amount;
                 transaction.TransactionDate = trans.TransactionDate;
                 transaction.Category = GetCategoryName(trans.CategoryID);
                 transaction.Vendor = GetVendorName(trans.VendorID);
@@ -401,8 +426,8 @@ namespace BudgetAp.BudgetClasses
         /// <returns>Decimal: balance for the specified account.</returns>
         private decimal GetAccountBalance(int accountID)
         {
-            decimal from = 0;
-            decimal to = 0;
+            decimal from = 0.0M;
+            decimal to = 0.0M;
 
             //Get total payments from the account.
             var accountBalanceFrom =
@@ -412,8 +437,8 @@ namespace BudgetAp.BudgetClasses
             
             //TODO: Research a better means for aggregation.
             foreach (var account in accountBalanceFrom)
-            {
-                from += account.Amount;
+            {                
+                from = decimal.Add(account.Amount, from);
             }
 
             //Get total payments to the account.
@@ -424,19 +449,19 @@ namespace BudgetAp.BudgetClasses
 
             foreach (var account in accountBalanceTo)
             {
-                to += account.Amount;
+                to = decimal.Add(account.Amount, to);
             }
 
             //Determine asset status
             if (AccountIsAsset(accountID))
             {
                 //Asset account balance is the sum of total payments to less payments from.
-                return to - from;
+                return decimal.Subtract(to, from);
             }
             else
             {
                 //Liability account balance is the sum of payments from (i.e., credit to the holder) less payments to (i.e., paying down debt).
-                return from - to;
+                return decimal.Subtract(from, to);
             }
         }
 
@@ -449,6 +474,7 @@ namespace BudgetAp.BudgetClasses
             List<string> accountsList = new List<string>();
             IQueryable<Account> accounts =
                 from acct in Accounts
+                orderby acct.Name
                 select acct;
 
             foreach (Account item in accounts)
@@ -468,6 +494,7 @@ namespace BudgetAp.BudgetClasses
             List<AccountWithBalance> accountList = new List<AccountWithBalance>();
             IQueryable<Account> accounts =
                 from acct in Accounts
+                orderby acct.Name
                 select acct;
 
             foreach (Account item in accounts)
@@ -522,6 +549,7 @@ namespace BudgetAp.BudgetClasses
 
             IQueryable<Category> categoryQuery =
                 from cats in Categories
+                orderby cats.Name
                 select cats;
 
             foreach (Category item in categoryQuery)
@@ -552,6 +580,7 @@ namespace BudgetAp.BudgetClasses
             IQueryable<Category> categoryQuery =
                 from cats in Categories
                 where cats.IsDisplayed == displayed
+                orderby cats.Name
                 select cats;
 
             foreach  (Category cat in categoryQuery)
@@ -571,6 +600,7 @@ namespace BudgetAp.BudgetClasses
 
             IQueryable<Vendor> vendorQuery =
                 from vend in Vendors
+                orderby vend.Name
                 select vend;
 
             foreach (Vendor item in vendorQuery)
@@ -750,6 +780,7 @@ namespace BudgetAp.BudgetClasses
                 List<Category> categories = new List<Category>();
                 IQueryable<Category> categoriesQuery =
                     from cats in Categories
+                    orderby cats.Name
                     select cats;
 
                 foreach (Category cat in categoriesQuery)
@@ -757,6 +788,7 @@ namespace BudgetAp.BudgetClasses
                     Category nextCat = new Category();
                     nextCat.Name = cat.Name;
                     nextCat.IsDefault = cat.IsDefault;
+                    nextCat.IsDisplayed = cat.IsDisplayed;
                     categories.Add(nextCat);
                 }
                 
@@ -767,6 +799,7 @@ namespace BudgetAp.BudgetClasses
                 List<Vendor> vendors = new List<Vendor>();
                 IQueryable<Vendor> vendorsQuery =
                     from vends in Vendors
+                    orderby vends.Name
                     select vends;
 
                 foreach (Vendor vend in vendorsQuery)
@@ -801,7 +834,8 @@ namespace BudgetAp.BudgetClasses
         {
             List<TransactionsWithNames> transactions = new List<TransactionsWithNames>();
             IQueryable<Transactions> transactionsQuery =
-                from trans in Transactions
+                from trans in Transactions          
+                orderby trans.TransactionDate descending
                 select trans;
 
             foreach (Transactions item in transactionsQuery)
@@ -811,9 +845,9 @@ namespace BudgetAp.BudgetClasses
                 itemToAdd.TransactionDate = item.TransactionDate;
                 itemToAdd.TransactionType = item.TransactionType;
                 itemToAdd.Account = GetAccountName(item.AccountID);
-                itemToAdd.Amount = item.Amount;
                 itemToAdd.Category = GetCategoryName(item.CategoryID);
                 itemToAdd.Vendor = GetVendorName(item.VendorID);
+                itemToAdd.Amount = (decimal)item.Amount;
                 itemToAdd.Description = item.Description;
                 transactions.Add(itemToAdd);
             }
@@ -850,7 +884,7 @@ namespace BudgetAp.BudgetClasses
         /// <returns>Decimal: total spending for the category for the specified timespan.</returns>
         private decimal GetCategoryTotal(int categoryID, DateTime timeSpan)
         {
-            decimal total = 0;
+            decimal total = 0.0M;
 
             var categorySumQuery =
                 from trans in Transactions
@@ -859,7 +893,7 @@ namespace BudgetAp.BudgetClasses
 
             foreach (var item in categorySumQuery)
             {
-                total += item.Amount;
+                total = decimal.Add(item.Amount, total);
             }
 
             return total;
@@ -873,7 +907,7 @@ namespace BudgetAp.BudgetClasses
         /// <returns>Decimal: average spending spending for the 3 months prior to the specified date.</returns>
         private decimal GetCategoryThreeMonthAverage(int categoryID, DateTime originDate)
         {
-            decimal total = 0;
+            decimal total = 0.0M;
 
             var categorySumQuery =
                 from trans in Transactions
@@ -886,7 +920,7 @@ namespace BudgetAp.BudgetClasses
 
             foreach (var item in categorySumQuery)
             {
-                total += item.Amount;
+                total = decimal.Add(item.Amount, total);
             }
 
             return total/3;

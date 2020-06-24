@@ -50,19 +50,6 @@ namespace BudgetAp
             }
         }
 
-        /// <summary>
-        /// Moves all items from the not displayed list box (and list) to the displayed list box (and list).
-        /// </summary>
-        private void btnMoveAllToDisplayedList_Click(object sender, EventArgs e)
-        {
-            foreach (string category in _notDisplayedCategories)
-            {
-                _displayedCategories.Add(category);
-                _notDisplayedCategories.Remove(category);
-            }
-            RefreshDisplayListBoxes();
-        }
-
         //TODO: insert XML documentation.
         private void btnMoveSelectedToDisplayedList_Click(object sender, EventArgs e)
         {
@@ -91,16 +78,6 @@ namespace BudgetAp
             {
                 MessageBox.Show("No 'Displayed' category selected.");
             }
-        }
-
-        private void btnMoveAllToNotDisplayedList_Click(object sender, EventArgs e)
-        {
-            foreach (string category in _displayedCategories)
-            {
-                _notDisplayedCategories.Add(category);
-                _displayedCategories.Remove(category);
-            }
-            RefreshDisplayListBoxes();
         }
 
         private void btnFinished_Click(object sender, EventArgs e)
