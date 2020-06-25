@@ -131,7 +131,7 @@
             this.txtbxAmount.Location = new System.Drawing.Point(13, 142);
             this.txtbxAmount.Name = "txtbxAmount";
             this.txtbxAmount.Size = new System.Drawing.Size(174, 20);
-            this.txtbxAmount.TabIndex = 8;
+            this.txtbxAmount.TabIndex = 5;
             this.txtbxAmount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtbxAmount_KeyPress);
             // 
             // dateTimePicker1
@@ -139,7 +139,7 @@
             this.dateTimePicker1.Location = new System.Drawing.Point(229, 142);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(185, 20);
-            this.dateTimePicker1.TabIndex = 9;
+            this.dateTimePicker1.TabIndex = 6;
             // 
             // txtbxDescription
             // 
@@ -155,7 +155,7 @@
             this.chckbxTransfer.Location = new System.Drawing.Point(12, 70);
             this.chckbxTransfer.Name = "chckbxTransfer";
             this.chckbxTransfer.Size = new System.Drawing.Size(162, 17);
-            this.chckbxTransfer.TabIndex = 11;
+            this.chckbxTransfer.TabIndex = 3;
             this.chckbxTransfer.Text = "Transfer between accounts?";
             this.chckbxTransfer.UseVisualStyleBackColor = true;
             this.chckbxTransfer.CheckedChanged += new System.EventHandler(this.chckbxTransfer_CheckedChanged);
@@ -166,7 +166,7 @@
             this.cmbxTransType.Location = new System.Drawing.Point(13, 30);
             this.cmbxTransType.Name = "cmbxTransType";
             this.cmbxTransType.Size = new System.Drawing.Size(174, 21);
-            this.cmbxTransType.TabIndex = 12;
+            this.cmbxTransType.TabIndex = 1;
             // 
             // cmbxAccount
             // 
@@ -174,7 +174,7 @@
             this.cmbxAccount.Location = new System.Drawing.Point(229, 30);
             this.cmbxAccount.Name = "cmbxAccount";
             this.cmbxAccount.Size = new System.Drawing.Size(185, 21);
-            this.cmbxAccount.TabIndex = 13;
+            this.cmbxAccount.TabIndex = 2;
             // 
             // cmbxCategory
             // 
@@ -182,7 +182,7 @@
             this.cmbxCategory.Location = new System.Drawing.Point(12, 208);
             this.cmbxCategory.Name = "cmbxCategory";
             this.cmbxCategory.Size = new System.Drawing.Size(175, 21);
-            this.cmbxCategory.TabIndex = 14;
+            this.cmbxCategory.TabIndex = 7;
             // 
             // cmbxVendor
             // 
@@ -190,7 +190,7 @@
             this.cmbxVendor.Location = new System.Drawing.Point(13, 265);
             this.cmbxVendor.Name = "cmbxVendor";
             this.cmbxVendor.Size = new System.Drawing.Size(174, 21);
-            this.cmbxVendor.TabIndex = 15;
+            this.cmbxVendor.TabIndex = 8;
             // 
             // cmbxTransferAccounts
             // 
@@ -198,7 +198,7 @@
             this.cmbxTransferAccounts.Location = new System.Drawing.Point(229, 86);
             this.cmbxTransferAccounts.Name = "cmbxTransferAccounts";
             this.cmbxTransferAccounts.Size = new System.Drawing.Size(185, 21);
-            this.cmbxTransferAccounts.TabIndex = 16;
+            this.cmbxTransferAccounts.TabIndex = 4;
             // 
             // btnAccountManager
             // 
@@ -239,7 +239,7 @@
             this.btnAddTransaction.Location = new System.Drawing.Point(13, 302);
             this.btnAddTransaction.Name = "btnAddTransaction";
             this.btnAddTransaction.Size = new System.Drawing.Size(401, 51);
-            this.btnAddTransaction.TabIndex = 20;
+            this.btnAddTransaction.TabIndex = 10;
             this.btnAddTransaction.Text = "Add Transaction";
             this.btnAddTransaction.UseVisualStyleBackColor = true;
             this.btnAddTransaction.Click += new System.EventHandler(this.btnAddTransaction_Click);
@@ -250,7 +250,7 @@
             this.btnCancelTransaction.Location = new System.Drawing.Point(13, 359);
             this.btnCancelTransaction.Name = "btnCancelTransaction";
             this.btnCancelTransaction.Size = new System.Drawing.Size(401, 51);
-            this.btnCancelTransaction.TabIndex = 21;
+            this.btnCancelTransaction.TabIndex = 11;
             this.btnCancelTransaction.Text = "Cancel Transaction";
             this.btnCancelTransaction.UseVisualStyleBackColor = true;
             this.btnCancelTransaction.Click += new System.EventHandler(this.btnCancelTransaction_Click);
@@ -266,10 +266,10 @@
             // 
             // btnUpdateTransaction
             // 
-            this.btnUpdateTransaction.Location = new System.Drawing.Point(12, 302);
+            this.btnUpdateTransaction.Location = new System.Drawing.Point(13, 302);
             this.btnUpdateTransaction.Name = "btnUpdateTransaction";
             this.btnUpdateTransaction.Size = new System.Drawing.Size(402, 51);
-            this.btnUpdateTransaction.TabIndex = 23;
+            this.btnUpdateTransaction.TabIndex = 9;
             this.btnUpdateTransaction.Text = "Update Transaction";
             this.btnUpdateTransaction.UseVisualStyleBackColor = true;
             this.btnUpdateTransaction.Click += new System.EventHandler(this.btnUpdateTransaction_Click);
