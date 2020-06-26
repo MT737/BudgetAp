@@ -123,7 +123,7 @@ namespace BudgetAp.BudgetClasses
             }
 
             //Add a new account transaction.
-            InsertTransaction(Transactions, DateTime.Now, accountID, GetNewAccountTransType(accountID), GetCategoryID("New Account Balance"), GetVendorID("N/A"), balance, "New Account");
+            InsertTransaction(Transactions, DateTime.Now.Date, accountID, GetNewAccountTransType(accountID), GetCategoryID("New Account Balance"), GetVendorID("N/A"), balance, "New Account");
 
             //Submit transaction to the DB.
             PushToDBandBackup();
@@ -172,7 +172,7 @@ namespace BudgetAp.BudgetClasses
             {
                 //Add new transaction using the accountAdjustment to the transactions table. All subsequent account balance determinations reflect the updated account balance.
                 decimal accountAdjustment = updatedAccountBalance - GetAccountBalance(selectedAccountID);                
-                InsertTransaction(Transactions, DateTime.Now, selectedAccountID, GetNewAccountTransType(selectedAccountID), GetCategoryID("Account Balance Modification")
+                InsertTransaction(Transactions, DateTime.Now.Date, selectedAccountID, GetNewAccountTransType(selectedAccountID), GetCategoryID("Account Balance Modification")
                     , GetVendorID("N/A"), accountAdjustment, "Account Balance Modification");                
             }
 
@@ -869,8 +869,8 @@ namespace BudgetAp.BudgetClasses
                 categoryToAdd.CategoryID = GetCategoryID(category);
                 categoryToAdd.Name = category;
                 categoryToAdd.PriorMonth = GetCategoryTotal(categoryToAdd.CategoryID, DateTime.Now.AddMonths(-1));
-                categoryToAdd.CurrentMonth = GetCategoryTotal(categoryToAdd.CategoryID, DateTime.Now);
-                categoryToAdd.ThreeMonthAverage = GetCategoryThreeMonthAverage(categoryToAdd.CategoryID, DateTime.Now);
+                categoryToAdd.CurrentMonth = GetCategoryTotal(categoryToAdd.CategoryID, DateTime.Now.Date);
+                categoryToAdd.ThreeMonthAverage = GetCategoryThreeMonthAverage(categoryToAdd.CategoryID, DateTime.Now.Date);
                 categorySpending.Add(categoryToAdd);
             }
             return categorySpending;

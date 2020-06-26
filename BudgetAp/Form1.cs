@@ -280,19 +280,6 @@ namespace BudgetAp
             }
         }
 
-        //TODO: Implement export feature.
-        private void btnExport_Click(object sender, EventArgs e)
-        {
-            if (budget != null)
-            {
-                throw new NotImplementedException(); 
-            }
-            else
-            {
-                PleaseCreateOrLoadBudget();
-            }
-        }
-
         /// <summary>
         /// Prompts the edit transaction process on the transaction currently selected in the Transactions data grid view.
         /// </summary>
@@ -405,6 +392,19 @@ namespace BudgetAp
                 oForm = null;
 
                 FillDGVS();
+            }
+            else
+            {
+                PleaseCreateOrLoadBudget();
+            }
+        }
+
+        //TODO: Implement Export of transactions table.
+        private void exportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (budget != null)
+            {
+                throw new NotImplementedException();
             }
             else
             {

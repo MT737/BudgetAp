@@ -82,7 +82,7 @@ namespace BudgetAp
             txtbxDescription.Text = "";
 
             //Set date
-            dateTimePicker1.Value = DateTime.Now;
+            dateTimePicker1.Value = DateTime.Now.Date;
         }
 
         /// <summary>
@@ -105,11 +105,11 @@ namespace BudgetAp
                             //Transfer transactions consist of two transactions.
 
                             //First 1/2 of transfer
-                            InsertTransaction(_budget.GetTransactionsTable(), dateTimePicker1.Value, _budget.GetAccountID(cmbxAccount.SelectedItem.ToString()), cmbxTransType.SelectedItem.ToString(),
+                            InsertTransaction(_budget.GetTransactionsTable(), dateTimePicker1.Value.Date, _budget.GetAccountID(cmbxAccount.SelectedItem.ToString()), cmbxTransType.SelectedItem.ToString(),
                             _budget.GetCategoryID(cmbxCategory.SelectedItem.ToString()), _budget.GetVendorID(cmbxVendor.SelectedItem.ToString()), decimal.Parse(txtbxAmount.Text), $"Transfer Transaction: {txtbxDescription.Text}");
 
                             //Second 1/2 of transfer
-                            InsertTransaction(_budget.GetTransactionsTable(), dateTimePicker1.Value, _budget.GetAccountID(cmbxTransferAccounts.SelectedItem.ToString()), OppositeTransType(),
+                            InsertTransaction(_budget.GetTransactionsTable(), dateTimePicker1.Value.Date, _budget.GetAccountID(cmbxTransferAccounts.SelectedItem.ToString()), OppositeTransType(),
                             _budget.GetCategoryID(cmbxCategory.SelectedItem.ToString()), _budget.GetVendorID(cmbxVendor.SelectedItem.ToString()), decimal.Parse(txtbxAmount.Text), $"Transfer Transaction: {txtbxDescription.Text}");
 
                             //Push the transaction to the DB and then backup.
@@ -125,7 +125,7 @@ namespace BudgetAp
                     else                    
                     {
                         //Insert transaction
-                        InsertTransaction(_budget.GetTransactionsTable(), dateTimePicker1.Value, _budget.GetAccountID(cmbxAccount.SelectedItem.ToString()), cmbxTransType.SelectedItem.ToString(),
+                        InsertTransaction(_budget.GetTransactionsTable(), dateTimePicker1.Value.Date, _budget.GetAccountID(cmbxAccount.SelectedItem.ToString()), cmbxTransType.SelectedItem.ToString(),
                             _budget.GetCategoryID(cmbxCategory.SelectedItem.ToString()), _budget.GetVendorID(cmbxVendor.SelectedItem.ToString()), decimal.Parse(txtbxAmount.Text), txtbxDescription.Text);
 
                         //Push the transaction to the DB and then backup.

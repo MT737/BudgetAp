@@ -49,10 +49,10 @@
             this.btnNewTransaction = new System.Windows.Forms.Button();
             this.btnEditTransaction = new System.Windows.Forms.Button();
             this.btnDeleteTransaction = new System.Windows.Forms.Button();
-            this.btnExport = new System.Windows.Forms.Button();
             this.dgvAccountOverview = new System.Windows.Forms.DataGridView();
             this.dgvSpendingByCategory = new System.Windows.Forms.DataGridView();
             this.btnModifyDisplayedCats = new System.Windows.Forms.Button();
+            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTransactions)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAccountOverview)).BeginInit();
@@ -77,7 +77,7 @@
             this.managersToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1769, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1431, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -87,6 +87,7 @@
             this.newToolStripMenuItem,
             this.loadExistingBudgetToolStripMenuItem,
             this.saveBudgetToolStripMenuItem,
+            this.exportToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
@@ -95,28 +96,28 @@
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.newToolStripMenuItem.Text = "New Budget";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
             // loadExistingBudgetToolStripMenuItem
             // 
             this.loadExistingBudgetToolStripMenuItem.Name = "loadExistingBudgetToolStripMenuItem";
-            this.loadExistingBudgetToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.loadExistingBudgetToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.loadExistingBudgetToolStripMenuItem.Text = "Load Budget";
             this.loadExistingBudgetToolStripMenuItem.Click += new System.EventHandler(this.loadBudgetToolStripMenuItem_Click);
             // 
             // saveBudgetToolStripMenuItem
             // 
             this.saveBudgetToolStripMenuItem.Name = "saveBudgetToolStripMenuItem";
-            this.saveBudgetToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.saveBudgetToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveBudgetToolStripMenuItem.Text = "Save Budget";
             this.saveBudgetToolStripMenuItem.Click += new System.EventHandler(this.saveBudgetToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -197,7 +198,7 @@
             // 
             // btnCategoryManager
             // 
-            this.btnCategoryManager.Location = new System.Drawing.Point(1631, 24);
+            this.btnCategoryManager.Location = new System.Drawing.Point(1290, 24);
             this.btnCategoryManager.Name = "btnCategoryManager";
             this.btnCategoryManager.Size = new System.Drawing.Size(126, 27);
             this.btnCategoryManager.TabIndex = 5;
@@ -207,7 +208,7 @@
             // 
             // btnAccountManager
             // 
-            this.btnAccountManager.Location = new System.Drawing.Point(1242, 503);
+            this.btnAccountManager.Location = new System.Drawing.Point(1297, 503);
             this.btnAccountManager.Name = "btnAccountManager";
             this.btnAccountManager.Size = new System.Drawing.Size(119, 28);
             this.btnAccountManager.TabIndex = 6;
@@ -217,9 +218,9 @@
             // 
             // btnNewTransaction
             // 
-            this.btnNewTransaction.Location = new System.Drawing.Point(1405, 537);
+            this.btnNewTransaction.Location = new System.Drawing.Point(559, 24);
             this.btnNewTransaction.Name = "btnNewTransaction";
-            this.btnNewTransaction.Size = new System.Drawing.Size(352, 48);
+            this.btnNewTransaction.Size = new System.Drawing.Size(121, 27);
             this.btnNewTransaction.TabIndex = 7;
             this.btnNewTransaction.Text = "New Transaction";
             this.btnNewTransaction.UseVisualStyleBackColor = true;
@@ -227,9 +228,9 @@
             // 
             // btnEditTransaction
             // 
-            this.btnEditTransaction.Location = new System.Drawing.Point(1405, 591);
+            this.btnEditTransaction.Location = new System.Drawing.Point(686, 24);
             this.btnEditTransaction.Name = "btnEditTransaction";
-            this.btnEditTransaction.Size = new System.Drawing.Size(174, 48);
+            this.btnEditTransaction.Size = new System.Drawing.Size(121, 27);
             this.btnEditTransaction.TabIndex = 8;
             this.btnEditTransaction.Text = "Edit Transaction";
             this.btnEditTransaction.UseVisualStyleBackColor = true;
@@ -237,23 +238,13 @@
             // 
             // btnDeleteTransaction
             // 
-            this.btnDeleteTransaction.Location = new System.Drawing.Point(1585, 591);
+            this.btnDeleteTransaction.Location = new System.Drawing.Point(813, 24);
             this.btnDeleteTransaction.Name = "btnDeleteTransaction";
-            this.btnDeleteTransaction.Size = new System.Drawing.Size(172, 48);
+            this.btnDeleteTransaction.Size = new System.Drawing.Size(121, 27);
             this.btnDeleteTransaction.TabIndex = 9;
             this.btnDeleteTransaction.Text = "Delete Transaction";
             this.btnDeleteTransaction.UseVisualStyleBackColor = true;
             this.btnDeleteTransaction.Click += new System.EventHandler(this.btnDeleteTransaction_Click);
-            // 
-            // btnExport
-            // 
-            this.btnExport.Location = new System.Drawing.Point(1405, 645);
-            this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(352, 48);
-            this.btnExport.TabIndex = 10;
-            this.btnExport.Text = "Export";
-            this.btnExport.UseVisualStyleBackColor = true;
-            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
             // dgvAccountOverview
             // 
@@ -266,7 +257,7 @@
             this.dgvAccountOverview.Name = "dgvAccountOverview";
             this.dgvAccountOverview.ReadOnly = true;
             this.dgvAccountOverview.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvAccountOverview.Size = new System.Drawing.Size(418, 168);
+            this.dgvAccountOverview.Size = new System.Drawing.Size(473, 168);
             this.dgvAccountOverview.TabIndex = 11;
             // 
             // dgvSpendingByCategory
@@ -280,12 +271,12 @@
             this.dgvSpendingByCategory.Name = "dgvSpendingByCategory";
             this.dgvSpendingByCategory.ReadOnly = true;
             this.dgvSpendingByCategory.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvSpendingByCategory.Size = new System.Drawing.Size(814, 440);
+            this.dgvSpendingByCategory.Size = new System.Drawing.Size(472, 440);
             this.dgvSpendingByCategory.TabIndex = 12;
             // 
             // btnModifyDisplayedCats
             // 
-            this.btnModifyDisplayedCats.Location = new System.Drawing.Point(1474, 24);
+            this.btnModifyDisplayedCats.Location = new System.Drawing.Point(1133, 24);
             this.btnModifyDisplayedCats.Name = "btnModifyDisplayedCats";
             this.btnModifyDisplayedCats.Size = new System.Drawing.Size(151, 27);
             this.btnModifyDisplayedCats.TabIndex = 13;
@@ -293,15 +284,21 @@
             this.btnModifyDisplayedCats.UseVisualStyleBackColor = true;
             this.btnModifyDisplayedCats.Click += new System.EventHandler(this.btnModifyDisplayedCats_Click);
             // 
+            // exportToolStripMenuItem
+            // 
+            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportToolStripMenuItem.Text = "ExportToTextFile";
+            this.exportToolStripMenuItem.Click += new System.EventHandler(this.exportToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1769, 712);
+            this.ClientSize = new System.Drawing.Size(1431, 712);
             this.Controls.Add(this.btnModifyDisplayedCats);
             this.Controls.Add(this.dgvSpendingByCategory);
             this.Controls.Add(this.dgvAccountOverview);
-            this.Controls.Add(this.btnExport);
             this.Controls.Add(this.btnDeleteTransaction);
             this.Controls.Add(this.btnEditTransaction);
             this.Controls.Add(this.btnNewTransaction);
@@ -344,7 +341,6 @@
         private System.Windows.Forms.Button btnNewTransaction;
         private System.Windows.Forms.Button btnEditTransaction;
         private System.Windows.Forms.Button btnDeleteTransaction;
-        private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.DataGridView dgvAccountOverview;
         private System.Windows.Forms.DataGridView dgvSpendingByCategory;
         private System.Windows.Forms.ToolStripMenuItem saveBudgetToolStripMenuItem;
@@ -353,6 +349,7 @@
         private System.Windows.Forms.ToolStripMenuItem categoryManagerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem vendorManagerToolStripMenuItem;
         private System.Windows.Forms.Button btnModifyDisplayedCats;
+        private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
     }
 }
 
