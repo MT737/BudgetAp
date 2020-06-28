@@ -17,6 +17,7 @@ namespace BudgetAp
             //Create main form. Assign it an on close event handler. Then show it.
             Form1 oForm = new Form1();
             oForm.Closed += new EventHandler(OnFormClosed);
+            oForm.StartPosition = FormStartPosition.CenterScreen;
             oForm.Show();
             oForm = null;
         }

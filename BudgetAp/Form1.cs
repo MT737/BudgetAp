@@ -182,6 +182,7 @@ namespace BudgetAp
             MessageBox.Show("Please enter the accounts you would like to associate with this budget. Note: you must include at least 1 account.");
             bool created = false;
             AccountManager oForm = new AccountManager(budget);
+            oForm.StartPosition = FormStartPosition.CenterParent;
             oForm.ShowDialog();  //Using showdialog so that the main form pauses while the AccountManager is open.
             oForm = null;
 
@@ -197,7 +198,10 @@ namespace BudgetAp
         /// </summary>
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            budget.PushToDBandBackup();
+            if (budget != null)
+            {
+                budget.PushToDBandBackup(); 
+            }
             Application.Exit();
         }
 
@@ -209,6 +213,7 @@ namespace BudgetAp
             if (budget != null)
             {
                 EditSelection oForm = new EditSelection(budget, "Category");
+                oForm.StartPosition = FormStartPosition.CenterParent;
                 oForm.ShowDialog();  //Using showdialog so that the main form pauses while the AccountManager is open.
                 oForm = null;
 
@@ -228,6 +233,7 @@ namespace BudgetAp
             if (budget != null)
             {
                 AccountManager oForm = new AccountManager(budget);
+                oForm.StartPosition = FormStartPosition.CenterParent;
                 oForm.ShowDialog();  //Using showdialog so that the main form pauses while the AccountManager is open.
                 oForm = null;
 
@@ -247,6 +253,7 @@ namespace BudgetAp
             if (budget != null)
             {
                 TransactionManager oForm = new TransactionManager(false, 0, budget);
+                oForm.StartPosition = FormStartPosition.CenterParent;
                 oForm.ShowDialog(); //Using showdialog so that the m ain form pauses whil the TransactionManager is open.
                 oForm = null;
 
@@ -288,6 +295,7 @@ namespace BudgetAp
             if (budget != null)
             {
                 TransactionManager oForm = new TransactionManager(true, (int)dgvTransactions.CurrentRow.Cells[0].Value, budget);
+                oForm.StartPosition = FormStartPosition.CenterParent;
                 oForm.ShowDialog(); //Using showdialog so that the main form pauses whil the TransactionManager is open.
                 oForm = null;
 
@@ -323,6 +331,7 @@ namespace BudgetAp
             if (budget != null)
             {
                 AccountManager oForm = new AccountManager(budget);
+                oForm.StartPosition = FormStartPosition.CenterParent;
                 oForm.ShowDialog();  //Using showdialog so that the main form pauses while the AccountManager is open.
                 oForm = null;
 
@@ -342,6 +351,7 @@ namespace BudgetAp
             if (budget != null)
             {
                 EditSelection oForm = new EditSelection(budget, "Category");
+                oForm.StartPosition = FormStartPosition.CenterParent;
                 oForm.ShowDialog();  //Using showdialog so that the main form pauses while the AccountManager is open.
                 oForm = null;
 
@@ -361,6 +371,7 @@ namespace BudgetAp
             if (budget != null)
             {
                 EditSelection oForm = new EditSelection(budget, "Vendor");
+                oForm.StartPosition = FormStartPosition.CenterParent;
                 oForm.ShowDialog();  //Using showdialog so that the main form pauses while the AccountManager is open.
                 oForm = null;
 
@@ -388,6 +399,7 @@ namespace BudgetAp
             if (budget != null)
             {
                 DisplayCategoriesManager oForm = new DisplayCategoriesManager(budget);
+                oForm.StartPosition = FormStartPosition.CenterParent;
                 oForm.ShowDialog();  //Using showdialog so that the main form pauses while the AccountManager is open.
                 oForm = null;
 

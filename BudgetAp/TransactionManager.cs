@@ -207,6 +207,7 @@ namespace BudgetAp
         private void btnCategoryManager_Click(object sender, EventArgs e)
         {
             EditSelection oForm = new EditSelection(_budget, "Category");
+            oForm.StartPosition = FormStartPosition.CenterParent;
             oForm.ShowDialog();  //Using showdialog so that the calling form pauses while the AccountManager is open.
             oForm = null;
 
@@ -220,6 +221,7 @@ namespace BudgetAp
         private void btnVendorManager_Click(object sender, EventArgs e)
         {
             EditSelection oForm = new EditSelection(_budget, "Vendor");
+            oForm.StartPosition = FormStartPosition.CenterParent;
             oForm.ShowDialog();  //Using showdialog so that the calling form pauses while the AccountManager is open.
             oForm = null;
 
@@ -232,6 +234,7 @@ namespace BudgetAp
         private void btnAccountManager_Click(object sender, EventArgs e)
         {            
             AccountManager oForm = new AccountManager(_budget);
+            oForm.StartPosition = FormStartPosition.CenterParent;
             oForm.ShowDialog();  //Using showdialog so that the main form pauses while the AccountManager is open.
             oForm = null;
 
