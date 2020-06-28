@@ -3,6 +3,7 @@ using System;
 using System.Data;
 using System.Data.Linq;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace BudgetAp
 {
@@ -94,6 +95,34 @@ namespace BudgetAp
             modifyCategoryQuery.Single().Name = updatedCategoryName;
         }
 
+        public static void DeleteEntry(BudgetDB budget, string catOrVend, int toDeleteID)
+        {
+            if (catOrVend == "Category")
+            {
+                Table<Category> catTable = budget.GetCategoryTable();
+                IQueryable<Category> modifyCategoryQuery =
+                    from cats in catTable
+                    where cats.CategoryID == toDeleteID
+                    select cats;
+
+                catTable.DeleteOnSubmit(modifyCategoryQuery.Single());
+            }
+            else if (catOrVend == "Vendor")
+            {
+                Table<Vendor> vendorTable = budget.GetVendorTable();
+                IQueryable<Vendor> modifyVendorQuery =
+                    from vendors in vendorTable
+                    where vendors.VendorID == toDeleteID
+                    select vendors;
+
+                vendorTable.DeleteOnSubmit(modifyVendorQuery.Single());
+            }
+            else
+            {
+                MessageBox.Show("Error! Invalid Transaction Type.", "BudgetApp", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
         /// <summary>
         /// Modifies the isdisplayed field of a specified category found in the calling budget's Category table.
         /// </summary>
@@ -173,6 +202,45 @@ namespace BudgetAp
             transactionsModificationQuery.Single().VendorID = vendorID;
             transactionsModificationQuery.Single().Amount = (decimal)amount;
             transactionsModificationQuery.Single().Description = description;
+        }
+
+        /// <summary>
+        /// Modifies the transaction table by converting entryIDs that are to be deleted to the EntryIDs to be absorbed.
+        /// </summary>
+        /// <param name="transactions">Table Transactions: the transactions table of the budget object.</param>
+        /// <param name="entryToDelete">Int: the ID (Category or Vendor) that is to be deleted.</param>
+        /// <param name="entryToAbsorb">Int: the ID (Category or Vendor) that will absorb the transactions of the deleted ID.</param>
+        /// <param name="entryType"></param>
+        public static void ModifyTransaction(Table<Transactions> transactions, int entryToDelete, int entryToAbsorb, string entryType)
+        {
+            if (entryType == "Category")
+            {
+                IQueryable<Transactions> transactionsModifcationQuery =
+                from trans in transactions
+                where trans.CategoryID == entryToDelete
+                select trans;
+
+                foreach (Transactions trans in transactionsModifcationQuery)
+                {
+                    trans.CategoryID = entryToAbsorb;
+                }
+            }
+            else if (entryType == "Vendor")
+            {
+                IQueryable<Transactions> transactionModifcationQuery =
+                    from trans in transactions
+                    where trans.VendorID == entryToDelete
+                    select trans;
+
+                foreach (Transactions trans in transactionModifcationQuery)
+                {
+                    trans.VendorID = entryToAbsorb;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Error! Nonexistent EntryType.", "BudgetApp", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         /// <summary>

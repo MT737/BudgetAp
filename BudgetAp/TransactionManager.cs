@@ -14,7 +14,6 @@ namespace BudgetAp
 
         private BudgetDB _budget;
         private int _transID;
-        private bool _isModification;
 
         //Constructor
         public TransactionManager(bool isModification, int transID, BudgetDB budget)
@@ -22,7 +21,6 @@ namespace BudgetAp
             InitializeComponent();
             _budget = budget;
             _transID = transID;
-            _isModification = isModification;
 
             //Prep the fields.
             PrepTransactionManagerFields(isModification);

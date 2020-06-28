@@ -698,12 +698,60 @@ namespace BudgetAp.BudgetClasses
         }
 
         /// <summary>
+        /// Evaluates if the passed entry is a default entry.
+        /// </summary>
+        /// <param name="catOrVend">String: designates the table to query (Category/Vendor). </param>
+        /// <param name="selectedName">String: the passed name to test for default status.</param>
+        /// <returns></returns>
+        public bool IsDefault(string catOrVend, string selectedName)
+        {
+            //Get a list of default names from the appropriate table.
+            List<string> names = new List<string>();
+            if (catOrVend == "Vendor")
+            {
+
+                IQueryable<Vendor> nameCheckQuery =
+                    from vends in Vendors
+                    where vends.IsDefault == true
+                    select vends;
+
+                foreach (Vendor vend in nameCheckQuery)
+                {
+                    names.Add(Regex.Replace(vend.Name, "[^A-Za-z0-9]", "").ToUpper().Trim());
+                }
+
+            }
+            else
+            {
+                IQueryable<Category> nameCheckQuery =
+                    from cats in Categories
+                    where cats.IsDefault == true
+                    select cats;
+
+                foreach (Category cats in nameCheckQuery)
+                {
+                    names.Add(Regex.Replace(cats.Name, "[^A-Za-z0-9]", "").ToUpper().Trim());
+                }
+            }
+
+            int count = 0;
+            foreach (string name in names)
+            {
+                if (name == Regex.Replace(selectedName, "[^A-Za-z0-9]", "").ToUpper().Trim())
+                {
+                    count++; 
+                }
+            }
+            return count > 0;
+        }
+
+        /// <summary>
         /// Infers if the passed entry's IsDefault field evaluates to true.
         /// </summary>
         /// <param name="catOrVend">String: Indication of the entity list to compare to. Either "Category" or "Vendor".</param>
         /// <param name="selectedName">String: entity name being reviewed for default status.</param>
         /// <returns>Bool: True if the entry is a default value. False if the entry is not a default value.</returns>
-        internal bool IsDefaultEntry(string catOrVend, string selectedName)
+        internal bool NameExistsAsDefault(string catOrVend, string selectedName)
         {
             //Get a list of default names from the appropriate table.
             List<string> names = new List<string>();

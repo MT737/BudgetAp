@@ -67,15 +67,19 @@ namespace BudgetAp
         private void PrepFieldsAndFillDGV(string catOrVend)
         {        
             txtbxNewEntry.Text = "";
+           
             _budget.FillEditSelectionDGV(dgvSelectionList, _catOrVend);
+             
             dgvSelectionList.Columns[0].Visible = false;
             if (catOrVend == "Category")
             {
                 chckbxNewDisplaySpendByMonth.Visible = true;
+                _budget.ReLoadComboBox(cmbxAbsorbingEntry, "Category");
             }
             else
             {
                 chckbxNewDisplaySpendByMonth.Visible = false;
+                _budget.ReLoadComboBox(cmbxAbsorbingEntry, "Vendor");
             }
         }
 
@@ -86,7 +90,7 @@ namespace BudgetAp
         {
             if (txtbxUpdatedEntry.Text != "" && txtbxSelectedEntry.Text != txtbxUpdatedEntry.Text)
             {
-                if (!_budget.IsDefaultEntry(_catOrVend, txtbxSelectedEntry.Text) && !_budget.IsDefaultEntry(_catOrVend, txtbxUpdatedEntry.Text))
+                if (!_budget.NameExistsAsDefault(_catOrVend, txtbxSelectedEntry.Text) && !_budget.NameExistsAsDefault(_catOrVend, txtbxUpdatedEntry.Text))
                 {
                     if (_catOrVend == "Category")
                     {
@@ -111,11 +115,53 @@ namespace BudgetAp
         }
 
         /// <summary>
+        /// Prompts the process to set all transactions with the deleted entry ID to the absorbing entry ID and remove the deleted entry from the relevant entry table (Category/Vendor).
+        /// </summary>
+        private void btnDeleteEntry_Click(object sender, EventArgs e)
+        {
+            //Get IDs
+            int toDeleteID = 0;
+            int toAbsorbID = 0;
+            if (_catOrVend == "Category")
+            {
+                toDeleteID = _budget.GetCategoryID(txtbxSelectedEntryToDelete.Text.ToString());
+                toAbsorbID = _budget.GetCategoryID(cmbxAbsorbingEntry.Text.ToString());
+            }
+            else
+            {
+                toDeleteID = _budget.GetVendorID(txtbxSelectedEntryToDelete.Text.ToString());
+                toAbsorbID = _budget.GetVendorID(cmbxAbsorbingEntry.Text.ToString());
+            }
+
+            //Validate the inputs
+            //Check that the entity to be deleted is not identical to the absorbing entity and check that the entity to be deleted is not a default entity.
+            if (toDeleteID != toAbsorbID && !_budget.IsDefault(_catOrVend, txtbxSelectedEntry.Text.ToString()))
+            {
+                //Modify the transactions table
+                ModifyTransaction(_budget.GetTransactionsTable(), toDeleteID, toAbsorbID, _catOrVend);
+
+                //Modify the entry table                
+                DeleteEntry(_budget, _catOrVend, toDeleteID);
+
+                //Submit changes
+                _budget.PushToDBandBackup();
+
+                //Refill DGV and CmbBx
+                PrepFieldsAndFillDGV(_catOrVend);
+            }
+            else
+            {
+                MessageBox.Show("Selected entry to delete and selected entry to absorb cannot be the same and the selected entry cannot be a default entry.");
+            }
+        }
+
+        /// <summary>
         /// Fills the text value of the txtbxSelectedEntry based on the selected row of the dgvSelectionList.
         /// </summary>
         private void dgvSelectionList_SelectionChanged(object sender, EventArgs e)
         {
             txtbxSelectedEntry.Text = dgvSelectionList.CurrentRow.Cells[1].Value.ToString();
+            txtbxSelectedEntryToDelete.Text = dgvSelectionList.CurrentRow.Cells[1].Value.ToString();
         }
     }
 }
