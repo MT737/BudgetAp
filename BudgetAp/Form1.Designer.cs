@@ -35,6 +35,7 @@
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadExistingBudgetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveBudgetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.managersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.accountManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,7 +53,7 @@
             this.dgvAccountOverview = new System.Windows.Forms.DataGridView();
             this.dgvSpendingByCategory = new System.Windows.Forms.DataGridView();
             this.btnModifyDisplayedCats = new System.Windows.Forms.Button();
-            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveFileDialog2 = new System.Windows.Forms.SaveFileDialog();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTransactions)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAccountOverview)).BeginInit();
@@ -113,6 +114,13 @@
             this.saveBudgetToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveBudgetToolStripMenuItem.Text = "Save Budget";
             this.saveBudgetToolStripMenuItem.Click += new System.EventHandler(this.saveBudgetToolStripMenuItem_Click);
+            // 
+            // exportToolStripMenuItem
+            // 
+            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportToolStripMenuItem.Text = "ExportToTextFile";
+            this.exportToolStripMenuItem.Click += new System.EventHandler(this.exportToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
@@ -284,12 +292,10 @@
             this.btnModifyDisplayedCats.UseVisualStyleBackColor = true;
             this.btnModifyDisplayedCats.Click += new System.EventHandler(this.btnModifyDisplayedCats_Click);
             // 
-            // exportToolStripMenuItem
+            // saveFileDialog2
             // 
-            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.exportToolStripMenuItem.Text = "ExportToTextFile";
-            this.exportToolStripMenuItem.Click += new System.EventHandler(this.exportToolStripMenuItem_Click);
+            this.saveFileDialog2.DefaultExt = "txt";
+            this.saveFileDialog2.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*\"";
             // 
             // Form1
             // 
@@ -350,6 +356,7 @@
         private System.Windows.Forms.ToolStripMenuItem vendorManagerToolStripMenuItem;
         private System.Windows.Forms.Button btnModifyDisplayedCats;
         private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog2;
     }
 }
 

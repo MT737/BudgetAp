@@ -404,7 +404,19 @@ namespace BudgetAp
         {
             if (budget != null)
             {
-                throw new NotImplementedException();
+                MessageBox.Show("Please select a location and file name to store your export file.");                
+                if (saveFileDialog2.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        ExportToTextFile(dgvTransactions, saveFileDialog2.FileName);
+                        MessageBox.Show("Transactions table successfully exported.");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error exporting transactions table. {ex}", "BudgetApp", MessageBoxButtons.OK);
+                    }
+                }
             }
             else
             {

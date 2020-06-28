@@ -363,6 +363,27 @@ namespace BudgetAp
             }
         }
 
+        internal static void ExportToTextFile(DataGridView dgvTransactions, string filename)
+        {
+            TextWriter writer = new StreamWriter(filename);
+            for (int i = 0; i < dgvTransactions.Rows.Count ; i++)
+            {
+                for (int j = 0; j < dgvTransactions.Columns.Count; j++)
+                {
+                    if (j == dgvTransactions.Columns.Count -1) //If if this is the last column.
+                    {
+                    writer.WriteLine($"{dgvTransactions.Rows[i].Cells[j].Value.ToString()}");
+                    }
+                    else
+                    {
+                    writer.Write($"{dgvTransactions.Rows[i].Cells[j].Value.ToString()}| ");
+                    }
+                }                
+            }
+
+            writer.Close();
+        }
+
         /// <summary>
         /// Limits inputs to -0123456789. and backspace.
         /// </summary>
