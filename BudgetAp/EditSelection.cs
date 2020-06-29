@@ -119,39 +119,43 @@ namespace BudgetAp
         /// </summary>
         private void btnDeleteEntry_Click(object sender, EventArgs e)
         {
-            //Get IDs
-            int toDeleteID = 0;
-            int toAbsorbID = 0;
-            if (_catOrVend == "Category")
+            DialogResult result = MessageBox.Show("This acction cannot be undone. Are you sure you would like to delete the selected entry?", "BudgetApp", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (result == DialogResult.Yes)
             {
-                toDeleteID = _budget.GetCategoryID(txtbxSelectedEntryToDelete.Text.ToString());
-                toAbsorbID = _budget.GetCategoryID(cmbxAbsorbingEntry.Text.ToString());
-            }
-            else
-            {
-                toDeleteID = _budget.GetVendorID(txtbxSelectedEntryToDelete.Text.ToString());
-                toAbsorbID = _budget.GetVendorID(cmbxAbsorbingEntry.Text.ToString());
-            }
+                //Get IDs
+                int toDeleteID = 0;
+                int toAbsorbID = 0;
+                if (_catOrVend == "Category")
+                {
+                    toDeleteID = _budget.GetCategoryID(txtbxSelectedEntryToDelete.Text.ToString());
+                    toAbsorbID = _budget.GetCategoryID(cmbxAbsorbingEntry.Text.ToString());
+                }
+                else
+                {
+                    toDeleteID = _budget.GetVendorID(txtbxSelectedEntryToDelete.Text.ToString());
+                    toAbsorbID = _budget.GetVendorID(cmbxAbsorbingEntry.Text.ToString());
+                }
 
-            //Validate the inputs
-            //Check that the entity to be deleted is not identical to the absorbing entity and check that the entity to be deleted is not a default entity.
-            if (toDeleteID != toAbsorbID && !_budget.IsDefault(_catOrVend, txtbxSelectedEntry.Text.ToString()))
-            {
-                //Modify the transactions table
-                ModifyTransaction(_budget.GetTransactionsTable(), toDeleteID, toAbsorbID, _catOrVend);
+                //Validate the inputs
+                //Check that the entity to be deleted is not identical to the absorbing entity and check that the entity to be deleted is not a default entity.
+                if (toDeleteID != toAbsorbID && !_budget.IsDefault(_catOrVend, txtbxSelectedEntry.Text.ToString()))
+                {
+                    //Modify the transactions table
+                    ModifyTransaction(_budget.GetTransactionsTable(), toDeleteID, toAbsorbID, _catOrVend);
 
-                //Modify the entry table                
-                DeleteEntry(_budget, _catOrVend, toDeleteID);
+                    //Modify the entry table                
+                    DeleteEntry(_budget, _catOrVend, toDeleteID);
 
-                //Submit changes
-                _budget.PushToDBandBackup();
+                    //Submit changes
+                    _budget.PushToDBandBackup();
 
-                //Refill DGV and CmbBx
-                PrepFieldsAndFillDGV(_catOrVend);
-            }
-            else
-            {
-                MessageBox.Show("Selected entry to delete and selected entry to absorb cannot be the same and the selected entry cannot be a default entry.");
+                    //Refill DGV and CmbBx
+                    PrepFieldsAndFillDGV(_catOrVend);
+                }
+                else
+                {
+                    MessageBox.Show("Selected entry to delete and selected entry to absorb cannot be the same and the selected entry cannot be a default entry.");
+                } 
             }
         }
 
