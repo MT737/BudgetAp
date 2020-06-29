@@ -143,6 +143,7 @@ namespace BudgetAp
             //Transactions
             budget.FillTransactionsDGV(dgvTransactions);
             dgvTransactions.Columns[0].Visible = false;                 //Don't show TransactionsID
+            dgvTransactions.Columns[1].DefaultCellStyle.Format = "MM/dd/yyyy";
             dgvTransactions.Columns[6].DefaultCellStyle.Format = "c";
             dgvTransactions.Columns[6].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             dgvTransactions.Rows[0].Cells[1].Selected = true; //Hiding the first column results in the table not autoloading with a cell(row) selected. Can result in a crash if user selects edit transaction before selecting a row.

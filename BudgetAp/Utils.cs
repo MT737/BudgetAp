@@ -372,11 +372,21 @@ namespace BudgetAp
                 {
                     if (j == dgvTransactions.Columns.Count -1) //If if this is the last column.
                     {
-                    writer.WriteLine($"{dgvTransactions.Rows[i].Cells[j].Value.ToString()}");
+                    writer.WriteLine($"{dgvTransactions.Rows[i].Cells[j].Value}");
                     }
                     else
                     {
-                    writer.Write($"{dgvTransactions.Rows[i].Cells[j].Value.ToString()}| ");
+                        if (dgvTransactions.Columns[j].Name == "TransactionDate")
+                        {
+                            //Setting the format for the DGV to exclude time did not prevent the export feature from reinserting the 12:00 time value. 
+                            //This approach allows for applying formatting just before writing.
+                            //In short, text interpolation converts the date value to a string and the ":d" applies the date format (i.e., removes the time).
+                            writer.Write($"{dgvTransactions.Rows[i].Cells[j].Value:d}| ");
+                        }
+                        else
+                        {
+                            writer.Write($"{dgvTransactions.Rows[i].Cells[j].Value}| ");
+                        }
                     }
                 }                
             }

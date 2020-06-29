@@ -196,11 +196,11 @@ namespace BudgetAp
                 select trans;
 
             transactionsModificationQuery.Single().TransactionDate = date;
-            transactionsModificationQuery.Single().AccountID = accountID;
             transactionsModificationQuery.Single().TransactionType = transType;
+            transactionsModificationQuery.Single().AccountID = accountID;
             transactionsModificationQuery.Single().CategoryID = categoryID;
             transactionsModificationQuery.Single().VendorID = vendorID;
-            transactionsModificationQuery.Single().Amount = (decimal)amount;
+            transactionsModificationQuery.Single().Amount = amount;
             transactionsModificationQuery.Single().Description = description;
         }
 

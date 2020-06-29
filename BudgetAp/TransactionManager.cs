@@ -88,6 +88,7 @@ namespace BudgetAp
         /// </summary>
         private void btnAddTransaction_Click(object sender, EventArgs e)
         {
+            //TODO: Clean up this If tree.
             //Check that the user has interacted with the comboboxes.
             if (ComboBoxesCompleted())
             {

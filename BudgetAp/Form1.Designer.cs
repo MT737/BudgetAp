@@ -97,35 +97,35 @@
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.newToolStripMenuItem.Text = "New Budget";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
             // loadExistingBudgetToolStripMenuItem
             // 
             this.loadExistingBudgetToolStripMenuItem.Name = "loadExistingBudgetToolStripMenuItem";
-            this.loadExistingBudgetToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadExistingBudgetToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.loadExistingBudgetToolStripMenuItem.Text = "Load Budget";
             this.loadExistingBudgetToolStripMenuItem.Click += new System.EventHandler(this.loadBudgetToolStripMenuItem_Click);
             // 
             // saveBudgetToolStripMenuItem
             // 
             this.saveBudgetToolStripMenuItem.Name = "saveBudgetToolStripMenuItem";
-            this.saveBudgetToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveBudgetToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.saveBudgetToolStripMenuItem.Text = "Save Budget";
             this.saveBudgetToolStripMenuItem.Click += new System.EventHandler(this.saveBudgetToolStripMenuItem_Click);
             // 
             // exportToolStripMenuItem
             // 
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.exportToolStripMenuItem.Text = "ExportToTextFile";
             this.exportToolStripMenuItem.Click += new System.EventHandler(this.exportToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -200,9 +200,9 @@
             this.lblAccountOverview.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
             this.lblAccountOverview.Location = new System.Drawing.Point(940, 511);
             this.lblAccountOverview.Name = "lblAccountOverview";
-            this.lblAccountOverview.Size = new System.Drawing.Size(151, 20);
+            this.lblAccountOverview.Size = new System.Drawing.Size(205, 20);
             this.lblAccountOverview.TabIndex = 4;
-            this.lblAccountOverview.Text = "Account Overview";
+            this.lblAccountOverview.Text = "Active Account Overview";
             // 
             // btnCategoryManager
             // 
